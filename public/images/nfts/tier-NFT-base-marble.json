@@ -1,0 +1,12 @@
+{
+  "name": "Base Marble",    
+  "description": "NFT description",    
+  "image": "https://ipfs.io/ipfs/QmSnz85drLjCD4qNgaMwHFC6PFEkGrmYhM1LpHwZWpEWaQ?filename=NFT-base-marble.mp4",    
+  "attributes": 
+    [
+      {
+        "trait_type": "Strength",            
+        "value": 84        
+      }
+    ]
+}

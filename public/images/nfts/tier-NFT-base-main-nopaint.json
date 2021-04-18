@@ -1,0 +1,12 @@
+{
+  "name": "Main-Nopaint",    
+  "description": "NFT description",    
+  "image": "https://ipfs.io/ipfs/QmWckPrzbjvf8jqUpdQ7jKLzdaSBTyPSV6x6obSUHHipqc?filename=NFT-base-main-nopaint.mp4",    
+  "attributes": 
+    [
+      {
+        "trait_type": "Strength",            
+        "value": 84        
+      }
+    ]
+}

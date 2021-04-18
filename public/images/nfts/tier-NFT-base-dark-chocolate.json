@@ -1,0 +1,12 @@
+{
+  "name": "Dark chocolate",    
+  "description": "NFT description",    
+  "image": "https://ipfs.io/ipfs/QmX9UuF41nfhnESX3DnVHhC4XwuYAcLEReGyN4CtE8P7Bg?filename=NFT-base-dark-chocolate.mp4",    
+  "attributes": 
+    [
+      {
+        "trait_type": "Strength",            
+        "value": 84        
+      }
+    ]
+}
