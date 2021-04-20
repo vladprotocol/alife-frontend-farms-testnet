@@ -135,7 +135,7 @@ const Menu = (props) => {
     .then((res) => res.json())
     .then(
       (result) => {
-        vladValue = result['vlad-finance'].usd
+        vladValue = Math.round(result['vlad-finance'].usd * 100) / 100
       },
       (error) => {
         vladValue = 0
