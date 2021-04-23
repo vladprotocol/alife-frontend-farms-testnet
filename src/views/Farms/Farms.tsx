@@ -103,7 +103,17 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   return (
     <Page>
       <Heading as="h1" size="xxl" color="primary" mb="50px" style={{ textAlign: 'center' }}>
-        ALIFE FARMING HAS STARTED
+        LIFE FARMING HAS ENDED
+      </Heading>
+      <Heading as="h1" size="lg" color="primary" mb="50px" style={{ textAlign: 'center' }}>
+        NEXT PHASE FARMING{' '}
+        <CustomA
+          href="https://vlad-finance.medium.com/vlad-phase-2-life-after-life-farming-19c730654f79"
+          target="_blank"
+          rel="noreferrer"
+        >
+          COMING SOON
+        </CustomA>
       </Heading>
 
       <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
