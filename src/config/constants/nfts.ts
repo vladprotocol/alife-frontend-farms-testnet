@@ -105,4 +105,3 @@ const Nfts: Nft[] = [
 ]
 
 export default Nfts
-
