@@ -14,7 +14,7 @@ import telegramLogo from './telegram.svg'
 import twitterLogo from './twitter.svg'
 import mediumLogo from './medium.svg'
 import vladLogo from './vlad-circle.png'
-import alifeLogo from './alife.png'
+import alifeLogo from './life.png'
 import bgFooter from './bg-footer.jpg'
 import soundCloudLogo from './soundcloud.png'
 
