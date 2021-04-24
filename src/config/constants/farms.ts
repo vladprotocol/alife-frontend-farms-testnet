@@ -44,7 +44,7 @@ const farms: FarmConfig[] = [
     },
     tokenSymbol: 'ALIFE',
     tokenAddresses: {
-      97: '0xADA2270B0CB5b6254d3d48A6fEE55b72693B746A',
+      97: '0xaBBe32A526093159361f52500fC576c8150f9446',
       56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
     },
     quoteTokenSymbol: QuoteToken.BUSD,
@@ -55,12 +55,12 @@ const farms: FarmConfig[] = [
     risk: 5,
     lpSymbol: 'ALIFE-BNB LP',
     lpAddresses: {
-      97: '0x197885A5af8ffdC945f2c5677A6E0F3A84C141A2',
+      97: '0x47C72F3C4069A2cA4B9E50B07F9eA5A750b69c72',
       56: '0x45b2eF2ECe32b34D20F6C6caD49043740B05f2A5',
     },
     tokenSymbol: 'ALIFE',
     tokenAddresses: {
-      97: '0xADA2270B0CB5b6254d3d48A6fEE55b72693B746A',
+      97: '0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c',
       56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
     },
     quoteTokenSymbol: QuoteToken.BNB,
