@@ -55,7 +55,7 @@ const farms: FarmConfig[] = [
     risk: 5,
     lpSymbol: 'ALIFE-BUSD LP',
     lpAddresses: {
-      97: '0xaBBe32A526093159361f52500fC576c8150f9446',
+      97: '0x47C72F3C4069A2cA4B9E50B07F9eA5A750b69c72',
       56: '0x45b2eF2ECe32b34D20F6C6caD49043740B05f2A5',
     },
     tokenSymbol: 'ALIFE',
