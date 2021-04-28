@@ -5,8 +5,14 @@ const chainId = process.env.REACT_APP_CHAIN_ID
 export const getCakeAddress = () => {
   return addresses.cake[chainId]
 }
+export const getLifeAddress = () => {
+  return addresses.life[chainId]
+}
 export const getMasterChefAddress = () => {
   return addresses.masterChef[chainId]
+}
+export const getLifeMasterChefAddress = () => {
+  return addresses.lifeMasterChef[chainId]
 }
 export const getMulticallAddress = () => {
   return addresses.mulltiCall[chainId]
