@@ -45,10 +45,10 @@ const farms: FarmConfig[] = [
     tokenSymbol: 'ALIFE',
     tokenAddresses: {
       97: '0xaBBe32A526093159361f52500fC576c8150f9446',
-      56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+      56: '0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c',
     },
-    quoteTokenSymbol: QuoteToken.BUSD,
-    quoteTokenAdresses: contracts.busd,
+    quoteTokenSymbol: QuoteToken.BNB,
+    quoteTokenAdresses: contracts.wbnb,
   },
   {
     pid: 1,
@@ -61,10 +61,10 @@ const farms: FarmConfig[] = [
     tokenSymbol: 'ALIFE',
     tokenAddresses: {
       97: '0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c',
-      56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+      56: '0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c',
     },
-    quoteTokenSymbol: QuoteToken.BNB,
-    quoteTokenAdresses: contracts.wbnb,
+    quoteTokenSymbol: QuoteToken.BUSD,
+    quoteTokenAdresses: contracts.busd,
   },
 
   {
@@ -78,7 +78,7 @@ const farms: FarmConfig[] = [
     tokenSymbol: 'ALIFE',
     tokenAddresses: {
       97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
-      56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+      56: '0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c',
     },
     quoteTokenSymbol: QuoteToken.BUSD,
     quoteTokenAdresses: contracts.busd,
