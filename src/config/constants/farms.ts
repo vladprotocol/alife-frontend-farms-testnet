@@ -37,9 +37,9 @@ const farms: FarmConfig[] = [
   {
     pid: 0,
     risk: 5,
-    lpSymbol: 'ALIFE-BUSD LP',
+    lpSymbol: 'ALIFE-BNB LP',
     lpAddresses: {
-      97: '0xE2115e605a81dc6CB448f5111DE6bEf5B8a760DA',
+      97: '0x47C72F3C4069A2cA4B9E50B07F9eA5A750b69c72',
       56: '0x5eE167b75118125e7d46add5cE61F749BB977A00',
     },
     tokenSymbol: 'ALIFE',
@@ -53,9 +53,9 @@ const farms: FarmConfig[] = [
   {
     pid: 1,
     risk: 5,
-    lpSymbol: 'ALIFE-BNB LP',
+    lpSymbol: 'ALIFE-BUSD LP',
     lpAddresses: {
-      97: '0x47C72F3C4069A2cA4B9E50B07F9eA5A750b69c72',
+      97: '0xaBBe32A526093159361f52500fC576c8150f9446',
       56: '0x45b2eF2ECe32b34D20F6C6caD49043740B05f2A5',
     },
     tokenSymbol: 'ALIFE',
@@ -67,22 +67,6 @@ const farms: FarmConfig[] = [
     quoteTokenAdresses: contracts.wbnb,
   },
 
-  {
-    pid: 4,
-    risk: 3,
-    lpSymbol: 'BNB-BUSD LP',
-    lpAddresses: {
-      97: '0xa75c80e7Ca70505AAB6062cF15A2cFC71b6138C0',
-      56: '0x1B96B92314C44b159149f7E0303511fB2Fc4774f',
-    },
-    tokenSymbol: 'BNB',
-    tokenAddresses: {
-      97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
-      56: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
-    },
-    quoteTokenSymbol: QuoteToken.BUSD,
-    quoteTokenAdresses: contracts.busd,
-  },
 ]
 
 export default farms
