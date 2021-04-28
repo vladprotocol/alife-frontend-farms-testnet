@@ -80,6 +80,13 @@ export const usePriceCakeBusd = (): BigNumber => {
   return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : ZERO
 }
 
+export const usePriceVladBusd = (): BigNumber => {
+  const pid = 3 // VLAD-BUSD LP
+  const farm = useFarmFromPid(pid)
+  // console.log('farm.tokenPriceVsQuote', farm.tokenPriceVsQuote.toString());
+  return farm.tokenPriceVsQuote ? new BigNumber(farm.tokenPriceVsQuote) : ZERO
+}
+
 export const useTotalValue = (): BigNumber => {
   const farms = useFarms()
   const bnbPrice = usePriceBnbBusd()
