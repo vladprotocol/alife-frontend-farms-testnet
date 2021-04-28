@@ -67,6 +67,23 @@ const farms: FarmConfig[] = [
     quoteTokenAdresses: contracts.wbnb,
   },
 
+  {
+    pid: 4,
+    risk: 5,
+    lpSymbol: 'BUSD-BNB LP',
+    lpAddresses: {
+      97: '0xa75c80e7Ca70505AAB6062cF15A2cFC71b6138C0',
+      56: '0x5eE167b75118125e7d46add5cE61F749BB977A00',
+    },
+    tokenSymbol: 'ALIFE',
+    tokenAddresses: {
+      97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
+      56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+    },
+    quoteTokenSymbol: QuoteToken.BUSD,
+    quoteTokenAdresses: contracts.busd,
+  },
+
 ]
 
 export default farms
