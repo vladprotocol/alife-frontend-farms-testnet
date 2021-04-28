@@ -4,7 +4,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Modal, Text } from '@pancakeswap-libs/uikit'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { EpicNftFarm, AMOUNT_TO_CLAIM } from 'config/constants/epic'
-import { getCakeAddress } from 'utils/addressHelpers'
+import { getLifeAddress } from 'utils/addressHelpers'
 import { Nft } from 'config/constants/types'
 import useTokenBalance from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
@@ -40,13 +40,13 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
   const TranslateString = useI18n()
   const { account } = useWallet()
   const nftMintingContract = useRabbitMintingFarm(EpicNftFarm)
-  const contraToken = useERC20(getCakeAddress())
+  const contraToken = useERC20(getLifeAddress())
   const allowance = useNftAllowance(contraToken, EpicNftFarm, pendingTx)
   const onApprove = useNftApprove(contraToken, EpicNftFarm)
-  const cakeBalance = useTokenBalance(getCakeAddress())
+  const cakeBalance = useTokenBalance(getLifeAddress())
   const cakeInWallet = getBalanceNumber(cakeBalance)
 
-  // console.log('getCakeAddress', getCakeAddress(), EpicNftFarm, allowance)
+  // console.log('getLifeAddress', getLifeAddress(), EpicNftFarm, allowance)
   // console.log('allowance', allowance)
 
   const handleConfirm = async () => {
@@ -77,12 +77,12 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
 
   useEffect(() => {
     if (cakeInWallet === 0) {
-      setError(`You must have ALIFE balance to claim NFT`)
+      setError(`You must have LIFE balance to claim NFT`)
     }
   }, [cakeInWallet, setError])
 
   return (
-    <Modal title={`Claim NFT for ${nft.tokenAmount} ALIFE`} onDismiss={onDismiss}>
+    <Modal title={`Claim NFT for ${nft.tokenAmount} LIFE`} onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">

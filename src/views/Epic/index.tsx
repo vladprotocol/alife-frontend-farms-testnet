@@ -57,7 +57,7 @@ const Nft = () => {
             Epic NFTs
           </Heading>
           <Heading as="h2" size="lg" color="#5ca269">
-            {TranslateString(999, 'Trade in for ALIFE, or keep for your collection!')}
+            {TranslateString(999, 'Trade in for LIFE, or keep for your collection!')}
           </Heading>
           <CustomButton onClick={() => history.push(`nft`)} mt="24px">
             Base and Rare NFTs

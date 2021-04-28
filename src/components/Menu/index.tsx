@@ -14,7 +14,8 @@ import telegramLogo from './telegram.svg'
 import twitterLogo from './twitter.svg'
 import mediumLogo from './medium.svg'
 import vladLogo from './vlad-circle.png'
-import alifeLogo from './life.png'
+import alifeLogo from './alife.png'
+import lifeLogo from './life.png'
 import bgFooter from './bg-footer.jpg'
 import soundCloudLogo from './soundcloud.png'
 
@@ -187,7 +188,7 @@ const Menu = (props) => {
                   />
                   <SocialHeaderLink
                     link="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
-                    src={alifeLogo}
+                    src={lifeLogo}
                     alt="Life Token"
                   />
                   <SocialHeaderLink
@@ -239,7 +240,7 @@ const Menu = (props) => {
           />
           <SocialFooterLink
             link="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
-            src={alifeLogo}
+            src={lifeLogo}
             alt="Life Token"
           />
           <SocialFooterLink
