@@ -187,7 +187,7 @@ const Menu = (props) => {
                     alt="Vlad Token"
                   />
                   <SocialHeaderLink
-                    link="https://bscscan.com/token/0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c"
+                    link="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
                     src={lifeLogo}
                     alt="Life Token"
                   />
@@ -197,7 +197,7 @@ const Menu = (props) => {
                     alt="Buy Vlad"
                   />
                   <SocialHeaderLink
-                    link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c"
+                    link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
                     src={pancakeLogo}
                     alt="Buy Life"
                   />
@@ -224,7 +224,7 @@ const Menu = (props) => {
           setLang={setSelectedLanguage}
           cakePriceUsd={cakePriceUsd.toNumber()}
           links={config}
-          priceLink="https://bscscan.com/token/0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c"
+          priceLink="https://bscscan.com/token/0xbAF885732186AB7FE82bAbf52d38CF2Dc1A72872"
           {...props}
         />
       </Container>
@@ -239,7 +239,7 @@ const Menu = (props) => {
             alt="Vlad Token"
           />
           <SocialFooterLink
-            link="https://bscscan.com/token/0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c"
+            link="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
             src={lifeLogo}
             alt="Life Token"
           />
@@ -249,7 +249,7 @@ const Menu = (props) => {
             alt="Buy Vlad"
           />
           <SocialFooterLink
-            link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c"
+            link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
             src={pancakeLogo}
             alt="Buy Life"
           />

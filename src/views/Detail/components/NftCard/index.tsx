@@ -224,7 +224,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
           <CustomButton
             onClick={() =>
               window.open(
-                'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x943ABB19055FBA3d3f7bc3e46F6510720DdA548c',
+                'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
                 '_blank',
               )
             }
