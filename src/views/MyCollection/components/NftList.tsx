@@ -6,13 +6,16 @@ import NftGrid from './NftGrid'
 import { NftProviderContext } from '../contexts/NftProvider'
 
 const NftList = () => {
-  const { myMints } = useContext(NftProviderContext)
+  const { myMints, hasClaimed } = useContext(NftProviderContext)
 
   const filteredNft = []
 
   nfts.forEach(function (nft, key) {
     const { nftId, name, previewImage, originalImage, description } = nft
-    const MINTS = myMints[nftId] || 0
+
+    const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
+
+    const MINTS = myMints[nftIndex] || 0
     console.log(nftId, '?myMints', myMints, 'MINTS', MINTS)
 
     if (MINTS > 0) {
