@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { Route, useRouteMatch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -17,6 +17,7 @@ import useI18n from 'hooks/useI18n'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
+import { NftProviderContext } from '../Nft/contexts/NftProvider'
 
 export interface FarmsProps {
   tokenMode?: boolean
@@ -27,6 +28,8 @@ const CustomA = styled.a`
 `
 
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
+  const { myMints, hasClaimed } = useContext(NftProviderContext)
+
   const { path } = useRouteMatch()
   const TranslateString = useI18n()
   const farmsLP = useFarms()
