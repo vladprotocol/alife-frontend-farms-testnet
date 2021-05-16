@@ -123,12 +123,18 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
     const nftIndex7 = epicHasClaimed && epicHasClaimed.indexOf(0)
     const nftIndex8 = epicHasClaimed && epicHasClaimed.indexOf(1)
     const nftIndex9 = epicHasClaimed && epicHasClaimed.indexOf(2)
+    const nftIndex10 = epicHasClaimed && epicHasClaimed.indexOf(3)
+    const nftIndex11 = epicHasClaimed && epicHasClaimed.indexOf(4)
+    const nftIndex12 = epicHasClaimed && epicHasClaimed.indexOf(5)
 
     const MINTS7 = myEpicMints[nftIndex7] || 0
     const MINTS8 = myEpicMints[nftIndex8] || 0
     const MINTS9 = myEpicMints[nftIndex9] || 0
+    const MINTS10 = myEpicMints[nftIndex10] || 0
+    const MINTS11 = myEpicMints[nftIndex11] || 0
+    const MINTS12 = myEpicMints[nftIndex12] || 0
     
-    mustHaveNft = MINTS7 || MINTS8 || MINTS9
+    mustHaveNft = MINTS7 || MINTS8 || MINTS9 || MINTS10 || MINTS11 || MINTS12
   } else if (farm.mustHaveNft === 0) {
     mustHaveNft = 1
   }
