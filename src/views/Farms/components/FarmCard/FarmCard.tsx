@@ -1,8 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useContext } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
 import { Flex, Text, Skeleton } from '@pancakeswap-libs/uikit'
-import { communityFarms } from 'config/constants'
 import { Farm } from 'state/types'
 import { provider } from 'web3-core'
 import useI18n from 'hooks/useI18n'
@@ -12,6 +11,8 @@ import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
 import CardActionsContainer from './CardActionsContainer'
 import ApyButton from './ApyButton'
+import { NftProviderContext } from '../../contexts/NftProvider'
+import { EpicProviderContext } from '../../contexts/EpicProvider'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
@@ -93,6 +94,20 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
   const TranslateString = useI18n()
+
+    const { hasClaimed } = useContext(NftProviderContext)
+    const { epicHasClaimed } = useContext(EpicProviderContext)
+    let mustHaveNft = false
+
+  if(farm.mustHaveNft === 1) {
+    mustHaveNft = hasClaimed && (hasClaimed.indexOf(0) > 0 || hasClaimed.indexOf(1) > 0 || hasClaimed.indexOf(2) > 0)
+  } else if(farm.mustHaveNft === 2) {
+    mustHaveNft = hasClaimed && (hasClaimed.indexOf(3) > 0 || hasClaimed.indexOf(4) > 0 || hasClaimed.indexOf(5) > 0)
+  } else if(farm.mustHaveNft === 3) {
+    mustHaveNft = epicHasClaimed && (epicHasClaimed.indexOf(3) > 0 || epicHasClaimed.indexOf(4) > 0 || epicHasClaimed.indexOf(5) > 0)
+  } else if (farm.mustHaveNft === 0) {
+    mustHaveNft = true
+  }
 
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
@@ -178,7 +193,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
         <Text>{farm.depositFeeBP ? farm.depositFeeBP / 100 : '0'}%</Text>
       </Flex>
 
-      <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
+      {mustHaveNft && (
+        <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
+      )}
       <Divider />
       <ExpandableSectionButton
         onClick={() => setShowExpandableSection(!showExpandableSection)}

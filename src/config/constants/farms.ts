@@ -3,40 +3,6 @@ import { FarmConfig, QuoteToken } from './types'
 
 const farms: FarmConfig[] = [
   {
-    pid: 2,
-    mustHaveNft:3,
-    risk: 3,
-    lpSymbol: 'VLAD-BNB LP',
-    lpAddresses: {
-      97: '0xb7419aC5Ff93Ac91047585A28CB37f765B1090B6',
-      56: '0x3512D9a9d3F369e3258D4a75D3B471CA9F37CC86',
-    },
-    tokenSymbol: 'VLAD',
-    tokenAddresses: {
-      97: '0xa800D23CCc013d2cFF18665cCc4709d45D969841',
-      56: '0x279d41f3f78fe5C1f0BA41aE963d6E545113C973',
-    },
-    quoteTokenSymbol: QuoteToken.BNB,
-    quoteTokenAdresses: contracts.wbnb,
-  },
-  {
-    pid: 3,
-    mustHaveNft:0,
-    risk: 3,
-    lpSymbol: 'VLAD-BUSD LP',
-    lpAddresses: {
-      97: '0x8B7635d524d1eD9518F3Dc32980E13584BB175d8',
-      56: '0x99ffD623a46362d61D5E0F9ABf9728A2A429acf5',
-    },
-    tokenSymbol: 'VLAD',
-    tokenAddresses: {
-      97: '0xa800D23CCc013d2cFF18665cCc4709d45D969841',
-      56: '0x279d41f3f78fe5C1f0BA41aE963d6E545113C973',
-    },
-    quoteTokenSymbol: QuoteToken.BUSD,
-    quoteTokenAdresses: contracts.busd,
-  },
-  {
     pid: 0,
     mustHaveNft:1,
     risk: 5,
@@ -70,7 +36,40 @@ const farms: FarmConfig[] = [
     quoteTokenSymbol: QuoteToken.BUSD,
     quoteTokenAdresses: contracts.busd,
   },
-
+  {
+    pid: 2,
+    mustHaveNft:3,
+    risk: 3,
+    lpSymbol: 'VLAD-BNB LP',
+    lpAddresses: {
+      97: '0xb7419aC5Ff93Ac91047585A28CB37f765B1090B6',
+      56: '0x3512D9a9d3F369e3258D4a75D3B471CA9F37CC86',
+    },
+    tokenSymbol: 'VLAD',
+    tokenAddresses: {
+      97: '0xa800D23CCc013d2cFF18665cCc4709d45D969841',
+      56: '0x279d41f3f78fe5C1f0BA41aE963d6E545113C973',
+    },
+    quoteTokenSymbol: QuoteToken.BNB,
+    quoteTokenAdresses: contracts.wbnb,
+  },
+  {
+    pid: 3,
+    mustHaveNft:0,
+    risk: 3,
+    lpSymbol: 'VLAD-BUSD LP',
+    lpAddresses: {
+      97: '0x8B7635d524d1eD9518F3Dc32980E13584BB175d8',
+      56: '0x99ffD623a46362d61D5E0F9ABf9728A2A429acf5',
+    },
+    tokenSymbol: 'VLAD',
+    tokenAddresses: {
+      97: '0xa800D23CCc013d2cFF18665cCc4709d45D969841',
+      56: '0x279d41f3f78fe5C1f0BA41aE963d6E545113C973',
+    },
+    quoteTokenSymbol: QuoteToken.BUSD,
+    quoteTokenAdresses: contracts.busd,
+  },
   {
     pid: 4,
     mustHaveNft:0,
