@@ -17,7 +17,8 @@ import useI18n from 'hooks/useI18n'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
-import { NftProviderContext } from '../Nft/contexts/NftProvider'
+import NftProvider from './contexts/NftProvider'
+import EpicProvider from './contexts/EpicProvider'
 
 export interface FarmsProps {
   tokenMode?: boolean
@@ -28,7 +29,6 @@ const CustomA = styled.a`
 `
 
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
-  const { myMints, hasClaimed } = useContext(NftProviderContext)
 
   const { path } = useRouteMatch()
   const TranslateString = useI18n()
@@ -106,6 +106,8 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   )
 
   return (
+    <EpicProvider>
+    <NftProvider>
     <Page>
       <Heading as="h1" size="xxl" color="primary" mb="50px" style={{ textAlign: 'center' }}>
         ALIFE FARMING HAS STARTED
@@ -125,6 +127,8 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       </div>
       <Image src="/images/alife/8.png" alt="illustration" width={1352} height={587} responsive />
     </Page>
+    </NftProvider>
+    </EpicProvider>
   )
 }
 
