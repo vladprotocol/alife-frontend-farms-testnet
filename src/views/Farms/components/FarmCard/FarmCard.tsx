@@ -99,42 +99,27 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
     const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
     let mustHaveNft = 0
 
-  if(farm.mustHaveNft === 1) {
-    const nftIndex1 = hasClaimed && hasClaimed.indexOf(0)
-    const nftIndex2 = hasClaimed && hasClaimed.indexOf(1)
-    const nftIndex3 = hasClaimed && hasClaimed.indexOf(2)
-
-    const MINTS1 = myMints[nftIndex1] || 0
-    const MINTS2 = myMints[nftIndex2] || 0
-    const MINTS3 = myMints[nftIndex3] || 0
-    
-    mustHaveNft = MINTS1 || MINTS2 || MINTS3
-  } else if(farm.mustHaveNft === 2) {
-    const nftIndex4 = hasClaimed && hasClaimed.indexOf(3)
-    const nftIndex5 = hasClaimed && hasClaimed.indexOf(4)
-    const nftIndex6 = hasClaimed && hasClaimed.indexOf(5)
-
-    const MINTS4 = myMints[nftIndex4] || 0
-    const MINTS5 = myMints[nftIndex5] || 0
-    const MINTS6 = myMints[nftIndex6] || 0
-    
-    mustHaveNft = MINTS4 || MINTS5 || MINTS6
-  } else if(farm.mustHaveNft === 3) {
-    const nftIndex7 = epicHasClaimed && epicHasClaimed.indexOf(0)
-    const nftIndex8 = epicHasClaimed && epicHasClaimed.indexOf(1)
-    const nftIndex9 = epicHasClaimed && epicHasClaimed.indexOf(2)
-    const nftIndex10 = epicHasClaimed && epicHasClaimed.indexOf(3)
-    const nftIndex11 = epicHasClaimed && epicHasClaimed.indexOf(4)
-    const nftIndex12 = epicHasClaimed && epicHasClaimed.indexOf(5)
-
-    const MINTS7 = myEpicMints[nftIndex7] || 0
-    const MINTS8 = myEpicMints[nftIndex8] || 0
-    const MINTS9 = myEpicMints[nftIndex9] || 0
-    const MINTS10 = myEpicMints[nftIndex10] || 0
-    const MINTS11 = myEpicMints[nftIndex11] || 0
-    const MINTS12 = myEpicMints[nftIndex12] || 0
-    
-    mustHaveNft = MINTS7 || MINTS8 || MINTS9 || MINTS10 || MINTS11 || MINTS12
+  if(hasClaimed && farm.mustHaveNft === 1) {
+    for (let index = 0; index < 3; index++) {
+      const haveNft = myMints[hasClaimed.indexOf(index)]
+      if(haveNft !== undefined && haveNft !== 0) {
+        mustHaveNft = haveNft
+      }
+    }
+  } else if(hasClaimed && farm.mustHaveNft === 2) {
+    for (let index = 3; index < 6; index++) {
+      const haveNft = myMints[hasClaimed.indexOf(index)]
+      if(haveNft !== undefined && haveNft !== 0) {
+        mustHaveNft = haveNft
+      }
+    }
+  } else if(epicHasClaimed && farm.mustHaveNft === 3) {
+    for (let index = 0; index < 3; index++) {
+      const haveNft = myEpicMints[epicHasClaimed.indexOf(index)]
+      if(haveNft !== undefined && haveNft !== 0) {
+        mustHaveNft = haveNft
+      }
+    }
   } else if (farm.mustHaveNft === 0) {
     mustHaveNft = 1
   }
