@@ -95,18 +95,42 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
   const TranslateString = useI18n()
 
-    const { hasClaimed } = useContext(NftProviderContext)
-    const { epicHasClaimed } = useContext(EpicProviderContext)
-    let mustHaveNft = false
+    const { myMints, hasClaimed } = useContext(NftProviderContext)
+    const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
+    let mustHaveNft = 0
 
   if(farm.mustHaveNft === 1) {
-    mustHaveNft = hasClaimed && (hasClaimed.indexOf(0) > 0 || hasClaimed.indexOf(1) > 0 || hasClaimed.indexOf(2) > 0)
+    const nftIndex1 = hasClaimed && hasClaimed.indexOf(0)
+    const nftIndex2 = hasClaimed && hasClaimed.indexOf(1)
+    const nftIndex3 = hasClaimed && hasClaimed.indexOf(2)
+
+    const MINTS1 = myMints[nftIndex1] || 0
+    const MINTS2 = myMints[nftIndex2] || 0
+    const MINTS3 = myMints[nftIndex3] || 0
+    
+    mustHaveNft = MINTS1 || MINTS2 || MINTS3
   } else if(farm.mustHaveNft === 2) {
-    mustHaveNft = hasClaimed && (hasClaimed.indexOf(3) > 0 || hasClaimed.indexOf(4) > 0 || hasClaimed.indexOf(5) > 0)
+    const nftIndex4 = hasClaimed && hasClaimed.indexOf(3)
+    const nftIndex5 = hasClaimed && hasClaimed.indexOf(4)
+    const nftIndex6 = hasClaimed && hasClaimed.indexOf(5)
+
+    const MINTS4 = myMints[nftIndex4] || 0
+    const MINTS5 = myMints[nftIndex5] || 0
+    const MINTS6 = myMints[nftIndex6] || 0
+    
+    mustHaveNft = MINTS4 || MINTS5 || MINTS6
   } else if(farm.mustHaveNft === 3) {
-    mustHaveNft = epicHasClaimed && (epicHasClaimed.indexOf(3) > 0 || epicHasClaimed.indexOf(4) > 0 || epicHasClaimed.indexOf(5) > 0)
+    const nftIndex7 = epicHasClaimed && epicHasClaimed.indexOf(0)
+    const nftIndex8 = epicHasClaimed && epicHasClaimed.indexOf(1)
+    const nftIndex9 = epicHasClaimed && epicHasClaimed.indexOf(2)
+
+    const MINTS7 = myEpicMints[nftIndex7] || 0
+    const MINTS8 = myEpicMints[nftIndex8] || 0
+    const MINTS9 = myEpicMints[nftIndex9] || 0
+    
+    mustHaveNft = MINTS7 || MINTS8 || MINTS9
   } else if (farm.mustHaveNft === 0) {
-    mustHaveNft = true
+    mustHaveNft = 1
   }
 
   const [showExpandableSection, setShowExpandableSection] = useState(false)
@@ -193,7 +217,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
         <Text>{farm.depositFeeBP ? farm.depositFeeBP / 100 : '0'}%</Text>
       </Flex>
 
-      {mustHaveNft && (
+      {mustHaveNft > 0 && (
         <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
       )}
       <Divider />

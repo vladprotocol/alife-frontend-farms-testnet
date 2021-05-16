@@ -22,7 +22,7 @@ type State = {
   amounts: number[]
   maxMintByNft: number[]
   prices: number[]
-  myMints: number[]
+  myEpicMints: number[]
   countBurnt: number
   endBlockNumber: number
   startBlockNumber: number
@@ -69,7 +69,7 @@ const EpicProvider: React.FC<NftProviderProps> = ({ children }) => {
     amounts: [],
     maxMintByNft: [],
     prices: [],
-    myMints: [],
+    myEpicMints: [],
   })
   const { account } = useWallet()
   const currentBlock = useBlock()
@@ -149,7 +149,7 @@ const EpicProvider: React.FC<NftProviderProps> = ({ children }) => {
         const ownerById = getMinted[0][2]
         const maxMintByNft = getToInt(getMinted[0][3])
         const prices = getFromWayArray(getMinted[0][4])
-        const myMints = getToInt(getMinted[0][5])
+        const myEpicMints = getToInt(getMinted[0][5])
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
@@ -204,7 +204,7 @@ const EpicProvider: React.FC<NftProviderProps> = ({ children }) => {
           amounts,
           maxMintByNft,
           prices,
-          myMints,
+          myEpicMints,
         }))
       } catch (error) {
         console.error('an error occured', error)
