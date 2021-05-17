@@ -42,6 +42,7 @@ export interface Address {
 
 export interface FarmConfig {
   pid: number
+  mustHaveNft: number
   lpSymbol: string
   lpAddresses: Address
   tokenSymbol: string

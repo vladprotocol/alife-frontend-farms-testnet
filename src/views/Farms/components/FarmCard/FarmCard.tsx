@@ -1,8 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useContext } from 'react'
 import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
 import { Flex, Text, Skeleton } from '@pancakeswap-libs/uikit'
-import { communityFarms } from 'config/constants'
 import { Farm } from 'state/types'
 import { provider } from 'web3-core'
 import useI18n from 'hooks/useI18n'
@@ -12,6 +11,8 @@ import DetailsSection from './DetailsSection'
 import CardHeading from './CardHeading'
 import CardActionsContainer from './CardActionsContainer'
 import ApyButton from './ApyButton'
+import { NftProviderContext } from '../../contexts/NftProvider'
+import { EpicProviderContext } from '../../contexts/EpicProvider'
 
 export interface FarmWithStakedValue extends Farm {
   apy?: BigNumber
@@ -93,6 +94,35 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
   const TranslateString = useI18n()
+
+    const { myMints, hasClaimed } = useContext(NftProviderContext)
+    const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
+    let mustHaveNft = 0
+
+  if(hasClaimed && farm.mustHaveNft === 1) {
+    for (let index = 0; index < 3; index++) {
+      const haveNft = myMints[hasClaimed.indexOf(index)]
+      if(haveNft !== undefined && haveNft !== 0) {
+        mustHaveNft = haveNft
+      }
+    }
+  } else if(hasClaimed && farm.mustHaveNft === 2) {
+    for (let index = 3; index < 6; index++) {
+      const haveNft = myMints[hasClaimed.indexOf(index)]
+      if(haveNft !== undefined && haveNft !== 0) {
+        mustHaveNft = haveNft
+      }
+    }
+  } else if(epicHasClaimed && farm.mustHaveNft === 3) {
+    for (let index = 0; index < 3; index++) {
+      const haveNft = myEpicMints[epicHasClaimed.indexOf(index)]
+      if(haveNft !== undefined && haveNft !== 0) {
+        mustHaveNft = haveNft
+      }
+    }
+  } else if (farm.mustHaveNft === 0) {
+    mustHaveNft = 1
+  }
 
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
@@ -178,7 +208,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
         <Text>{farm.depositFeeBP ? farm.depositFeeBP / 100 : '0'}%</Text>
       </Flex>
 
-      <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
+      {mustHaveNft > 0 && (
+        <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
+      )}
       <Divider />
       <ExpandableSectionButton
         onClick={() => setShowExpandableSection(!showExpandableSection)}
