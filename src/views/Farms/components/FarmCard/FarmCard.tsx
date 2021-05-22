@@ -123,7 +123,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
   } else if (farm.mustHaveNft === 0) {
     mustHaveNft = 1
   }
-
+  // console.log(farm);
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
   // const isCommunityFarm = communityFarms.includes(farm.tokenSymbol)
