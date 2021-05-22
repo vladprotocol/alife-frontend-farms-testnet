@@ -4,7 +4,7 @@ import {FarmConfig, QuoteToken} from './types'
 const farms: FarmConfig[] = [
     {
         pid: 0,
-        mustHaveNft: 0,
+        mustHaveNft: 1,
         risk: 5,
         lpSymbol: 'ALIFE-BUSD LP',
         lpAddresses: {
@@ -21,7 +21,7 @@ const farms: FarmConfig[] = [
     },
     {
         pid: 1,
-        mustHaveNft: 0,
+        mustHaveNft: 2,
         risk: 5,
         lpSymbol: 'ALIFE-BNB LP',
         lpAddresses: {
@@ -38,7 +38,7 @@ const farms: FarmConfig[] = [
     },
     {
         pid: 2,
-        mustHaveNft: 0,
+        mustHaveNft: 3,
         risk: 3,
         lpSymbol: 'VLAD-BNB LP',
         lpAddresses: {

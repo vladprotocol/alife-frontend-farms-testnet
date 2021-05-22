@@ -95,9 +95,10 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
   const TranslateString = useI18n()
 
-    const { myMints, hasClaimed } = useContext(NftProviderContext)
-    const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
-    let mustHaveNft = 0
+  const { myMints, hasClaimed } = useContext(NftProviderContext)
+  const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
+  let mustHaveNft = 0
+
 
   if(hasClaimed && farm.mustHaveNft === 1) {
     for (let index = 0; index < 3; index++) {
@@ -117,13 +118,13 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
     for (let index = 0; index < 3; index++) {
       const haveNft = myEpicMints[epicHasClaimed.indexOf(index)]
       if(haveNft !== undefined && haveNft !== 0) {
+        console.log(farm.lpSymbol, haveNft)
         mustHaveNft = haveNft
       }
     }
   } else if (farm.mustHaveNft === 0) {
     mustHaveNft = 1
   }
-  // console.log(farm);
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
   // const isCommunityFarm = communityFarms.includes(farm.tokenSymbol)
