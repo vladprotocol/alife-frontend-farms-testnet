@@ -84,7 +84,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   background: ${(props) => (!props.disabled ? props.theme.card.background : `#ddd`)};
   border: 0;
   border-radius: 12px;
-  color: ${(props) => (!props.disabled ? `#32cad7` : `#acaaaf`)};
+  color: ${(props) => (!props.disabled ? `#32cad7` : `#9f0d0d`)};
   cursor: pointer;
   display: flex;
   font-size: ${(props) => props.fontSize}px;

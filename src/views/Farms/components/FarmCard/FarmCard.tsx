@@ -99,25 +99,24 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
   const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
   let mustHaveNft = 0
 
-
-  if(hasClaimed && farm.mustHaveNft === 1) {
+  if (hasClaimed && farm.mustHaveNft === 1) {
     for (let index = 0; index < 3; index++) {
       const haveNft = myMints[hasClaimed.indexOf(index)]
-      if(haveNft !== undefined && haveNft !== 0) {
+      if (haveNft !== undefined && haveNft !== 0) {
         mustHaveNft = haveNft
       }
     }
-  } else if(hasClaimed && farm.mustHaveNft === 2) {
+  } else if (hasClaimed && farm.mustHaveNft === 2) {
     for (let index = 3; index < 6; index++) {
       const haveNft = myMints[hasClaimed.indexOf(index)]
-      if(haveNft !== undefined && haveNft !== 0) {
+      if (haveNft !== undefined && haveNft !== 0) {
         mustHaveNft = haveNft
       }
     }
-  } else if(epicHasClaimed && farm.mustHaveNft === 3) {
+  } else if (epicHasClaimed && farm.mustHaveNft === 3) {
     for (let index = 0; index < 3; index++) {
       const haveNft = myEpicMints[epicHasClaimed.indexOf(index)]
-      if(haveNft !== undefined && haveNft !== 0) {
+      if (haveNft !== undefined && haveNft !== 0) {
         console.log(farm.lpSymbol, haveNft)
         mustHaveNft = haveNft
       }
@@ -209,9 +208,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
         <Text>{farm.depositFeeBP ? farm.depositFeeBP / 100 : '0'}%</Text>
       </Flex>
 
-      {mustHaveNft > 0 && (
-        <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
-      )}
+      {mustHaveNft > 0 && <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />}
       <Divider />
       <ExpandableSectionButton
         onClick={() => setShowExpandableSection(!showExpandableSection)}

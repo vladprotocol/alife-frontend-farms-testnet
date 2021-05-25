@@ -64,7 +64,7 @@ const Nft = () => {
       <NftProvider>
         <Page>
           <StyledHero>
-            <Heading as="h1" size="xxl" color="#5ca269" mb="24px">
+            <Heading as="h1" size="xl" color="#9f0d0d" mb="24px">
               My Epic Collection
             </Heading>
             <CustomButton onClick={() => history.push(`my-collection`)} mt="24px">

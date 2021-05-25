@@ -7,15 +7,20 @@ import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/hooks'
 import { Menu as UikitMenu, Button } from '@pancakeswap-libs/uikit'
 import config from './config'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './style.css'
-import bscscanLogo from './bscscan.png'
-import pancakeLogo from './pancake.png'
+// import './innerpage.css'
+import './main.css'
+// import './nftfactstyle.css'
+// import './owl.css'
+import bscscanLogo from './bscan.png'
+import pancakeLogo from './pancake1.png'
 import telegramLogo from './telegram.svg'
 import twitterLogo from './twitter.svg'
 import mediumLogo from './medium.svg'
 import vladLogo from './vlad-circle.png'
-import alifeLogo from './alife.png'
 import lifeLogo from './life.png'
+import alifeLogo from './alife.svg'
 import bgFooter from './bg-footer.jpg'
 import soundCloudLogo from './soundcloud.png'
 
@@ -50,7 +55,20 @@ const SocialFooter = styled(Social)`
 `
 
 const Container = styled.div`
-  margin-top: 45px;
+  margin-top: 85px;
+
+  @media (max-width: 667px) {
+    margin-top: 167px;
+  }
+
+  @media (max-width: 348px) {
+    margin-top: 203px!important;
+  }
+
+  @media (max-width: 321px) {
+    margin-top: 219px!important;
+  }
+}
 `
 
 const SocialImageHeader = styled.img`
@@ -116,6 +134,8 @@ const AudioDescriptionA = styled.a`
 const CustomButton = styled(Button)`
   height: 22px;
   margin-left: 10px;
+  font-size: 12px;
+  padding: 10px !important;
 `
 
 const CustomI = styled.i`
@@ -125,6 +145,47 @@ const CustomI = styled.i`
 `
 
 let vladValue = 0
+let lifeValue = 0
+
+fetch(
+  'https://api.vlad.finance/price.php?key=6547643&pool=0x60d5e86c0074b56e52a7540b3bf36c399e9f3038&token=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973&decimals=8',
+)
+  .then((res) => res.json())
+  .then(
+    (result) => {
+      if (result.status === true) {
+        vladValue = result.data
+      } else {
+        vladValue = 0
+      }
+    },
+    (error) => {
+      vladValue = 0
+    },
+  )
+  .catch(() => {
+    vladValue = 0
+  })
+
+fetch(
+  'https://api.vlad.finance/price.php?key=6547643&pool=0x5ee167b75118125e7d46add5ce61f749bb977a00&token=0x50f4220c82c9325dc99f729c3328fb5c338beaae&decimals=18',
+)
+  .then((res) => res.json())
+  .then(
+    (result) => {
+      if (result.status === true) {
+        lifeValue = result.data
+      } else {
+        lifeValue = 0
+      }
+    },
+    (error) => {
+      lifeValue = 0
+    },
+  )
+  .catch(() => {
+    lifeValue = 0
+  })
 
 const Menu = (props) => {
   const { account, connect, reset } = useWallet()
@@ -132,85 +193,103 @@ const Menu = (props) => {
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
 
-  fetch('https://api.coingecko.com/api/v3/simple/price?ids=vlad-finance&vs_currencies=usd')
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        vladValue = Math.round(result['vlad-finance'].usd * 100) / 100
-      },
-      (error) => {
-        vladValue = 0
-      },
-    )
-
   return (
     <div className="body-bg">
       <section className="topsmnav-bg mb-4">
-        <div className="container">
-          <nav className="tp-sm-wrap">
-            <div className="row">
-              <div className="tp-vlad">
-                <ul>
-                  <li>
-                    <a href="https://vlad.finance" target="_blank" rel="noreferrer">
-                      Vlad.Finance
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="tp-audio">
-                <div className="tp-inner">
-                  <ul>
-                    <li>
-                      <AudioDescription>
-                        Listen to DJ Ezra - Live From $VLADHalla
-                        <AudioPlayer controls>
-                          <source src="./dj-erza.mp3" type="audio/mpeg" />
-                          <track kind="captions" />
-                        </AudioPlayer>
-                        <AudioDescriptionA href="https://soundcloud.app.goo.gl/kHiyk" target="_blank" rel="noreferrer">
-                          Enjoying $ALIFE! by DJ Ezra Is Back! on #SoundCloud
-                        </AudioDescriptionA>
-                      </AudioDescription>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="top-sm-nav">
-                <ul>
-                  <SocialHeaderLink link="https://t.me/VladFinanceOfficial" src={telegramLogo} alt="Telegram" />
-                  <SocialHeaderLink link="https://vlad-finance.medium.com" src={mediumLogo} alt="Medium" />
-                  <SocialHeaderLink link="https://twitter.com/VladFinance" src={twitterLogo} alt="Twitter" />
-                  <SocialHeaderLink
-                    link="https://bscscan.com/token/0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
-                    src={vladLogo}
-                    alt="Vlad Token"
-                  />
-                  <SocialHeaderLink
-                    link="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
-                    src={lifeLogo}
-                    alt="Life Token"
-                  />
-                  <SocialHeaderLink
-                    link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
-                    src={pancakeLogo}
-                    alt="Buy Vlad"
-                  />
-                  <SocialHeaderLink
-                    link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
-                    src={pancakeLogo}
-                    alt="Buy Life"
-                  />
-                  <CustomButton variant="primary">
-                    <CustomI>
-                      <img src={vladLogo} className="img-fluid" alt="Vlad Token" />
-                    </CustomI>
-                    $ {vladValue}
-                  </CustomButton>
-                </ul>
+        <div className="container-wrap1">
+          <div className="tp-sm-wrap">
+            <div className="tp-vlad">
+              <ul>
+                <li>
+                  <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                    Vlad.Finance
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="tp-audio">
+              <div className="tp-inner">
+                <span>Listen to DJ Ezra - Live From $VLADHalla</span>
+                <audio controls>
+                  <source src="./dj-erza.mp3" type="audio/mpeg" />
+                  <track kind="captions" />
+                </audio>
+                <a href="https://soundcloud.app.goo.gl/kHiyk" target="_blank" rel="noreferrer">
+                  Enjoying $LIFE! by DJ Ezra Is Back! on #SoundCloud
+                </a>
               </div>
             </div>
-          </nav>
+            <div className="top-sm-nav">
+              <ul>
+                <li>
+                  <a href="https://t.me/VladFinanceOfficial" target="_blank" rel="noreferrer">
+                    <div>
+                      <img src={telegramLogo} className="img-fluid" alt="telegram" />
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://vlad-finance.medium.com" target="_blank" rel="noreferrer">
+                    <div>
+                      <img src={mediumLogo} className="img-fluid" alt="medium" />
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/VladFinance" target="_blank" rel="noreferrer">
+                    <div>
+                      <img src={twitterLogo} className="img-fluid" alt="twitter" />
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="clear-fix" />
+          </div>
+          <div className="tp-btns">
+            <ul>
+              <li>
+                <div className="btn-wrap">
+                  <span className="btn-first">
+                    <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                      <img src={vladLogo} className="" alt="" />${vladValue}
+                    </a>
+                  </span>
+                  <span className="btn-second">
+                    <img src={bscscanLogo} alt="" />
+                    <img src={pancakeLogo} alt="" />
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div className="btn-wrap">
+                  <span className="btn-first">
+                    <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                      <img src={lifeLogo} className="" alt="" />${lifeValue}
+                    </a>
+                  </span>
+                  <span className="btn-second">
+                    <img src={bscscanLogo} alt="" />
+                    <img src={pancakeLogo} alt="" />
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div className="btn-wrap">
+                  <span className="btn-first">
+                    <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                      <img src={alifeLogo} className="" alt="" />
+                      $0.00
+                    </a>
+                  </span>
+                  <span className="btn-second">
+                    <img className="disable-btn" src={bscscanLogo} alt="" />
+                    <img className="disable-btn" src={pancakeLogo} alt="" />
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
       <Container>
@@ -224,49 +303,243 @@ const Menu = (props) => {
           setLang={setSelectedLanguage}
           cakePriceUsd={cakePriceUsd.toNumber()}
           links={config}
-          priceLink="https://bscscan.com/token/0xFecBE190631196e73A879b317D8A51CC4fE6cB0B"
+          priceLink="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
           {...props}
         />
       </Container>
-      <Footer>
-        <SocialFooter>
-          <SocialFooterLink link="https://t.me/VladFinanceOfficial" src={telegramLogo} alt="Telegram" />
-          <SocialFooterLink link="https://vlad-finance.medium.com" src={mediumLogo} alt="Medium" />
-          <SocialFooterLink link="https://twitter.com/VladFinance" src={twitterLogo} alt="Twitter" />
-          <SocialFooterLink
-            link="https://bscscan.com/token/0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
-            src={vladLogo}
-            alt="Vlad Token"
-          />
-          <SocialFooterLink
-            link="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
-            src={lifeLogo}
-            alt="Life Token"
-          />
-          <SocialFooterLink
-            link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
-            src={pancakeLogo}
-            alt="Buy Vlad"
-          />
-          <SocialFooterLink
-            link="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
-            src={pancakeLogo}
-            alt="Buy Life"
-          />
-        </SocialFooter>
-        <Logo src={vladLogo} alt="vlad.finance" />
-        <LiveLinkGroup>
-          <RankingLink link="https://www.coingecko.com/en/coins/vlad-finance" name="CoinGecko" />
-          <RankingLink
-            link="https://goswappcharts.web.app/?isbsc=true&tokenId=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
-            name="GoSwapp"
-          />
-          <RankingLink link="https://nomics.com/assets/vlad-vlad-finance" name="Nomics" />
-          <RankingLink link="https://www.livecoinwatch.com/price/VladFinance-VLAD" name="LiveCoinWatch" />
-          <RankingLink link="https://coinmarketcap.com/currencies/vlad-finance" name="CoinMarketCap" />
-        </LiveLinkGroup>
-        <FooterCopyRight>© Vlad Finance. All Rights Reserved</FooterCopyRight>
-      </Footer>
+      <footer>
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12 col-md-3 footer-logoblock">
+              <ul className="footer-logo">
+                <li>
+                  <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                    <img src={vladLogo} className="img-fluid" alt="Vlad Finance" />
+                  </a>
+                </li>
+              </ul>
+              <h4>Vlad.Finance</h4>
+              <p>
+                Come for the Immortality. <br /> Stay for the NFTs.
+              </p>
+              <ul className="footermenu">
+                <li>
+                  <a href="https://vlad.finance/token-facts" target="_blank" rel="noreferrer">
+                    TOKEN FACTS
+                  </a>
+                </li>
+                <li>
+                  <a href="https://vlad.finance/nft" target="_blank" rel="noreferrer">
+                    NFTs
+                  </a>
+                </li>
+                <li>
+                  <a href="https://vlad.finance/team" target="_blank" rel="noreferrer">
+                    TEAM
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="col-sm-12 col-md-9 footer-sm">
+              <div className="row">
+                <div className="col-sm-12 col-md-3">
+                  <h6>COMMUNITY</h6>
+                  <ul>
+                    <li>
+                      <a href="https://t.me/VladFinanceOfficial" target="_blank" rel="noreferrer">
+                        <img src={telegramLogo} className="img-fluid" alt="" />
+                        <span>Telegram</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://vlad-finance.medium.com/" target="_blank" rel="noreferrer">
+                        <img src={mediumLogo} className="img-fluid" alt="" />
+                        Medium
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://twitter.com/VladFinance" target="_blank" rel="noreferrer">
+                        <img src={twitterLogo} className="img-fluid" alt="" />
+                        Twitter
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="col-sm-12 col-md-3">
+                  <h6>$VLAD</h6>
+                  <ul>
+                    <li>
+                      <a
+                        href="https://bscscan.com/token/0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fbscscanlogo.svg" className="img-fluid" alt="" />
+                        BSCScan
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fpancakeswap.svg" className="img-fluid" alt="" />
+                        Buy $VLAD
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://dex.guru/token/0x279d41f3f78fe5c1f0ba41ae963d6e545113c973-bsc"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/dexguru.png" className="img-fluid" alt="" />
+                        DexGuru
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.coingecko.com/en/coins/vlad-finance" target="_blank" rel="noreferrer">
+                        <img src="../images/fcoingecko.svg" className="img-fluid" alt="" />
+                        CoinGecko
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://coinmarketcap.com/currencies/vlad-finance/" target="_blank" rel="noreferrer">
+                        <img src="../images/fcoinmarketcap.svg" className="img-fluid" alt="" />
+                        CoinMarketCap
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://goswappcharts.web.app/?isbsc=true&tokenId=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fgoswapp.svg" className="img-fluid" alt="" />
+                        GoSwapp
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://nomics.com/assets/vlad-vlad-finance" target="_blank" rel="noreferrer">
+                        <img src="../images/fnomics.svg" className="img-fluid" alt="" />
+                        Nomics
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.livecoinwatch.com/price/VladFinance-VLAD" target="_blank" rel="noreferrer">
+                        <img src="../images/fLiveCoinWatch.svg" className="img-fluid" alt="" />
+                        LiveCoinWatch
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="col-sm-12 col-md-3">
+                  <h6>$LIFE</h6>
+                  <ul>
+                    <li>
+                      <a
+                        href="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fbscscanlogo.svg" className="img-fluid" alt="" />
+                        BSCScan
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fpancakeswap.svg" className="img-fluid" alt="" />
+                        Buy $LIFE
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://dex.guru/token/0x50f4220c82c9325dc99f729c3328fb5c338beaae-bsc"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/dexguru.png" className="img-fluid" alt="" />
+                        DexGuru
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://goswappcharts.web.app/?isbsc=true&tokenId=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fgoswapp.svg" className="img-fluid" alt="goswapp" />
+                        GoSwapp
+                      </a>
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fcoinmarketcap.svg" className="img-fluid" alt="" />
+                      CoinMarketCap
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fcoingecko.svg" className="img-fluid" alt="" />
+                      CoinGecko
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fnomics.svg" className="img-fluid" alt="" />
+                      Nomics
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fLiveCoinWatch.svg" className="img-fluid" alt="" />
+                      LiveCoinWatch
+                    </li>
+                  </ul>
+                </div>
+                <div className="col-sm-12 col-md-3">
+                  <h6>$aLIFE</h6>
+                  <ul>
+                    <li className="fdeactive">
+                      <img src="../images/fbscscanlogo.svg" className="img-fluid" alt="" />
+                      BSCScan
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fpancakeswap.svg" className="img-fluid" alt="" />
+                      Buy $VLAD
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/dexguru.png" className="img-fluid" alt="" />
+                      DexGuru
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fcoingecko.svg" className="img-fluid" alt="" />
+                      CoinGecko
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fcoinmarketcap.svg" className="img-fluid" alt="" />
+                      CoinMarketCap
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fgoswapp.svg" className="img-fluid" alt="GoSwapp" />
+                      GoSwapp
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fnomics.svg" className="img-fluid" alt="" />
+                      Nomics
+                    </li>
+                    <li className="fdeactive">
+                      <img src="../images/fLiveCoinWatch.svg" className="img-fluid" alt="" />
+                      LiveCoinWatch
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12 col-md-12 fo-copyright">&copy; Vlad Finance.All Rights Reserved</div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
@@ -274,8 +547,7 @@ const Menu = (props) => {
 export default Menu
 
 const RankingLink = (value) => {
-  const link = value.link
-  const name = value.name
+  const { link, name } = value
   return (
     <LiveLink target="_blank" href={link}>
       {name}
@@ -284,9 +556,7 @@ const RankingLink = (value) => {
 }
 
 const SocialFooterLink = (value) => {
-  const link = value.link
-  const src = value.src
-  const alt = value.alt
+  const { link, src, alt } = value
   return (
     <SocialLink target="_blank" title={alt} href={link}>
       <SocialImageFooter src={src} alt={alt} />
@@ -295,9 +565,7 @@ const SocialFooterLink = (value) => {
 }
 
 const SocialHeaderLink = (value) => {
-  const link = value.link
-  const src = value.src
-  const alt = value.alt
+  const { link, src, alt } = value
   return (
     <li>
       <a href={link} title={alt} target="_blank" rel="noreferrer">

@@ -1,0 +1,134 @@
+/* .container {
+  background: #E1ECE7;
+  width: 100%;
+} */
+.nftfactslide:after {
+  clear: both;
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.nftfactsslide .row{
+  clear: left;
+}
+
+.nbs-flexisel-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nbs-flexisel-ul {
+  position: relative;
+  width: 9999px;
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  text-align: center;
+}
+
+.nbs-flexisel-inner {
+  overflow: hidden;
+  float: left;
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 425px){
+  .nftfactslide:after{
+    display: none;
+  }
+}
+
+
+.nftfactslide:after{
+  transform: translateY(-95%);
+  -ms-transform: translateY(-95%);
+  float: right;
+  width: 80px;
+  height: 600px;
+  background: linear-gradient(270deg, #0D0E13 3.13%, rgba(13, 14, 19, 0.811123) 37.5%, rgba(13, 14, 19, 0.448684) 66.67%, rgba(13, 14, 19, 0) 100%);
+  z-index: 99;
+}
+
+.nbs-flexisel-item {
+  width:33.333%;
+  float: left;
+  margin: 15px;
+  padding: 0px;
+  /* cursor: pointer; */
+  position: relative;
+  line-height: 0px;
+}
+
+.nbs-flexisel-item img {
+  width: 100%;
+  /* cursor: pointer; */
+  position: relative;
+  /* filter: drop-shadow(30px 10px 4px #000000); */
+  -webkit-box-shadow: 0px 57px 89px -58px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 57px 89px -58px rgba(0,0,0,0.75);
+  box-shadow: 0px 57px 89px -58px rgba(0,0,0,0.75);
+  /* margin-top: 70px;
+  margin-bottom: 70px;*/
+  border-radius: 8px;
+}
+
+/*** Navigation ***/
+.nbs-flexisel-nav-left,
+.nbs-flexisel-nav-right {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0.8;
+}
+
+.nbs-flexisel-nav-left {
+  left: 0px;
+  background:url(./images/prevarrow.png);
+}
+.nbs-flexisel-nav-right {
+  right: 0px;
+  background:url(./images/nextarrow.png);
+}
+.nbs-flexisel-nav-right, .nbs-flexisel-nav-left{
+  background-repeat: no-repeat;
+  background-size: 34px 34px;
+}
+
+.inner-mid-intro .token-contract-container{
+    background: rgba(31, 34, 41, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0px 16px 16px 8px rgb(0 0 0 / 15%), inset 62.7333px -62.7333px 62.7333px rgb(24 26 31 / 5%), inset -62.7333px 63px 62.7333px -59px rgb(255 255 255 / 5%);
+    backdrop-filter: blur(45px);
+    -webkit-backdrop-filter: blur(45px);
+    border-radius: 8px;
+    padding: 8px 24px;
+}
+.token-contract-container p{ 
+  margin-bottom: 0px !important;
+  font-weight: 400;
+  font-size: 15px;
+}
+.token-contract-container a{
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 15px;
+  word-break: break-word; 
+}
+.token-contract-container a:hover {
+    color: #B90D0D !important;
+    opacity: 0.8;
+}
+
+/* TOKENOMICS Graphic */
+.iseed h6, .emission h6, .atreasury h6, .tokenomics-text h6, .surprise h6 {
+    text-align: center;
+    font-size: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+}

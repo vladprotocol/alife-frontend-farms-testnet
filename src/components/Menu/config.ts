@@ -11,8 +11,16 @@ const config: MenuEntry[] = [
     icon: 'TradeIcon',
     items: [
       {
-        label: 'Exchange',
+        label: 'Trade $VLAD',
         href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973',
+      },
+      {
+        label: 'Trade $LIFE',
+        href: 'https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+      },
+      {
+        label: 'Trade $ALIFE',
+        href: '',
       },
       {
         label: 'Liquidity',
@@ -21,7 +29,7 @@ const config: MenuEntry[] = [
     ],
   },
   {
-    label: 'Farm ALIFE',
+    label: 'Farm LIFE',
     icon: 'FarmIcon',
     href: '/farms',
   },
@@ -34,6 +42,11 @@ const config: MenuEntry[] = [
     label: 'My NFT Collection',
     icon: 'NftIcon',
     href: '/my-collection',
+  },
+  {
+    label: 'External Pools',
+    icon: 'PoolIcon',
+    href: '/pools',
   },
   {
     label: 'More',
@@ -67,11 +80,6 @@ const config: MenuEntry[] = [
     icon: 'NftIcon',
     href: '#',
   },
-  // {
-  //   label: 'Pools',
-  //   icon: 'PoolIcon',
-  //   href: '/pools',
-  // },
   // {
   //   label: 'Lottery',
   //   icon: 'TicketIcon',

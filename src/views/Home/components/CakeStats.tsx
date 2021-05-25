@@ -22,6 +22,12 @@ const Row = styled.div`
   margin-bottom: 8px;
 `
 
+const LifeStatsHeading = styled(Heading)`
+  @media (max-width: 1300px) {
+    font-size: 24px !important;
+  }
+`
+
 const CakeStats = () => {
   const TranslateString = useI18n()
   const totalSupply = useTotalSupply()
@@ -40,9 +46,9 @@ const CakeStats = () => {
   return (
     <StyledCakeStats>
       <CardBody>
-        <Heading color="#5ca269" size="xl" mb="24px">
+        <LifeStatsHeading color="#9f0d0d" size="xl" mb="24px">
           {TranslateString(534, 'Alife Stats')}
-        </Heading>
+        </LifeStatsHeading>
         <Row>
           <Text fontSize="14px">{TranslateString(10005, 'Market Cap')}</Text>
           <CardValue fontSize="14px" value={getBalanceNumber(marketCap)} decimals={0} prefix="$" />

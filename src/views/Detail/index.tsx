@@ -39,7 +39,7 @@ const Detail = (props) => {
       <NftProvider>
         <Page>
           <StyledHero>
-            <CustomHeading as="h1" size="xxl" color="#5ca269" mb="24px">
+            <CustomHeading as="h1" size="xxl" color="#9f0d0d" mb="24px">
               {nft1[0] && nft1[0].name}
             </CustomHeading>
           </StyledHero>
