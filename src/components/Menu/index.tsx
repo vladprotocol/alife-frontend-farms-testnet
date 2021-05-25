@@ -251,7 +251,11 @@ const Menu = (props) => {
               <li>
                 <div className="btn-wrap">
                   <span className="btn-first">
-                    <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                    <a
+                      href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <img src={vladLogo} className="" alt="" />${vladValue}
                     </a>
                   </span>
@@ -264,7 +268,11 @@ const Menu = (props) => {
               <li>
                 <div className="btn-wrap">
                   <span className="btn-first">
-                    <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                    <a
+                      href="https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <img src={lifeLogo} className="" alt="" />${lifeValue}
                     </a>
                   </span>
@@ -277,7 +285,7 @@ const Menu = (props) => {
               <li>
                 <div className="btn-wrap">
                   <span className="btn-first">
-                    <a href="https://vlad.finance" target="_blank" rel="noreferrer">
+                    <a href="/" rel="noreferrer">
                       <img src={alifeLogo} className="" alt="" />
                       $0.00
                     </a>
