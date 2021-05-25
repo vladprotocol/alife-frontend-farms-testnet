@@ -218,8 +218,29 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       }
     }
 
+    const fetchNonLoggedInContractData = async () => {
+      try {
+        const getMinted = await multicall(epicNftFarm, [
+          { address: EpicNftFarm, name: 'getMinted', params: ['0x0000000000000000000000000000000000000000'] },
+        ])
+        const hasClaimed = getMinted[0][0]
+        const amounts = getToFloat(getMinted[0][1])
+
+        setState((prevState) => ({
+          ...prevState,
+          isInitialized: true,
+          hasClaimed,
+          amounts,
+        }))
+      } catch (error) {
+        console.error('an error occured', error)
+      }
+    }
+
     if (account) {
       fetchContractData()
+    } else {
+      fetchNonLoggedInContractData()
     }
   }, [isInitialized, account, setState])
 

@@ -66,6 +66,10 @@ const Value = styled(Text)`
 const SmallCard = styled(Card)`
   width: 500px;
   margin: 0 auto;
+
+  @media (max-width: 767px) {
+    width: 320px;
+  }
 `
 
 const CustomButton = styled(Button)`

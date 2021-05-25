@@ -1,0 +1,26 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_bii)">
+<circle cx="15" cy="15" r="15" fill="white" fill-opacity="0.1"/>
+</g>
+<path d="M9.65847 11.4482C9.67583 11.2637 9.60926 11.0792 9.48191 10.9541L8.17656 9.25326V9H12.2344L15.3719 16.432L18.1302 9H22V9.25326L20.8828 10.4101C20.7873 10.4883 20.7381 10.6196 20.7583 10.7478V19.2522C20.7381 19.3804 20.7873 19.5117 20.8828 19.5899L21.974 20.7467V21H16.4834V20.7467L17.6151 19.5618C17.725 19.4429 17.725 19.4054 17.725 19.2241V12.3517L14.5789 20.9781H14.1534L10.4949 12.3517V18.1329C10.4631 18.3768 10.5384 18.6206 10.6975 18.7957L12.1679 20.7217V20.975H8V20.7249L9.47033 18.7957C9.62663 18.6206 9.69899 18.3736 9.65847 18.1329V11.4482Z" fill="white"/>
+<defs>
+<filter id="filter0_bii" x="-4" y="-4" width="38" height="38" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImage" stdDeviation="2"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-0.4" dy="0.4"/>
+<feGaussianBlur stdDeviation="0.2"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0"/>
+<feBlend mode="normal" in2="shape" result="effect2_innerShadow"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="0.4" dy="-0.4"/>
+<feGaussianBlur stdDeviation="0.2"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.84 0 0 0 0 0.84 0 0 0 0 0.84 0 0 0 0.4 0"/>
+<feBlend mode="normal" in2="effect2_innerShadow" result="effect3_innerShadow"/>
+</filter>
+</defs>
+</svg>

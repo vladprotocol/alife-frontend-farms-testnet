@@ -23,15 +23,21 @@ const Row = styled.div`
   margin-bottom: 8px;
 `
 
+const AnnouncementHeading = styled(Heading)`
+  @media (max-width: 1300px) {
+    font-size: 24px !important;
+  }
+`
+
 const TwitterCard = () => {
   const TranslateString = useI18n()
 
   return (
     <StyledTwitterCard>
       <CardBody>
-        <Heading color="#5ca269" size="xl" mb="24px">
+        <AnnouncementHeading color="#9f0d0d" size="xl" mb="24px">
           {TranslateString(10003, 'Announcements')}
-        </Heading>
+        </AnnouncementHeading>
         <Timeline
           dataSource={{
             sourceType: 'profile',

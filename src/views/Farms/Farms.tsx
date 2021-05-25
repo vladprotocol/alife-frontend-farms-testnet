@@ -29,7 +29,6 @@ const CustomA = styled.a`
 `
 
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
-
   const { path } = useRouteMatch()
   const TranslateString = useI18n()
   const farmsLP = useFarms()
@@ -107,27 +106,27 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   return (
     <EpicProvider>
-    <NftProvider>
-    <Page>
-      <Heading as="h1" size="xxl" color="primary" mb="50px" style={{ textAlign: 'center' }}>
-        ALIFE FARMING HAS STARTED
-      </Heading>
+      <NftProvider>
+        <Page>
+          <Heading as="h1" size="xxl" color="primary" mb="50px" style={{ textAlign: 'center' }}>
+            ALIFE FARMING HAS STARTED
+          </Heading>
 
-      <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
-      <div>
-        <Divider />
-        <FlexLayout>
-          <Route exact path={`${path}`}>
-            {stakedOnly ? farmsList(stakedOnlyFarms, false) : farmsList(activeFarms, false)}
-          </Route>
-          <Route exact path={`${path}/history`}>
-            {farmsList(inactiveFarms, true)}
-          </Route>
-        </FlexLayout>
-      </div>
-      <Image src="/images/alife/8.png" alt="illustration" width={1352} height={587} responsive />
-    </Page>
-    </NftProvider>
+          <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
+          <div>
+            <Divider />
+            <FlexLayout>
+              <Route exact path={`${path}`}>
+                {stakedOnly ? farmsList(stakedOnlyFarms, false) : farmsList(activeFarms, false)}
+              </Route>
+              <Route exact path={`${path}/history`}>
+                {farmsList(inactiveFarms, true)}
+              </Route>
+            </FlexLayout>
+          </div>
+          <Image src="/images/alife/8.png" alt="illustration" width={1352} height={587} responsive />
+        </Page>
+      </NftProvider>
     </EpicProvider>
   )
 }
