@@ -20,7 +20,7 @@ import twitterLogo from './twitter.svg'
 import mediumLogo from './medium.svg'
 import vladLogo from './vlad-circle.png'
 import lifeLogo from './life.png'
-import alifeLogo from './alife.svg'
+import alifeLogo from './alife.png'
 import bgFooter from './bg-footer.jpg'
 import soundCloudLogo from './soundcloud.png'
 
@@ -144,8 +144,8 @@ const CustomI = styled.i`
   margin-right: 10px;
 `
 
-let vladValue = 0
-let lifeValue = 0
+let vladValue = '0.00'
+let lifeValue = '0.00'
 
 fetch(
   'https://api.vlad.finance/price.php?key=6547643&pool=0x60d5e86c0074b56e52a7540b3bf36c399e9f3038&token=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973&decimals=8',
@@ -156,15 +156,15 @@ fetch(
       if (result.status === true) {
         vladValue = result.data
       } else {
-        vladValue = 0
+        vladValue = '0.00'
       }
     },
     (error) => {
-      vladValue = 0
+      vladValue = '0.00'
     },
   )
   .catch(() => {
-    vladValue = 0
+    vladValue = '0.00'
   })
 
 fetch(
@@ -176,15 +176,15 @@ fetch(
       if (result.status === true) {
         lifeValue = result.data
       } else {
-        lifeValue = 0
+        lifeValue = '0.00'
       }
     },
     (error) => {
-      lifeValue = 0
+      lifeValue = '0.00'
     },
   )
   .catch(() => {
-    lifeValue = 0
+    lifeValue = '0.00'
   })
 
 const Menu = (props) => {
@@ -211,7 +211,7 @@ const Menu = (props) => {
               <div className="tp-inner">
                 <span>Listen to DJ Ezra - Live From $VLADHalla</span>
                 <audio controls>
-                  <source src="./dj-erza.mp3" type="audio/mpeg" />
+                  <source src="/dj-erza.mp3" type="audio/mpeg" />
                   <track kind="captions" />
                 </audio>
                 <a href="https://soundcloud.app.goo.gl/kHiyk" target="_blank" rel="noreferrer">
@@ -251,44 +251,54 @@ const Menu = (props) => {
               <li>
                 <div className="btn-wrap">
                   <span className="btn-first">
+                    <img src={vladLogo} className="" alt="" />${vladValue}
+                  </span>
+                  <span className="btn-second">
+                    <a
+                      href="https://bscscan.com/token/0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={bscscanLogo} alt="" />
+                    </a>
                     <a
                       href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={vladLogo} className="" alt="" />${vladValue}
+                      <img src={pancakeLogo} alt="" />
                     </a>
-                  </span>
-                  <span className="btn-second">
-                    <img src={bscscanLogo} alt="" />
-                    <img src={pancakeLogo} alt="" />
                   </span>
                 </div>
               </li>
               <li>
                 <div className="btn-wrap">
                   <span className="btn-first">
+                    <img src={lifeLogo} className="" alt="" />${lifeValue}
+                  </span>
+                  <span className="btn-second">
+                    <a
+                      href="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={bscscanLogo} alt="" />
+                    </a>
                     <a
                       href="https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={lifeLogo} className="" alt="" />${lifeValue}
+                      <img src={pancakeLogo} alt="" />
                     </a>
-                  </span>
-                  <span className="btn-second">
-                    <img src={bscscanLogo} alt="" />
-                    <img src={pancakeLogo} alt="" />
                   </span>
                 </div>
               </li>
               <li>
                 <div className="btn-wrap">
                   <span className="btn-first">
-                    <a href="/" rel="noreferrer">
-                      <img src={alifeLogo} className="" alt="" />
-                      $0.00
-                    </a>
+                    <img src={alifeLogo} className="" alt="" />
+                    $0.00
                   </span>
                   <span className="btn-second">
                     <img className="disable-btn" src={bscscanLogo} alt="" />

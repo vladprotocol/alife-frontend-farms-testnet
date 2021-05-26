@@ -26,11 +26,11 @@ nav {
 
 nav ~ div > div:nth-child(1) {
 	position: relative!important;
-	height: 93vh;
+	height: 150vh;
 }
 
 
-nav ~ div > div:nth-child(1) > div:nth-child(2) {
+nav ~ div > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div {
 	display: none;
 }
 
@@ -157,11 +157,6 @@ a:hover {
 .tp-inner ul li a:first-child{
     margin-left: 0;
 }
- audio::-webkit-media-controls-play-button,
-     audio::-webkit-media-controls-panel {
-     background-color: rgb(92, 162, 105);
-     color: #fff!important;
- }
  audio:focus{
      outline: none;
  }
@@ -170,6 +165,7 @@ a:hover {
      margin: 0px 12px;
  }
  .btn-first{
+    z-index: 1;
      display: inline-block;
     background: #390404;
     padding: 6px 10px;
@@ -178,7 +174,13 @@ a:hover {
     -webkit-box-shadow: 2px 0px 3px 0px rgba(0,0,0,0.59);
     -moz-box-shadow: 2px 0px 3px 0px rgba(0,0,0,0.59);
  }
- .btn-first a{
+ .btn-first {
+    display: flex;
+    align-items: center;
+    color:#fff;
+    font-size: 14px;
+}
+ .btn-first a, .btn-second a{
      display: flex;
      align-items: center;
      color:#fff;
@@ -200,6 +202,8 @@ a:hover {
  .btn-wrap{
      position:relative;
      width:155px;
+     display: flex;
+     align-items: center;
  }
  .btn-second{
     background: #fff;
@@ -207,7 +211,6 @@ a:hover {
     border-radius: 25px;
     display: inline-flex;
     align-items: center;
-    z-index: -1;
     position:absolute;
     left: 74px;
  }
@@ -320,6 +323,9 @@ a:hover {
     }
 }
 @media(max-width:568px){
+    .btn-first {
+        font-size: 11px;
+    }
     .btn-first a {
         font-size: 11px;
     }
