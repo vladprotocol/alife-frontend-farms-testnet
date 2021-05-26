@@ -61,7 +61,15 @@ const config: MenuEntry[] = [
         href: 'https://github.com/vladprotocol',
       },
       {
-        label: 'Overview',
+        label: 'Token Facts',
+        href: 'https://vlad.finance/token-facts',
+      },
+      {
+        label: 'Announcements',
+        href: 'https://twitter.com/VladFinance',
+      },
+      {
+        label: 'What is Vlad.Finance',
         href: 'https://vlad-finance.medium.com/introducing-vlad-token-and-the-path-to-immortality-ce96990fdf66/',
       },
       // {
