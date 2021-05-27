@@ -298,7 +298,7 @@ const Menu = (props) => {
                 <div className="btn-wrap">
                   <span className="btn-first">
                     <img src={alifeLogo} className="" alt="" />
-                    $0.00
+                    ${cakePriceUsd.toNumber()}
                   </span>
                   <span className="btn-second">
                     <img className="disable-btn" src={bscscanLogo} alt="" />
