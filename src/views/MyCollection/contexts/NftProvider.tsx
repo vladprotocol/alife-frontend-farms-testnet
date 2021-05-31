@@ -11,7 +11,7 @@ interface NftProviderProps {
   children: ReactNode
 }
 
-type BunnyMap = {
+type NftMap = {
   [key: number]: number[]
 }
 
@@ -29,7 +29,7 @@ type State = {
   totalSupplyDistributed: number
   currentDistributedSupply: number
   balanceOf: number
-  nftMap: BunnyMap
+  nftMap: NftMap
 
   allowMultipleClaims: boolean
   rarity: string
@@ -156,19 +156,19 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         // console.log('ownerById', ownerById)
         // console.log('maxMintByNft', maxMintByNft)
         // console.log('prices', prices)
-        console.log('myMints', myMints)
+        // console.log('myMints', myMints)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
-        let nftMap: BunnyMap = {}
+        let nftMap: NftMap = {}
 
         // If the "balanceOf" is greater than 0 then retrieve the tokenIds
         // owned by the wallet, then the nftId's associated with the tokenIds
         if (balanceOf > 0) {
-          const getTokenIdAndBunnyId = async (index: number) => {
+          const getTokenIdAndNftId = async (index: number) => {
             try {
               const tokenId = await nftContract.methods.tokenOfOwnerByIndex(account, index).call()
-              const nftId = await nftContract.methods.getBunnyId(tokenId).call()
+              const nftId = await nftContract.methods.getNftId(tokenId).call()
 
               return [parseInt(nftId, 10), parseInt(tokenId, 10)]
             } catch (error) {
@@ -179,7 +179,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           const tokenIdPromises = []
 
           for (let i = 0; i < balanceOf; i++) {
-            tokenIdPromises.push(getTokenIdAndBunnyId(i))
+            tokenIdPromises.push(getTokenIdAndNftId(i))
           }
 
           const tokenIdsOwnedByWallet = await Promise.all(tokenIdPromises)
