@@ -16,7 +16,6 @@ const NftList = () => {
     const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
 
     const MINTS = myMints[nftIndex] || 0
-    console.log(nftId, '?myMints', myMints, 'MINTS', MINTS)
 
     if (MINTS > 0) {
       filteredNft.push(nft)
