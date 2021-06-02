@@ -36,12 +36,12 @@ const Label = styled.label`
   margin-bottom: 8px;
   margin-top: 24px;
 `
-// TODO:: tokenIds is not used here dynamically. User need to enter manually for now.
+// tokenIds is retrieved dynamically from contracts.
 const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSuccess, onDismiss }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState({
     address: '',
-    tokenId: ''
+    tokenId: tokenIds[0]
   })
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
@@ -104,7 +104,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
           isWarning={error}
           disabled={isLoading}
         />
-        <Label htmlFor="transferAddress">{TranslateString(999, 'Token ID')}:</Label>
+        {/* <Label htmlFor="transferAddress">{TranslateString(999, 'Token ID')}:</Label>
         <Input
           id="tokenId"
           name="tokenId"
@@ -114,7 +114,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
           onChange={handleChange}
           isWarning={error}
           disabled={isLoading}
-        />
+        /> */}
       </ModalContent>
       <Actions>
         <Button fullWidth variant="secondary" onClick={onDismiss}>

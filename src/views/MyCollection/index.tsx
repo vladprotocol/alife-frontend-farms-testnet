@@ -7,6 +7,7 @@ import Page from 'components/layout/Page'
 import { useHistory } from 'react-router-dom'
 import HowItWorks from './components/HowItWorks'
 import NftList from './components/NftList'
+import NftTable from './components/NftTable'
 import NftProvider from './contexts/NftProvider'
 import NftInfo from './components/NftInfo'
 
@@ -78,7 +79,7 @@ const Nft = () => {
             </GoldenButton>
           </StyledHero>
           <NftInfo />
-          <NftList />
+          <NftTable />
         </Page>
       </NftProvider>
     )
