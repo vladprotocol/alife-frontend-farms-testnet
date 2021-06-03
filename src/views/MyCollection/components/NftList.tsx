@@ -6,7 +6,7 @@ import NftGrid from './NftGrid'
 import { NftProviderContext } from '../contexts/NftProvider'
 
 const NftList = () => {
-  const { myMints, hasClaimed } = useContext(NftProviderContext)
+  const { myMints, hasClaimed, balanceOf, nftMap, nftTableData } = useContext(NftProviderContext)
 
   const filteredNft = []
 
@@ -16,7 +16,6 @@ const NftList = () => {
     const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
 
     const MINTS = myMints[nftIndex] || 0
-    console.log(nftId, '?myMints', myMints, 'MINTS', MINTS)
 
     if (MINTS > 0) {
       filteredNft.push(nft)
