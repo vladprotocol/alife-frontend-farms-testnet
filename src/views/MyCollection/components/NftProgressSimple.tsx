@@ -1,31 +1,22 @@
 import React, { useContext } from 'react'
 import { Card, CardBody, Text } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
-import nfts from 'config/constants/nfts'
 import { NftProviderContext } from '../contexts/NftProvider'
 import InfoRow from './InfoRow'
 
 const NftProgressSimple = () => {
   const TranslateString = useI18n()
-  const { isInitialized, currentDistributedSupply, totalSupplyDistributed, countBurnt, myMints } = useContext(
+  const {  balanceOf } = useContext(
     NftProviderContext,
   )
-
-  let myNFTs = 0
-
-  nfts.forEach(function (nft, key) {
-    const { nftId } = nft
-    const MINTS = myMints[nftId] || 0
-    myNFTs += MINTS
-  })
 
   return (
     <Card>
       <CardBody>
         <InfoRow>
-          <Text>{TranslateString(999, 'My Base and Rare NFTs')}:</Text>
+          <Text>{TranslateString(999, 'My NFTs')}:</Text>
           <Text>
-            <strong>{myNFTs}</strong>
+            <strong>{balanceOf}</strong>
           </Text>
         </InfoRow>
       </CardBody>
