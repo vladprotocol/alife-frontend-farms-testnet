@@ -156,7 +156,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         // console.log('ownerById', ownerById)
         // console.log('maxMintByNft', maxMintByNft)
         // console.log('prices', prices)
-        
+
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
         let nftMap: BunnyMap = {}

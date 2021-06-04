@@ -41,7 +41,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState({
     address: '',
-    tokenId: tokenIds[0]
+    tokenId: tokenIds[0],
   })
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
@@ -78,7 +78,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue, name } = evt.target
-    setValues({...values, [name]: inputValue })
+    setValues({ ...values, [name]: inputValue })
   }
 
   return (
@@ -120,7 +120,11 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
         <Button fullWidth variant="secondary" onClick={onDismiss}>
           {TranslateString(462, 'Cancel')}
         </Button>
-        <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading || !values.address || !values.tokenId}>
+        <Button
+          fullWidth
+          onClick={handleConfirm}
+          disabled={!account || isLoading || !values.address || !values.tokenId}
+        >
           {TranslateString(464, 'Confirm')}
         </Button>
       </Actions>

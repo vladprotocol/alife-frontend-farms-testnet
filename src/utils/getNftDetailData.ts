@@ -17,14 +17,14 @@ const getNftDetailData = async (tokenURI: string): Promise<DataResponse> => {
     description: '',
     image: '',
     rarity: '',
-    error: ''
-  };
+    error: '',
+  }
   try {
     const response = await fetch(tokenURI)
     data = await response.json()
     return data
   } catch (error) {
-    return data;
+    return data
   }
 }
 

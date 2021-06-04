@@ -48,7 +48,9 @@ const NftTable = () => {
     {
       title: 'NFT Name',
       dataIndex: 'nftName',
-      key: 'nftName',
+      render: (text, record) => {
+        return <p style={{ fontWeight: 600, fontSize: '18px' }}>{record.nftName}</p>
+      },
     },
     {
       title: 'NFT preview Image',
@@ -56,7 +58,11 @@ const NftTable = () => {
       render: (text, record) => {
         return (
           <div>
-            <img src={record.nftPreviewImage} alt="preview" />
+            <img
+              src={`images/nfts/${record.nftPreviewImage}`}
+              alt="preview"
+              style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '25px' }}
+            />
           </div>
         )
       },
@@ -67,14 +73,18 @@ const NftTable = () => {
       key: 'tokenId',
     },
     {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
+      title: 'Rarity',
+      dataIndex: 'rarity',
+      key: 'rarity',
     },
     {
       title: 'NFT Details',
       dataIndex: 'nftDetailLink',
-      render: (text, record) => <Link to={record.nftDetailLink}>Detail</Link>,
+      render: (text, record) => (
+        <Link to={record.nftDetailLink} style={{ color: 'black' }}>
+          View Detail
+        </Link>
+      ),
       key: 'nftDetailLink',
     },
     {
@@ -103,7 +113,7 @@ const NftTable = () => {
         return (
           <Button
             fullWidth
-            variant="secondary"
+            variant="primary"
             mt="24px"
             onClick={() => {
               onPresentTransferModal()
@@ -117,7 +127,7 @@ const NftTable = () => {
     },
   ]
 
-  return <Table columns={columns} dataSource={nftTableData} />
+  return <Table columns={columns} dataSource={nftTableData} style={{ marginTop: '25px' }} />
 }
 
 export default NftTable
