@@ -80,9 +80,9 @@ const NftTable = () => {
       title: 'NFT Details',
       dataIndex: 'nftDetailLink',
       render: (text, record) => (
-        <Link to={record.nftDetailLink} style={{ color: 'black' }}>
+        <Button as={Link} to={record.nftDetailLink}>
           View Detail
-        </Link>
+        </Button>
       ),
       key: 'nftDetailLink',
     },
