@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState, useContext, useCallback, useEffect } from 'react'
 import {
   Card,
   CardBody,
@@ -29,19 +29,33 @@ const NftTable = () => {
   const [state, setState] = useState({
     isLoading: false,
     isOpen: true,
+    nftTableData: []
   })
 
-  const { nftTableData } = useContext(NftProviderContext)
+  const { nftTableData, 
+    reInitialize } = useContext(NftProviderContext)
 
   const TranslateString = useI18n()
 
+  const onTransfer = useCallback(async () => {
+    setState((prevState) => ({ ...prevState, isLoading: true }))
+    try {
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        isDataFetched: true,
+        nftTableData
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+  }, [nftTableData])
+
   const handleSuccess = () => {
-    setState((prevState) => ({
-      ...prevState,
-      isLoading: false,
-      isDataFetched: true,
-    }))
+    onTransfer();
+    reInitialize();
   }
+
 
   const columns = [
     {
