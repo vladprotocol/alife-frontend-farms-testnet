@@ -17,7 +17,6 @@ import {
 import { Link } from 'react-router-dom'
 import { Table } from 'antd'
 import useI18n from 'hooks/useI18n'
-import 'antd/dist/antd.css'
 import orderBy from 'lodash/orderBy'
 import nfts from 'config/constants/nfts'
 import NftCard from './NftCard'
