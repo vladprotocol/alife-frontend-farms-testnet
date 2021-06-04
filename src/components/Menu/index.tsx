@@ -210,13 +210,13 @@ const Menu = (props) => {
             </div>
             <div className="tp-audio">
               <div className="tp-inner">
-                <span>Listen to DJ Ezra - Live From $VLADHalla</span>
+                <span>DJ Ezra - Live in the Afterlife</span>
                 <audio controls>
-                  <source src="/dj-erza.mp3" type="audio/mpeg" />
+                  <source src="/DJ-Ezra-live-in-the-afterlife.mp3" type="audio/mpeg" />
                   <track kind="captions" />
                 </audio>
                 <a href="https://soundcloud.app.goo.gl/kHiyk" target="_blank" rel="noreferrer">
-                  Enjoying $LIFE! by DJ Ezra Is Back! on #SoundCloud
+                  DJ - Ezra on on #SoundCloud
                 </a>
               </div>
             </div>
@@ -301,8 +301,20 @@ const Menu = (props) => {
                     <img src={alifeLogo} className="" alt="" />${cakePriceUsd.toNumber()}
                   </span>
                   <span className="btn-second">
-                    <img className="disable-btn" src={bscscanLogo} alt="" />
-                    <img className="disable-btn" src={pancakeLogo} alt="" />
+                    <a
+                      href="https://bscscan.com/token/0x42ba7bbddecb471c1e1fe08636918952b6c19019"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={bscscanLogo} alt="" />
+                    </a>
+                    <a
+                      href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x42ba7bbddecb471c1e1fe08636918952b6c19019"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={pancakeLogo} alt="" />
+                    </a>
                   </span>
                 </div>
               </li>
@@ -336,7 +348,7 @@ const Menu = (props) => {
                   </a>
                 </li>
               </ul>
-              <h4>Vlad.Finance</h4>
+              <h4 style={{ color: 'white' }}>Vlad.Finance</h4>
               <p>
                 Come for the Immortality. <br /> Stay for the NFTs.
               </p>
@@ -361,7 +373,7 @@ const Menu = (props) => {
             <div className="col-sm-12 col-md-9 footer-sm">
               <div className="row">
                 <div className="col-sm-12 col-md-3">
-                  <h6>COMMUNITY</h6>
+                  <h6 style={{ color: 'white' }}>COMMUNITY</h6>
                   <ul>
                     <li>
                       <a href="https://t.me/VladFinanceOfficial" target="_blank" rel="noreferrer">
@@ -384,7 +396,7 @@ const Menu = (props) => {
                   </ul>
                 </div>
                 <div className="col-sm-12 col-md-3">
-                  <h6>$VLAD</h6>
+                  <h6 style={{ color: 'white' }}>$VLAD</h6>
                   <ul>
                     <li>
                       <a
@@ -453,7 +465,7 @@ const Menu = (props) => {
                   </ul>
                 </div>
                 <div className="col-sm-12 col-md-3">
-                  <h6>$LIFE</h6>
+                  <h6 style={{ color: 'white' }}>$LIFE</h6>
                   <ul>
                     <li>
                       <a
@@ -514,15 +526,27 @@ const Menu = (props) => {
                   </ul>
                 </div>
                 <div className="col-sm-12 col-md-3">
-                  <h6>$aLIFE</h6>
+                  <h6 style={{ color: 'white' }}>$aLIFE</h6>
                   <ul>
-                    <li className="fdeactive">
-                      <img src="../images/fbscscanlogo.svg" className="img-fluid" alt="" />
-                      BSCScan
+                    <li>
+                      <a
+                        href="https://bscscan.com/token/0x42bA7BbDDEcb471c1e1Fe08636918952b6C19019"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fbscscanlogo.svg" className="img-fluid" alt="" />
+                        BSCScan
+                      </a>
                     </li>
-                    <li className="fdeactive">
-                      <img src="../images/fpancakeswap.svg" className="img-fluid" alt="" />
-                      Buy $VLAD
+                    <li>
+                      <a
+                        href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x42bA7BbDDEcb471c1e1Fe08636918952b6C19019"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fpancakeswap.svg" className="img-fluid" alt="" />
+                        Buy $ALIFE
+                      </a>
                     </li>
                     <li className="fdeactive">
                       <img src="../images/dexguru.png" className="img-fluid" alt="" />

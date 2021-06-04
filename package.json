@@ -12,7 +12,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "uikit": "cd ../vlad-uikit && yarn && yarn build && rm -rf ../life-frontend-farms/node_modules/@pancakeswap-libs/uikit/dist && cp -Rp ./dist ../life-frontend-farms/node_modules/@pancakeswap-libs/uikit/"
+    "uikit": "cd ../vlad-uikit && yarn && yarn build && rm -rf ../alife-frontend-farms/node_modules/@pancakeswap-libs/uikit/dist && cp -Rp ./dist ../alife-frontend-farms/node_modules/@pancakeswap-libs/uikit/"
   },
   "husky": {
     "hooks": {

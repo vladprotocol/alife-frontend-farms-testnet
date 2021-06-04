@@ -1,11 +1,7 @@
 import { Nft } from './types'
 
-// export const EpicNftFarm = '0x6a63AF63675D3c9D498DF43Aa163F9243E7b4646'
-// export const NFT = '0x3F7C7C24fFA2ceFfaACE11B39D5b8a575A4B0674'
-
-// testnet
-export const EpicNftFarm = '0x16034F26aD4e187FaBF752976d35395d3d4639F1'
-export const NFT = '0xA81Ab2D03b9E3a62BDBb837d417A5E221F754E14'
+export const EpicNftFarm = '0x6a63AF63675D3c9D498DF43Aa163F9243E7b4646'
+export const NFT = '0x3F7C7C24fFA2ceFfaACE11B39D5b8a575A4B0674'
 export const AMOUNT_TO_CLAIM = '10'
 
 const Nfts: Nft[] = [
@@ -13,7 +9,7 @@ const Nfts: Nft[] = [
     name: 'Silver Pepes',
     metadata: '',
     description:
-      "The count has had an epic existence sure, but it has not been without many attempts at his alife. This artist's rendition pays homage to the time he was frozen in Carbonite ...oh wait, wrong story. Our bad, pretty slick tho right?",
+      "The count has had an epic existence sure, but it has not been without many attempts at his life. This artist's rendition pays homage to the time he was frozen in Carbonite ...oh wait, wrong story. Our bad, pretty slick tho right?",
     previewImage: 'preview-silver-pepe.jpg',
     originalImage:
       'https://ipfs.io/ipfs/QmaPP3CqB8iNcB9b9NCZVytNiaxZcJWt7Kk1vnHWwRL7hQ?filename=NFT-epic-silver-pepes.mp4',
@@ -30,7 +26,7 @@ const Nfts: Nft[] = [
     name: 'Bank of Vladhalla',
     metadata: '',
     description:
-      "They say when you leave this alife you can't take it with you... Well, who's leaving? That's for mortals to worry about.",
+      "They say when you leave this life you can't take it with you... Well, who's leaving? That's for mortals to worry about.",
     previewImage: 'preview-bank-of-vlad.png',
     originalImage:
       'https://ipfs.io/ipfs/Qma87NMJAu33nQuCRvoAK4MwP9CBwhGsLkQdTptM6uxoyp?filename=NFT-epic-bank-of-vladhalla.mp4',

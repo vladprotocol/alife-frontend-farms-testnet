@@ -29,11 +29,10 @@ const NftTable = () => {
   const [state, setState] = useState({
     isLoading: false,
     isOpen: true,
-    nftTableData: []
+    nftTableData: [],
   })
 
-  const { nftTableData, 
-    reInitialize } = useContext(NftProviderContext)
+  const { nftTableData, reInitialize } = useContext(NftProviderContext)
 
   const TranslateString = useI18n()
 
@@ -44,7 +43,7 @@ const NftTable = () => {
         ...prevState,
         isLoading: false,
         isDataFetched: true,
-        nftTableData
+        nftTableData,
       }))
     } catch (error) {
       console.error(error)
@@ -52,10 +51,9 @@ const NftTable = () => {
   }, [nftTableData])
 
   const handleSuccess = () => {
-    onTransfer();
-    reInitialize();
+    onTransfer()
+    reInitialize()
   }
-
 
   const columns = [
     {
