@@ -1,6 +1,6 @@
 export default {
   cake: {
-    56: '0x0',
+    56: '0x42bA7BbDDEcb471c1e1Fe08636918952b6C19019',
     97: '0xFecBE190631196e73A879b317D8A51CC4fE6cB0B',
   },
   life: {
@@ -8,7 +8,7 @@ export default {
     97: '0xADA2270B0CB5b6254d3d48A6fEE55b72693B746A',
   },
   masterChef: {
-    56: '0x0',
+    56: '0x7812eBD5787C6D9CC372486E8d09bde3770239C7',
     97: '0x5eAdf1a622B441Fb53D2b04D2DBE08078c9b0Bc6',
   },
   lifeMasterChef: {

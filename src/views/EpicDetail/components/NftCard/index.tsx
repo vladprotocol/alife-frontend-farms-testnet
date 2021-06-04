@@ -262,7 +262,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               </Value>
             </InfoRow>
             <InfoRow>
-              <Text>{TranslateString(999, 'Owned By Me')}:</Text>
+              <Text>{TranslateString(999, 'Minted By Me')}:</Text>
               <Value>{MINTS}</Value>
             </InfoRow>
           </InfoBlock>

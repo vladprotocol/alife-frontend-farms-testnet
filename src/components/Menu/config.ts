@@ -19,8 +19,8 @@ const config: MenuEntry[] = [
         href: 'https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
       },
       {
-        label: 'Trade $ALIFE',
-        href: '',
+        label: 'Buy $ALIFE',
+        href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x42bA7BbDDEcb471c1e1Fe08636918952b6C19019',
       },
       {
         label: 'Liquidity',
@@ -29,7 +29,7 @@ const config: MenuEntry[] = [
     ],
   },
   {
-    label: 'Farm LIFE',
+    label: 'Farm Alife',
     icon: 'FarmIcon',
     href: '/farms',
   },
@@ -44,9 +44,9 @@ const config: MenuEntry[] = [
     href: '/my-collection',
   },
   {
-    label: 'External Pools',
+    label: 'Past Farms',
     icon: 'PoolIcon',
-    href: '/pools',
+    href: 'https://life.vlad.finance',
   },
   {
     label: 'More',
