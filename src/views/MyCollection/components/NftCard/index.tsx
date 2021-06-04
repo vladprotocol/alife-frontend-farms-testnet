@@ -212,7 +212,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               </Tag>
             )}
           </Header>
-          {isInitialized  && (
+          {isInitialized && (
             <Button fullWidth variant="secondary" mt="24px" onClick={onPresentTransferModal}>
               {TranslateString(999, 'Transfer')}
             </Button>

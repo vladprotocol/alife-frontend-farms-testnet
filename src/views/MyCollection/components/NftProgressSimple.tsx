@@ -6,9 +6,7 @@ import InfoRow from './InfoRow'
 
 const NftProgressSimple = () => {
   const TranslateString = useI18n()
-  const {  balanceOf } = useContext(
-    NftProviderContext,
-  )
+  const { balanceOf } = useContext(NftProviderContext)
 
   return (
     <Card>

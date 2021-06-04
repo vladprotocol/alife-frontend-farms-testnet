@@ -10,11 +10,14 @@ export const bnToDec = (bn: BigNumber, decimals = 18): number => {
  * @param  {string} fullUrl
  */
 export const getUrlPartsInfo = (fullUrl) => {
-  const fullUrlArray = fullUrl.split('/');
-  const protocol = fullUrlArray[0];
-  const host = fullUrlArray[2];
-  const path = fullUrlArray.slice(3).join('/');
+  const fullUrlArray = fullUrl.split('/')
+  const protocol = fullUrlArray[0]
+  const host = fullUrlArray[2]
+  const path = fullUrlArray.slice(3).join('/')
   return {
-      protocol, host, path, fullUrlArray
+    protocol,
+    host,
+    path,
+    fullUrlArray,
   }
 }
