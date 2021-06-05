@@ -130,6 +130,9 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
               <Route exact path={`${path}/history`}>
                 {farmsList(inactiveFarms, true)}
               </Route>
+              <Route exact path={`${path}/all`}>
+                {farmsList(activeFarms, false)}
+              </Route>
               <Route exact path={`${path}/base`}>
                 {farmsList(baseNFTFarms, false)}
               </Route>
