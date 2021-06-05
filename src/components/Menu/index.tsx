@@ -215,7 +215,7 @@ const Menu = (props) => {
                   <source src="/DJ-Ezra-live-in-the-afterlife.mp3" type="audio/mpeg" />
                   <track kind="captions" />
                 </audio>
-                <a href="https://soundcloud.app.goo.gl/kHiyk" target="_blank" rel="noreferrer">
+                <a href="https://soundcloud.com/dj_ezra_is_back" target="_blank" rel="noreferrer">
                   DJ - Ezra on on #SoundCloud
                 </a>
               </div>
@@ -298,7 +298,7 @@ const Menu = (props) => {
               <li>
                 <div className="btn-wrap">
                   <span className="btn-first">
-                    <img src={alifeLogo} className="" alt="" />${cakePriceUsd.toNumber()}
+                    <img src={alifeLogo} className="" alt="" />${cakePriceUsd.toNumber().toFixed(2)}
                   </span>
                   <span className="btn-second">
                     <a
