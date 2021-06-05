@@ -58,6 +58,11 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
 
+  const baseNFTFarms = farmsLP.filter((farm) => farm.mustHaveNft === 1);
+  const rareNFTFarms = farmsLP.filter((farm) => farm.mustHaveNft === 2);
+  const eliteNFTFarms = farmsLP.filter((farm) => farm.mustHaveNft === 3);
+
+
   const stakedOnlyFarms = activeFarms.filter(
     (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
   )
@@ -124,6 +129,15 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
               </Route>
               <Route exact path={`${path}/history`}>
                 {farmsList(inactiveFarms, true)}
+              </Route>
+              <Route exact path={`${path}/base`}>
+                {farmsList(baseNFTFarms, false)}
+              </Route>
+              <Route exact path={`${path}/rare`}>
+                {farmsList(rareNFTFarms, false)}
+              </Route>
+              <Route exact path={`${path}/elite`}>
+                {farmsList(eliteNFTFarms, false)}
               </Route>
             </FlexLayout>
           </div>

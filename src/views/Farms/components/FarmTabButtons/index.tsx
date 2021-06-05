@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useRouteMatch, Link } from 'react-router-dom'
+import { useRouteMatch, Link, useLocation } from 'react-router-dom'
 import { ButtonMenu, ButtonMenuItem, Text, Toggle } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 
 const FarmTabButtons = ({ stakedOnly, setStakedOnly }) => {
+
+  const getDefaultPathIndex = (path: string): number => {
+    const mapIndexWithUrl: { [k: string]: number }  = {
+      '/farms': 0,
+      '/farms/base': 1,
+      '/farms/rare': 2,
+      '/farms/elite': 3
+    };
+    const defaultIndex = mapIndexWithUrl[path];
+    return defaultIndex;
+  }
+  
+  const location = useLocation();
+  
+  const defaultIndex = getDefaultPathIndex(location.pathname);
+
+  const [activeTabIndex, setActiveTabIndex] = useState(defaultIndex)
+
   const { url, isExact } = useRouteMatch()
   const TranslateString = useI18n()
+
+  const handleClick = (index: number) => {
+    setActiveTabIndex(index)
+  }
 
   return (
     <Wrapper>
@@ -20,6 +42,21 @@ const FarmTabButtons = ({ stakedOnly, setStakedOnly }) => {
         </ButtonMenuItem>
         <ButtonMenuItem as={Link} to={`${url}/history`}>
           {TranslateString(700, 'Inactive')}
+        </ButtonMenuItem>
+      </ButtonMenu>
+
+      <ButtonMenu activeIndex={activeTabIndex} onClick={handleClick} size="sm" variant="subtle">
+        <ButtonMenuItem as={Link} to={`${url}`}>
+          {TranslateString(10006, 'All')}
+        </ButtonMenuItem>
+        <ButtonMenuItem as={Link} to={`${url}/base`}>
+          {TranslateString(10007, 'Base')}
+        </ButtonMenuItem>
+        <ButtonMenuItem as={Link} to={`${url}/rare`}>
+          {TranslateString(10008, 'Rare')}
+        </ButtonMenuItem>
+        <ButtonMenuItem as={Link} to={`${url}/elite`}>
+          {TranslateString(10009, 'Elite')}
         </ButtonMenuItem>
       </ButtonMenu>
     </Wrapper>
