@@ -114,7 +114,16 @@ interface FarmCardProps {
   account?: string
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, lifePrice, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
+const FarmCard: React.FC<FarmCardProps> = ({
+  farm,
+  removed,
+  lifePrice,
+  cakePrice,
+  bnbPrice,
+  vladPrice,
+  ethereum,
+  account,
+}) => {
   const TranslateString = useI18n()
 
   const { myMints, hasClaimed } = useContext(NftProviderContext)

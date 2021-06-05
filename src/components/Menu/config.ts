@@ -79,12 +79,12 @@ const config: MenuEntry[] = [
     ],
   },
   {
-    label: 'DefiYield Audit Coming Soon',
+    label: 'Gordian Audit Passed',
     icon: 'NftIcon',
-    href: '#',
+    href: 'https://gordian.agency',
   },
   {
-    label: 'CERTIK Audit Coming Soon',
+    label: 'SOLIDITY Audit Coming Soon',
     icon: 'NftIcon',
     href: '#',
   },
