@@ -9,7 +9,7 @@ import { Card, CardBody, Image, Heading, Link, Text } from '@pancakeswap-libs/ui
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
-import { useFarms, usePriceBnbBusd, usePriceCakeBusd, usePriceVladBusd } from 'state/hooks'
+import { useFarms, usePriceLifeBusd, usePriceBnbBusd, usePriceCakeBusd, usePriceVladBusd } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
@@ -34,6 +34,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const TranslateString = useI18n()
   const farmsLP = useFarms()
   const vladPrice = usePriceVladBusd()
+  const lifePrice = usePriceLifeBusd()
   const cakePrice = usePriceCakeBusd()
   const bnbPrice = usePriceBnbBusd()
   const history = useHistory()
@@ -66,7 +67,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const rareNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 2);
   const eliteNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 3);
 
-  
+
   const getStackedOnlyFarms = (allFarms) => {
     const stakedOnlyFarms = allFarms.filter(
       (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
@@ -111,12 +112,13 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
           bnbPrice={bnbPrice}
           cakePrice={cakePrice}
           vladPrice={vladPrice}
+          lifePrice={lifePrice}
           ethereum={ethereum}
           account={account}
         />
       ))
     },
-    [bnbPrice, account, cakePrice, vladPrice, ethereum],
+    [bnbPrice, account, cakePrice, vladPrice, lifePrice, ethereum],
   )
 
   return (

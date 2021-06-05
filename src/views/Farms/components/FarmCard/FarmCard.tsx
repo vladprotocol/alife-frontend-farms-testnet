@@ -106,6 +106,7 @@ const ExpandingWrapper = styled.div<{ expanded: boolean }>`
 interface FarmCardProps {
   farm: FarmWithStakedValue
   removed: boolean
+  lifePrice?: BigNumber
   cakePrice?: BigNumber
   bnbPrice?: BigNumber
   vladPrice?: BigNumber
@@ -113,7 +114,7 @@ interface FarmCardProps {
   account?: string
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
+const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, lifePrice, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
   const TranslateString = useI18n()
 
   const { myMints, hasClaimed } = useContext(NftProviderContext)
@@ -168,8 +169,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
     if (farm.quoteTokenSymbol === QuoteToken.CAKE) {
       return cakePrice.times(farm.lpTotalInQuoteToken)
     }
+    if (farm.quoteTokenSymbol === QuoteToken.LIFE) {
+      // console.log(lifePrice.toString(), farm.lpTotalInQuoteToken.toString());
+      return lifePrice.times(farm.lpTotalInQuoteToken)
+    }
     return farm.lpTotalInQuoteToken
-  }, [vladPrice, bnbPrice, cakePrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
+  }, [lifePrice, vladPrice, bnbPrice, cakePrice, farm.lpTotalInQuoteToken, farm.quoteTokenSymbol])
 
   const totalValueFormated = totalValue
     ? `$${Number(totalValue).toLocaleString(undefined, { maximumFractionDigits: 2 })}`
