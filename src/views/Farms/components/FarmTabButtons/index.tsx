@@ -46,6 +46,7 @@ const FarmTabButtons = ({ stakedOnly, setStakedOnly }) => {
   const activeInactiveIndex = getActiveInactiveIndex(path);
 
   return (
+    <>
     <Wrapper>
       <ToggleWrapper>
         <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} />
@@ -59,22 +60,25 @@ const FarmTabButtons = ({ stakedOnly, setStakedOnly }) => {
           {TranslateString(700, 'Inactive')}
         </ButtonMenuItem>
       </ButtonMenu>
-
-      <ButtonMenu activeIndex={activeTabIndex} onClick={handleClick} size="sm" variant="subtle">
-        <ButtonMenuItem as={Link} to={`${url}/all`}>
-          {TranslateString(10006, 'All')}
-        </ButtonMenuItem>
-        <ButtonMenuItem as={Link} to={`${url}/base`}>
-          {TranslateString(10007, 'Base')}
-        </ButtonMenuItem>
-        <ButtonMenuItem as={Link} to={`${url}/rare`}>
-          {TranslateString(10008, 'Rare')}
-        </ButtonMenuItem>
-        <ButtonMenuItem as={Link} to={`${url}/elite`}>
-          {TranslateString(10009, 'Elite')}
-        </ButtonMenuItem>
-      </ButtonMenu>
     </Wrapper>
+    <Wrapper>
+
+    <ButtonMenu activeIndex={activeTabIndex} onClick={handleClick} size="sm" variant="subtle">
+      <ButtonMenuItem as={Link} to={`${url}/all`}>
+        {TranslateString(10006, 'All')}
+      </ButtonMenuItem>
+      <ButtonMenuItem as={Link} to={`${url}/base`}>
+        {TranslateString(10007, 'Base')}
+      </ButtonMenuItem>
+      <ButtonMenuItem as={Link} to={`${url}/rare`}>
+        {TranslateString(10008, 'Rare')}
+      </ButtonMenuItem>
+      <ButtonMenuItem as={Link} to={`${url}/elite`}>
+        {TranslateString(10009, 'Elite')}
+      </ButtonMenuItem>
+    </ButtonMenu>
+  </Wrapper>
+  </>
   )
 }
 
