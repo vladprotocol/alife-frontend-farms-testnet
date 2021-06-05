@@ -33,12 +33,13 @@ const FarmTabButtons = ({ stakedOnly, setStakedOnly }) => {
   }
 
   const getActiveInactiveIndex = (locationPath): number => {
-    let index = 0;
-    if(locationPath === '/farms') {
-      index = 0
-    } else {
-      index = 1;
+    let index = parseInt(localStorage.getItem('activeInactiveIndex'));
+    if(locationPath === '/farms/history') {
+      index = 1
+    } else if (locationPath === '/farms') {
+      index = 0;
     }
+    localStorage.setItem('activeInactiveIndex', index.toString());
     return index;
   }
 
