@@ -30,6 +30,27 @@ const RainbowLight = keyframes`
   }
 `
 
+const EliteStyledCardAccent = styled.div`
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 154, 0, 1) 10%,
+    rgba(208, 222, 33, 1) 20%,
+    rgba(251, 7, 217, 1) 90%,
+    rgba(255, 0, 0, 1) 100%
+  );
+  background-size: 300% 300%;
+  animation: ${RainbowLight} 2s linear infinite;
+  border-radius: 16px;
+  filter: blur(6px);
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  z-index: -1;
+`
+
 const StyledCardAccent = styled.div`
   background: linear-gradient(
     45deg,
@@ -167,7 +188,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
 
   return (
     <FCard>
-      {farm.tokenSymbol === 'ALIFE' && <StyledCardAccent />}
+      {farm.mustHaveNft === 2 && <StyledCardAccent />}
+      {farm.mustHaveNft === 3 && <EliteStyledCardAccent />}
       <CardHeading
         lpLabel={lpLabel}
         multiplier={farm.multiplier}
@@ -176,6 +198,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
         farmImage={farmImage}
         tokenSymbol={farm.tokenSymbol}
       />
+      <Flex justifyContent="space-between">
+        <Text>Rarity</Text>
+        <Text bold>
+          {farm.mustHaveNft === 1 && 'Base'}
+          {farm.mustHaveNft === 2 && 'Rare'}
+          {farm.mustHaveNft === 3 && 'Elite'}
+        </Text>
+      </Flex>
       {!removed && (
         <Flex justifyContent="space-between" alignItems="center">
           <Text>{TranslateString(352, 'APR')}:</Text>
