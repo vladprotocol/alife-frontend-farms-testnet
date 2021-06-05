@@ -25,8 +25,25 @@ export interface FarmsProps {
   tokenMode?: boolean
 }
 
-const CustomA = styled.a`
-  color: white;
+const CustomCard = styled(Card)`
+  margin-bottom: 20px;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(110 80 20 / 40%), inset 0 -2px 5px 1px rgb(139 66 8),
+    inset 0 -1px 1px 3px rgb(250 227 133);
+  background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);
+  border: 1px solid #a55d07;
+  color: red;
+  text-shadow: 0 2px 2px #b90d0d;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  background-size: 100% 100%;
+  background-position: center;
+`
+
+const CustomText = styled(Text)`
+  font-size: 18px;
+  font-weight: bolder;
+  text-shadow: 1px 2px 2px #b90d0d;
 `
 
 const Farms: React.FC<FarmsProps> = (farmsProps) => {
@@ -60,18 +77,17 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
 
-  const NFTFarms = localStorage.getItem('activeInactiveIndex') === "0" ? activeFarms : inactiveFarms;
+  const NFTFarms = localStorage.getItem('activeInactiveIndex') === '0' ? activeFarms : inactiveFarms
 
-  const baseNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 1);
-  const rareNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 2);
-  const eliteNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 3);
+  const baseNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 1)
+  const rareNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 2)
+  const eliteNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 3)
 
-  
   const getStackedOnlyFarms = (allFarms) => {
     const stakedOnlyFarms = allFarms.filter(
       (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
     )
-    return stakedOnlyFarms;
+    return stakedOnlyFarms
   }
 
   // /!\ This function will be removed soon
@@ -127,19 +143,19 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
             ALIFE FARMING HAS STARTED
           </Heading>
 
-          <Card style={{ marginBottom: '20px' }}>
+          <CustomCard style={{ marginBottom: '20px' }}>
             <CardBody>
               <InfoRow>
-                <Text>
-                  Only holders of genesis NFTs can stake: MINT yours &nbsp;
+                <CustomText>
+                  ONLY HOLDERS OF GENESIS NFTs CAN STAKE: MINT YOURS &nbsp;
                   <Link href="nft" style={{ display: 'unset' }}>
-                    link
+                    HERE
                   </Link>
-                  &nbsp;to access these pools
-                </Text>
+                  &nbsp;TO ACCESS THESE POOLS
+                </CustomText>
               </InfoRow>
             </CardBody>
-          </Card>
+          </CustomCard>
 
           <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
 

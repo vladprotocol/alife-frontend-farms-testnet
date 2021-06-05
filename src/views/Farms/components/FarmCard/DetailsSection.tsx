@@ -54,17 +54,17 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
     <Wrapper>
       <Flex justifyContent="flex-start">
         {mustHaveNft === 1 && (
-          <Link color="#9f0d0d" href="nft" bold={false}>
+          <Link color="white" href="nft" bold={false}>
             Mint Base NFT
           </Link>
         )}
         {mustHaveNft === 2 && (
-          <Link color="#9f0d0d" href="nft" bold={false}>
+          <Link color="white" href="nft" bold={false}>
             Mint Rare NFT
           </Link>
         )}
         {mustHaveNft === 3 && (
-          <Link color="#9f0d0d" href="epic" bold={false}>
+          <Link color="white" href="epic" bold={false}>
             Mint Epic NFT
           </Link>
         )}
