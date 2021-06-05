@@ -60,14 +60,19 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
   const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
 
-  const baseNFTFarms = farmsLP.filter((farm) => farm.mustHaveNft === 1);
-  const rareNFTFarms = farmsLP.filter((farm) => farm.mustHaveNft === 2);
-  const eliteNFTFarms = farmsLP.filter((farm) => farm.mustHaveNft === 3);
+  const NFTFarms = localStorage.getItem('activeInactiveIndex') === "0" ? activeFarms : inactiveFarms;
 
+  const baseNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 1);
+  const rareNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 2);
+  const eliteNFTFarms = NFTFarms.filter((farm) => farm.mustHaveNft === 3);
 
-  const stakedOnlyFarms = activeFarms.filter(
-    (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
-  )
+  
+  const getStackedOnlyFarms = (allFarms) => {
+    const stakedOnlyFarms = allFarms.filter(
+      (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
+    )
+    return stakedOnlyFarms;
+  }
 
   // /!\ This function will be removed soon
   // This function compute the APY for each farm and will be replaced when we have a reliable API
@@ -142,22 +147,22 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
             <Divider />
             <FlexLayout>
               <Route exact path={`${path}`}>
-                {stakedOnly ? farmsList(stakedOnlyFarms, false) : farmsList(activeFarms, false)}
+                {stakedOnly ? farmsList(getStackedOnlyFarms(activeFarms), false) : farmsList(activeFarms, false)}
               </Route>
               <Route exact path={`${path}/history`}>
                 {farmsList(inactiveFarms, true)}
               </Route>
               <Route exact path={`${path}/all`}>
-                {farmsList(activeFarms, false)}
+                {stakedOnly ? farmsList(getStackedOnlyFarms(NFTFarms), false) : farmsList(NFTFarms, false)}
               </Route>
               <Route exact path={`${path}/base`}>
-                {farmsList(baseNFTFarms, false)}
+                {stakedOnly ? farmsList(getStackedOnlyFarms(baseNFTFarms), false) : farmsList(baseNFTFarms, false)}
               </Route>
               <Route exact path={`${path}/rare`}>
-                {farmsList(rareNFTFarms, false)}
+                {stakedOnly ? farmsList(getStackedOnlyFarms(rareNFTFarms), false) : farmsList(rareNFTFarms, false)}
               </Route>
               <Route exact path={`${path}/elite`}>
-                {farmsList(eliteNFTFarms, false)}
+                {stakedOnly ? farmsList(getStackedOnlyFarms(eliteNFTFarms), false) : farmsList(eliteNFTFarms, false)}
               </Route>
             </FlexLayout>
           </div>
