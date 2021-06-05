@@ -16,7 +16,7 @@ const config: MenuEntry[] = [
       },
       {
         label: 'Trade $LIFE',
-        href: 'https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+        href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
       },
       {
         label: 'Buy $ALIFE',
