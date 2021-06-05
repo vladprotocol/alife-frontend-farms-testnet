@@ -11,12 +11,12 @@ const farms: FarmConfig[] = [
       97: '0xE6cfdE6BA3dEA95898a7d021F37662c5F188986e',
       56: '0x60D5e86c0074b56E52a7540b3bf36c399E9f3038',
     },
-    tokenSymbol: 'BUSD',
+    tokenSymbol: 'VLAD',
     tokenAddresses: {
       97: '0xFecBE190631196e73A879b317D8A51CC4fE6cB0B',
       56: '0x279d41f3f78fe5c1f0ba41ae963d6e545113c973',
     },
-    quoteTokenSymbol: QuoteToken.ALIFE,
+    quoteTokenSymbol: QuoteToken.BUSD,
     quoteTokenAdresses: contracts.busd,
   },
   {
@@ -28,12 +28,12 @@ const farms: FarmConfig[] = [
       97: '0xE6cfdE6BA3dEA95898a7d021F37662c5F188986e',
       56: '0x60D5e86c0074b56E52a7540b3bf36c399E9f3038',
     },
-    tokenSymbol: 'BUSD',
+    tokenSymbol: 'VLAD',
     tokenAddresses: {
       97: '0xFecBE190631196e73A879b317D8A51CC4fE6cB0B',
       56: '0x279d41f3f78fe5c1f0ba41ae963d6e545113c973',
     },
-    quoteTokenSymbol: QuoteToken.ALIFE,
+    quoteTokenSymbol: QuoteToken.BUSD,
     quoteTokenAdresses: contracts.busd,
   },
   {
@@ -45,12 +45,12 @@ const farms: FarmConfig[] = [
       97: '0xE6cfdE6BA3dEA95898a7d021F37662c5F188986e',
       56: '0x60D5e86c0074b56E52a7540b3bf36c399E9f3038',
     },
-    tokenSymbol: 'BUSD',
+    tokenSymbol: 'VLAD',
     tokenAddresses: {
       97: '0xFecBE190631196e73A879b317D8A51CC4fE6cB0B',
       56: '0x279d41f3f78fe5c1f0ba41ae963d6e545113c973',
     },
-    quoteTokenSymbol: QuoteToken.ALIFE,
+    quoteTokenSymbol: QuoteToken.BUSD,
     quoteTokenAdresses: contracts.busd,
   },
   {
@@ -118,8 +118,9 @@ const farms: FarmConfig[] = [
       97: '0xa800D23CCc013d2cFF18665cCc4709d45D969841',
       56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
     },
-    quoteTokenSymbol: QuoteToken.ALIFE,
+    quoteTokenSymbol: QuoteToken.LIFE,
     quoteTokenAdresses: contracts.life,
+    isTokenOnly: true,
   },
   {
     pid: 7,
@@ -135,8 +136,9 @@ const farms: FarmConfig[] = [
       97: '0xa800D23CCc013d2cFF18665cCc4709d45D969841',
       56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
     },
-    quoteTokenSymbol: QuoteToken.ALIFE,
+    quoteTokenSymbol: QuoteToken.LIFE,
     quoteTokenAdresses: contracts.life,
+    isTokenOnly: true,
   },
   {
     pid: 8,
@@ -152,8 +154,9 @@ const farms: FarmConfig[] = [
       97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
       56: '0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
     },
-    quoteTokenSymbol: QuoteToken.ALIFE,
+    quoteTokenSymbol: QuoteToken.LIFE,
     quoteTokenAdresses: contracts.life,
+    isTokenOnly: true,
   },
 ]
 

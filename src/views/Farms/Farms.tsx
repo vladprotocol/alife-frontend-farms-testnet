@@ -48,12 +48,15 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   const [stakedOnly, setStakedOnly] = useState(false)
 
-  const activeFarms = farmsLP.filter(
-    (farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP',
-  )
-  const inactiveFarms = farmsLP.filter(
-    (farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP',
-  )
+  // const activeFarms = farmsLP.filter(
+  //   (farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP',
+  // )
+  // const inactiveFarms = farmsLP.filter(
+  //   (farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP',
+  // )
+
+  const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
+  const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
 
   const stakedOnlyFarms = activeFarms.filter(
     (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
