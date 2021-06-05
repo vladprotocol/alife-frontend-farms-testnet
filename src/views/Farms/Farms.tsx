@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Image, Heading, Link } from '@pancakeswap-libs/uikit'
+import { Card, CardBody, Image, Heading, Link, Text } from '@pancakeswap-libs/uikit'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -14,6 +14,7 @@ import useRefresh from 'hooks/useRefresh'
 import { fetchFarmUserDataAsync } from 'state/actions'
 import { QuoteToken } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
+import InfoRow from 'views/Nft/components/InfoRow'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
@@ -112,18 +113,26 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
     <EpicProvider>
       <NftProvider>
         <Page>
-          <Heading as="h1" size="xl" color="primary" mb="50px" style={{ textAlign: 'center' }}>
+          <Heading as="h1" size="xl" color="primary" mb="70px" style={{ textAlign: 'center' }}>
             ALIFE FARMING HAS STARTED
           </Heading>
-          <Heading as="h2" size="sm" color="primary" mb="50px" style={{ textAlign: 'center' }}>
-            Only holders of genesis NFTs can stake: MINT yours here &nbsp;
-            <Link href="nft" style={{ display: 'unset' }}>
-              [link]
-            </Link>
-            &nbsp;to access these pools
-          </Heading>
+
+          <Card style={{ marginBottom: '20px' }}>
+            <CardBody>
+              <InfoRow>
+                <Text>
+                  Only holders of genesis NFTs can stake: MINT yours &nbsp;
+                  <Link href="nft" style={{ display: 'unset' }}>
+                    link
+                  </Link>
+                  &nbsp;to access these pools
+                </Text>
+              </InfoRow>
+            </CardBody>
+          </Card>
 
           <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly} />
+
           <div>
             <Divider />
             <FlexLayout>

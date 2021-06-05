@@ -12,7 +12,7 @@ const NftProgressSimple = () => {
     <Card>
       <CardBody>
         <InfoRow>
-          <Text>{TranslateString(999, 'My NFTs')}:</Text>
+          <Text>{TranslateString(999, 'My Genesis NFTs')}:</Text>
           <Text>
             <strong>{balanceOf}</strong>
           </Text>

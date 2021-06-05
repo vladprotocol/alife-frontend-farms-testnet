@@ -258,6 +258,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
           quoteTokenAdresses={quoteTokenAdresses}
           quoteTokenSymbol={quoteTokenSymbol}
           tokenAddresses={tokenAddresses}
+          mustHaveNft={farm.mustHaveNft}
         />
       </ExpandingWrapper>
     </FCard>
