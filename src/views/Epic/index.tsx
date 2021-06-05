@@ -53,10 +53,10 @@ const Nft = () => {
     <NftProvider>
       <Page>
         <StyledHero>
-          <Heading as="h1" size="xxl" color="#5ca269" mb="24px">
+          <Heading as="h1" size="xl" color="#9f0d0d" mb="24px">
             Epic NFTs
           </Heading>
-          <Heading as="h2" size="lg" color="#5ca269">
+          <Heading as="h2" size="lg" color="#9f0d0d">
             {TranslateString(999, 'Trade in for LIFE, or keep for your collection!')}
           </Heading>
           <CustomButton onClick={() => history.push(`nft`)} mt="24px">

@@ -14,6 +14,7 @@ export interface ExpandableSectionProps {
   quoteTokenAdresses?: Address
   quoteTokenSymbol?: string
   tokenAddresses: Address
+  mustHaveNft: number
 }
 
 const Wrapper = styled.div`
@@ -44,12 +45,30 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
   quoteTokenAdresses,
   quoteTokenSymbol,
   tokenAddresses,
+  mustHaveNft,
 }) => {
   const TranslateString = useI18n()
   const liquidityUrlPathParts = getLiquidityUrlPathParts({ quoteTokenAdresses, quoteTokenSymbol, tokenAddresses })
 
   return (
     <Wrapper>
+      <Flex justifyContent="flex-start">
+        {mustHaveNft === 1 && (
+          <Link color="#9f0d0d" href="nft" bold={false}>
+            Mint Base NFT
+          </Link>
+        )}
+        {mustHaveNft === 2 && (
+          <Link color="#9f0d0d" href="nft" bold={false}>
+            Mint Rare NFT
+          </Link>
+        )}
+        {mustHaveNft === 3 && (
+          <Link color="#9f0d0d" href="epic" bold={false}>
+            Mint Epic NFT
+          </Link>
+        )}
+      </Flex>
       <Flex justifyContent="space-between">
         <Text>{TranslateString(316, 'Stake')}:</Text>
         <StyledLinkExternal
@@ -69,7 +88,7 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
         </Flex>
       )}
       <Flex justifyContent="flex-start">
-        <Link color="#5ca269" external href={bscScanAddress} bold={false}>
+        <Link color="#9f0d0d" external href={bscScanAddress} bold={false}>
           {TranslateString(356, 'View on BscScan')}
         </Link>
       </Flex>

@@ -1241,6 +1241,30 @@
         "stringId": 10005,
         "text": "Market Cap"
       }
+    },
+    {
+      "data": {
+        "stringId": 10006,
+        "text": "All"
+      }
+    },
+    {
+      "data": {
+        "stringId": 10007,
+        "text": "Base"
+      }
+    },
+    {
+      "data": {
+        "stringId": 10008,
+        "text": "Rare"
+      }
+    },
+    {
+      "data": {
+        "stringId": 10009,
+        "text": "Elite"
+      }
     }
   ],
   "pagination": {

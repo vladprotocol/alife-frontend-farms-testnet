@@ -36,10 +36,13 @@ const Label = styled.label`
   margin-bottom: 8px;
   margin-top: 24px;
 `
-
+// tokenIds is retrieved dynamically from contracts.
 const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSuccess, onDismiss }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [value, setValue] = useState('')
+  const [values, setValues] = useState({
+    address: '',
+    tokenId: tokenIds[0],
+  })
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
@@ -47,13 +50,13 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
 
   const handleConfirm = async () => {
     try {
-      const isValidAddress = Web3.utils.isAddress(value)
+      const isValidAddress = Web3.utils.isAddress(values.address)
 
       if (!isValidAddress) {
         setError(TranslateString(999, 'Please enter a valid wallet address'))
       } else {
         await nftContract.methods
-          .transferFrom(account, value, tokenIds[0])
+          .transferFrom(account, values.address, values.tokenId)
           .send({ from: account })
           .on('sending', () => {
             setIsLoading(true)
@@ -74,8 +77,8 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
   }
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = evt.target
-    setValue(inputValue)
+    const { value: inputValue, name } = evt.target
+    setValues({ ...values, [name]: inputValue })
   }
 
   return (
@@ -96,17 +99,32 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
           name="address"
           type="text"
           placeholder={TranslateString(999, 'Paste address')}
-          value={value}
+          value={values.address}
           onChange={handleChange}
           isWarning={error}
           disabled={isLoading}
         />
+        {/* <Label htmlFor="transferAddress">{TranslateString(999, 'Token ID')}:</Label>
+        <Input
+          id="tokenId"
+          name="tokenId"
+          type="number"
+          placeholder={TranslateString(999, 'Enter tokenId')}
+          value={values.tokenId}
+          onChange={handleChange}
+          isWarning={error}
+          disabled={isLoading}
+        /> */}
       </ModalContent>
       <Actions>
         <Button fullWidth variant="secondary" onClick={onDismiss}>
           {TranslateString(462, 'Cancel')}
         </Button>
-        <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading || !value}>
+        <Button
+          fullWidth
+          onClick={handleConfirm}
+          disabled={!account || isLoading || !values.address || !values.tokenId}
+        >
           {TranslateString(464, 'Confirm')}
         </Button>
       </Actions>

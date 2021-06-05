@@ -1,11 +1,7 @@
 import { Nft } from './types'
 
-// export const NftFarm = '0x08d2cBc5EFd1B56034F4628bB32e947C0d86BbB1'
-// export const NFT = '0x3F7C7C24fFA2ceFfaACE11B39D5b8a575A4B0674'
-
-// testnet
-export const NftFarm = '0xaBa054F1437aEBEa43fB0804b734DdB3F39FB62F'
-export const NFT = '0xA81Ab2D03b9E3a62BDBb837d417A5E221F754E14'
+export const NftFarm = '0x08d2cBc5EFd1B56034F4628bB32e947C0d86BbB1'
+export const NFT = '0x3F7C7C24fFA2ceFfaACE11B39D5b8a575A4B0674'
 export const AMOUNT_TO_CLAIM = '10'
 
 const Nfts: Nft[] = [
@@ -93,7 +89,7 @@ const Nfts: Nft[] = [
   {
     name: 'All Hail VLAD',
     metadata: '',
-    description: 'A coin like no other. It grants the holder eternal life when stored in thier wallet.',
+    description: 'A coin like no other. It grants the holder eternal life when stored in their wallet.',
     previewImage: 'preview-all-hail-vlad.jpg',
     originalImage:
       'https://ipfs.io/ipfs/QmWmdegkuvXShBs47G4GPqxfwnVbtKY5pYeAoAN3Xy37KV?filename=NFT-rare-all-hail-vlad.mp4',

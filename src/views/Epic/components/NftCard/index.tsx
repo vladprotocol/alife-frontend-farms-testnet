@@ -115,8 +115,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
 
   const MINTS = myMints[nftIndex] || 0
 
-  console.log(nftId, '?myMints', myMints, 'MINTS', MINTS)
-
   // not sure about this, you need to check if this oser own this nft in the view nft page.
   const youAreTheLastOwner = ownerById && ownerById[nftIndex] && ownerById[nftIndex].toString() === account.toString()
 
@@ -245,7 +243,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               </Value>
             </InfoRow>
             <InfoRow>
-              <Text>{TranslateString(999, 'Owned By Me')}:</Text>
+              <Text>{TranslateString(999, 'Minted By Me')}:</Text>
               <Value>{MINTS}</Value>
             </InfoRow>
           </InfoBlock>

@@ -11,8 +11,16 @@ const config: MenuEntry[] = [
     icon: 'TradeIcon',
     items: [
       {
-        label: 'Exchange',
+        label: 'Trade $VLAD',
         href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x279d41f3f78fe5c1f0ba41ae963d6e545113c973',
+      },
+      {
+        label: 'Trade $LIFE',
+        href: 'https://v1exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+      },
+      {
+        label: 'Buy $ALIFE',
+        href: 'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x42bA7BbDDEcb471c1e1Fe08636918952b6C19019',
       },
       {
         label: 'Liquidity',
@@ -21,7 +29,7 @@ const config: MenuEntry[] = [
     ],
   },
   {
-    label: 'Farm ALIFE',
+    label: 'Farm Alife',
     icon: 'FarmIcon',
     href: '/farms',
   },
@@ -36,6 +44,11 @@ const config: MenuEntry[] = [
     href: '/my-collection',
   },
   {
+    label: 'Past Farms',
+    icon: 'PoolIcon',
+    href: 'https://life.vlad.finance',
+  },
+  {
     label: 'More',
     icon: 'MoreIcon',
     items: [
@@ -48,7 +61,15 @@ const config: MenuEntry[] = [
         href: 'https://github.com/vladprotocol',
       },
       {
-        label: 'Overview',
+        label: 'Token Facts',
+        href: 'https://vlad.finance/token-facts',
+      },
+      {
+        label: 'Announcements',
+        href: 'https://twitter.com/VladFinance',
+      },
+      {
+        label: 'What is Vlad.Finance',
         href: 'https://vlad-finance.medium.com/introducing-vlad-token-and-the-path-to-immortality-ce96990fdf66/',
       },
       // {
@@ -67,11 +88,6 @@ const config: MenuEntry[] = [
     icon: 'NftIcon',
     href: '#',
   },
-  // {
-  //   label: 'Pools',
-  //   icon: 'PoolIcon',
-  //   href: '/pools',
-  // },
   // {
   //   label: 'Lottery',
   //   icon: 'TicketIcon',

@@ -66,6 +66,10 @@ const Value = styled(Text)`
 const SmallCard = styled(Card)`
   width: 500px;
   margin: 0 auto;
+
+  @media (max-width: 767px) {
+    width: 320px;
+  }
 `
 
 const CustomButton = styled(Button)`
@@ -252,7 +256,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               </Value>
             </InfoRow>
             <InfoRow>
-              <Text>{TranslateString(999, 'Owned By Me')}:</Text>
+              <Text>{TranslateString(999, 'Minted By Me')}:</Text>
               <Value>{MINTS}</Value>
             </InfoRow>
           </InfoBlock>

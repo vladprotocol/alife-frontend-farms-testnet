@@ -30,6 +30,27 @@ const RainbowLight = keyframes`
   }
 `
 
+const EliteStyledCardAccent = styled.div`
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 154, 0, 1) 10%,
+    rgba(208, 222, 33, 1) 20%,
+    rgba(251, 7, 217, 1) 90%,
+    rgba(255, 0, 0, 1) 100%
+  );
+  background-size: 300% 300%;
+  animation: ${RainbowLight} 2s linear infinite;
+  border-radius: 16px;
+  filter: blur(6px);
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  z-index: -1;
+`
+
 const StyledCardAccent = styled.div`
   background: linear-gradient(
     45deg,
@@ -95,35 +116,35 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice, vladPrice, ethereum, account }) => {
   const TranslateString = useI18n()
 
-    const { myMints, hasClaimed } = useContext(NftProviderContext)
-    const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
-    let mustHaveNft = 0
+  const { myMints, hasClaimed } = useContext(NftProviderContext)
+  const { myEpicMints, epicHasClaimed } = useContext(EpicProviderContext)
+  let mustHaveNft = 0
 
-  if(hasClaimed && farm.mustHaveNft === 1) {
+  if (hasClaimed && farm.mustHaveNft === 1) {
     for (let index = 0; index < 3; index++) {
       const haveNft = myMints[hasClaimed.indexOf(index)]
-      if(haveNft !== undefined && haveNft !== 0) {
+      if (haveNft !== undefined && haveNft !== 0) {
         mustHaveNft = haveNft
       }
     }
-  } else if(hasClaimed && farm.mustHaveNft === 2) {
+  } else if (hasClaimed && farm.mustHaveNft === 2) {
     for (let index = 3; index < 6; index++) {
       const haveNft = myMints[hasClaimed.indexOf(index)]
-      if(haveNft !== undefined && haveNft !== 0) {
+      if (haveNft !== undefined && haveNft !== 0) {
         mustHaveNft = haveNft
       }
     }
-  } else if(epicHasClaimed && farm.mustHaveNft === 3) {
+  } else if (epicHasClaimed && farm.mustHaveNft === 3) {
     for (let index = 0; index < 3; index++) {
       const haveNft = myEpicMints[epicHasClaimed.indexOf(index)]
-      if(haveNft !== undefined && haveNft !== 0) {
+      if (haveNft !== undefined && haveNft !== 0) {
+        console.log(farm.lpSymbol, haveNft)
         mustHaveNft = haveNft
       }
     }
   } else if (farm.mustHaveNft === 0) {
     mustHaveNft = 1
   }
-  // console.log(farm);
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
   // const isCommunityFarm = communityFarms.includes(farm.tokenSymbol)
@@ -167,7 +188,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
 
   return (
     <FCard>
-      {farm.tokenSymbol === 'ALIFE' && <StyledCardAccent />}
+      {farm.mustHaveNft === 2 && <StyledCardAccent />}
+      {farm.mustHaveNft === 3 && <EliteStyledCardAccent />}
       <CardHeading
         lpLabel={lpLabel}
         multiplier={farm.multiplier}
@@ -176,6 +198,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
         farmImage={farmImage}
         tokenSymbol={farm.tokenSymbol}
       />
+      <Flex justifyContent="space-between">
+        <Text>Rarity</Text>
+        <Text bold>
+          {farm.mustHaveNft === 1 && 'Base'}
+          {farm.mustHaveNft === 2 && 'Rare'}
+          {farm.mustHaveNft === 3 && 'Elite'}
+        </Text>
+      </Flex>
       {!removed && (
         <Flex justifyContent="space-between" alignItems="center">
           <Text>{TranslateString(352, 'APR')}:</Text>
@@ -208,9 +238,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
         <Text>{farm.depositFeeBP ? farm.depositFeeBP / 100 : '0'}%</Text>
       </Flex>
 
-      {mustHaveNft > 0 && (
-        <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
-      )}
+      {mustHaveNft > 0 && <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />}
       <Divider />
       <ExpandableSectionButton
         onClick={() => setShowExpandableSection(!showExpandableSection)}
@@ -230,6 +258,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, removed, cakePrice, bnbPrice,
           quoteTokenAdresses={quoteTokenAdresses}
           quoteTokenSymbol={quoteTokenSymbol}
           tokenAddresses={tokenAddresses}
+          mustHaveNft={farm.mustHaveNft}
         />
       </ExpandingWrapper>
     </FCard>

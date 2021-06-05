@@ -68,7 +68,7 @@ const FarmedStakingCard = () => {
   return (
     <StyledFarmStakingCard>
       <CardBody>
-        <Heading color="#5ca269" size="xl" mb="24px">
+        <Heading color="#9f0d0d" size="xl" mb="24px">
           {TranslateString(542, 'Farms & Staking')}
         </Heading>
         <CardImage src="/images/alife/2.png" alt="cake logo" width={64} height={64} />

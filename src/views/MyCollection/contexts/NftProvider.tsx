@@ -5,13 +5,16 @@ import useBlock from 'hooks/useBlock'
 import nftFarm from 'config/abi/NftFarm.json'
 import { NftFarm } from 'config/constants/nfts'
 import multicall from 'utils/multicall'
+import nfts from 'config/constants/allnfts'
 import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray } from '../utils/contracts'
+import { getUrlPartsInfo } from '../../../utils'
+import getNftDetailData from '../../../utils/getNftDetailData'
 
 interface NftProviderProps {
   children: ReactNode
 }
 
-type BunnyMap = {
+type NftMap = {
   [key: number]: number[]
 }
 
@@ -23,13 +26,14 @@ type State = {
   maxMintByNft: number[]
   prices: number[]
   myMints: number[]
+  nftTableData: any[]
   countBurnt: number
   endBlockNumber: number
   startBlockNumber: number
   totalSupplyDistributed: number
   currentDistributedSupply: number
   balanceOf: number
-  nftMap: BunnyMap
+  nftMap: NftMap
 
   allowMultipleClaims: boolean
   rarity: string
@@ -70,6 +74,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     maxMintByNft: [],
     prices: [],
     myMints: [],
+    nftTableData: [],
   })
   const { account } = useWallet()
   const currentBlock = useBlock()
@@ -142,8 +147,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
         const getMinted = await multicall(nftFarm, [{ address: NftFarm, name: 'getMinted', params: [account] }])
 
-        // console.log('getMinted', getMinted)
-
         const hasClaimed = getMinted[0][0]
         const amounts = getToFloat(getMinted[0][1])
         const ownerById = getMinted[0][2]
@@ -156,33 +159,70 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         // console.log('ownerById', ownerById)
         // console.log('maxMintByNft', maxMintByNft)
         // console.log('prices', prices)
-        console.log('myMints', myMints)
+        // console.log('myMints', myMints)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
-        let nftMap: BunnyMap = {}
+        let nftMap: NftMap = {}
+
+        let nftTableData = []
 
         // If the "balanceOf" is greater than 0 then retrieve the tokenIds
         // owned by the wallet, then the nftId's associated with the tokenIds
         if (balanceOf > 0) {
-          const getTokenIdAndBunnyId = async (index: number) => {
+          const getTokenIdAndNftId = async (index: number) => {
             try {
               const tokenId = await nftContract.methods.tokenOfOwnerByIndex(account, index).call()
-              const nftId = await nftContract.methods.getBunnyId(tokenId).call()
+              const nftId = await nftContract.methods.getNftId(tokenId).call()
 
-              return [parseInt(nftId, 10), parseInt(tokenId, 10)]
+              return [parseInt(tokenId, 10)]
+            } catch (error) {
+              return null
+            }
+          }
+
+          const getNftData = async (index: number) => {
+            try {
+              const tokenId = await nftContract.methods.tokenOfOwnerByIndex(account, index).call()
+              const tokenURI = await nftContract.methods.tokenURI(parseInt(tokenId, 10)).call()
+              const { name: nftName, rarity } = await getNftDetailData(tokenURI)
+              const { fullUrlArray } = getUrlPartsInfo(tokenURI)
+              const hash = fullUrlArray[4]
+              const hashId = parseInt(fullUrlArray[5].substring(0, fullUrlArray[5].length - 5), 10)
+              let nftDetailLink = ''
+              if (rarity === 'Base' || rarity === 'Rare') {
+                nftDetailLink = `/detail/${hashId}`
+              } else if (rarity === 'Epic') {
+                nftDetailLink = `/epic-detail/${hashId}`
+              } else if (rarity === 'Legendary') {
+                nftDetailLink = `/legendary-detail/${hashId}`
+              }
+
+              const nftPreviewImage = nfts.filter((nft) => nftName === nft.name).map((nft) => nft.previewImage)
+
+              return {
+                tokenId: parseInt(tokenId, 10),
+                type: `${hash} ,  ${hashId}`,
+                rarity,
+                nftName,
+                nftPreviewImage,
+                nftDetailLink,
+              }
             } catch (error) {
               return null
             }
           }
 
           const tokenIdPromises = []
+          const nftTablePromises = []
 
           for (let i = 0; i < balanceOf; i++) {
-            tokenIdPromises.push(getTokenIdAndBunnyId(i))
+            nftTablePromises.push(getNftData(i))
+            tokenIdPromises.push(getTokenIdAndNftId(i))
           }
 
           const tokenIdsOwnedByWallet = await Promise.all(tokenIdPromises)
+          nftTableData = await Promise.all(nftTablePromises)
 
           // While improbable a wallet can own more than one of the same nft so the format is:
           // { [nftId]: [array of tokenIds] }
@@ -212,6 +252,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           maxMintByNft,
           prices,
           myMints,
+          nftTableData,
         }))
       } catch (error) {
         console.error('an error occured', error)

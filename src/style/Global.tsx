@@ -8,10 +8,6 @@ declare module 'styled-components' {
 }
 
 const GlobalStyle = createGlobalStyle`
-  * {
-    @import url('https://fonts.googleapis.com/css2?family=Metamorphous&amp;display=swap');
-    font-family: 'Montserrat', sans-serif;
-  }
   body {
     background-color: ${({ theme }) => theme.colors.background};
 
@@ -19,6 +15,22 @@ const GlobalStyle = createGlobalStyle`
       height: auto;
       max-width: 100%;
     }
+  }
+  audio::-webkit-media-controls-panel {
+    background-color:#fff!important;
+    color: #000!important;
+  }
+  audio::-webkit-media-controls-play-button, audio::-webkit-media-controls-current-time-display, audio::-webkit-media-controls-timeline, audio::-webkit-media-controls-time-remaining-display, audio::-webkit-media-controls-fullscreen-button, audio::-webkit-media-controls-volume-slider, audio::-webkit-media-controls-toggle-closed-captions-button, audio::-webkit-media-controls-mute-button
+  {
+    background-color: #fff!important;
+    color:#000!important;
+  }
+  audio:focus{
+    outline: none;
+  }
+  audio{
+    height: 18px;
+    margin: 2px 12px;
   }
 `
 

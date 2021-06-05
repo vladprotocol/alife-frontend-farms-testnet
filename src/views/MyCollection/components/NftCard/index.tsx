@@ -131,6 +131,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
 
   const walletCanClaim = maxMintPerNft === 0 || MINTED === undefined || MINTED < MAX_MINT
 
+  // Here, tokenIds can be undefined as balanceOf is less than 1.
   const tokenIds = getTokenIds(nftId)
   const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
   const walletOwnsNft = tokenIds && tokenIds.length > 0
@@ -211,7 +212,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               </Tag>
             )}
           </Header>
-          {isInitialized && walletOwnsNft && (
+          {isInitialized && (
             <Button fullWidth variant="secondary" mt="24px" onClick={onPresentTransferModal}>
               {TranslateString(999, 'Transfer')}
             </Button>
@@ -230,7 +231,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
                 </Value>
               </InfoRow>
               <InfoRow>
-                <Text>{TranslateString(999, 'Owned By Me')}:</Text>
+                <Text>{TranslateString(999, 'Minted By Me')}:</Text>
                 <Value>{MINTS}</Value>
               </InfoRow>
             </InfoBlock>
