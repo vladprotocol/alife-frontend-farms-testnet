@@ -8,8 +8,7 @@ const mapIndexWithUrl: { [k: string]: number }  = {
   '/farms': 0,
   '/farms/base': 1,
   '/farms/rare': 2,
-  '/farms/elite': 3,
-  '/farms/history': 4
+  '/farms/elite': 3
 };
 
 const FarmTabButtons = ({ stakedOnly, setStakedOnly }) => {
