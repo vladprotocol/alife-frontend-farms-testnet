@@ -6,7 +6,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build-mainnet": "react-scripts build && rm -rf ../mainnet/* && mv ./build/* ../mainnet/ && mv ../mainnet/CNAME-MAINNET ../mainnet/CNAME",
-    "build-testnet": "react-scripts build && rm -rf ../alife-testnet/* && mv ./build/* ../alife-testnet/ && mv ../alife-testnet/CNAME-TESTNET ../alife-testnet/CNAME && cd ../alife-testnet/CNAME && git commit -am \"automated build\" && git push",
+    "build-testnet": "react-scripts build && rm -rf ../testnet/* && mv ./build/* ../testnet/ && mv ../testnet/CNAME-TESTNET ../testnet/CNAME",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
@@ -35,7 +35,7 @@
     "@binance-chain/bsc-use-wallet": "^0.8.1",
     "@crowdin/crowdin-api-client": "^1.10.1",
     "@ethersproject/abi": "^5.0.7",
-    "@pancakeswap-libs/uikit": "^0.29.4",
+    "@pancakeswap-libs/uikit": "vladprotocol/vlad-uikit",
     "@reduxjs/toolkit": "^1.5.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -68,6 +68,7 @@
     "@pancakeswap-libs/eslint-config-pancake": "1.0.0",
     "@types/jest": "^26.0.19",
     "eslint": "^7.16.0",
+    "husky": "^4.3.0",
     "prettier": "^2.1.2",
     "source-map-explorer": "^2.5.1"
   }
