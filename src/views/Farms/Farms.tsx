@@ -148,7 +148,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
           <Button
             as="a"
             size="sm"
-            href="https://app1.vlad.finance"
+            href="https://app1.vlad.finance/farms/history"
             target="_blank"
             rel="noopener noreferrer"
             style={{ marginBottom: '10px' }}
