@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Card, CardBody, Image, Heading, Link, Text } from '@pancakeswap-libs/uikit'
+import { Card, CardBody, Image, Heading, Link, Text, Button } from '@pancakeswap-libs/uikit'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
@@ -142,8 +142,19 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       <NftProvider>
         <Page>
           <Heading as="h1" size="xl" color="primary" mb="70px" style={{ textAlign: 'center' }}>
-            ALIFE FARMING HAS STARTED
+            NEW ALIFE FARMING HAS STARTED
           </Heading>
+
+          <Button
+            as="a"
+            size="sm"
+            href="https://app1.vlad.finance"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginBottom: '10px' }}
+          >
+            Unstake Old Masterchef
+          </Button>
 
           <CustomCard style={{ marginBottom: '20px' }}>
             <CardBody>
