@@ -75,8 +75,12 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
   //   (farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP',
   // )
 
-  const activeFarms = farmsLP.filter((farm) => farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
-  const inactiveFarms = farmsLP.filter((farm) => farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP')
+  const activeFarms = farmsLP.filter(
+    (farm) => farm.multiplier !== '0X' && farm.lpSymbol !== 'BNB-BUSD LP' && farm.lpSymbol !== 'BUSD-ALIFE LP',
+  )
+  const inactiveFarms = farmsLP.filter(
+    (farm) => farm.multiplier === '0X' && farm.lpSymbol !== 'BNB-BUSD LP' && farm.lpSymbol !== 'BUSD-ALIFE LP',
+  )
 
   const NFTFarms = localStorage.getItem('activeInactiveIndex') === '0' ? activeFarms : inactiveFarms
 
@@ -145,7 +149,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
             NEW ALIFE FARMING HAS STARTED
           </Heading>
 
-          <Button
+          {/* <Button
             as="a"
             size="sm"
             href="https://app1.vlad.finance/farms/history"
@@ -154,7 +158,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
             style={{ marginBottom: '10px' }}
           >
             Unstake Old Masterchef
-          </Button>
+          </Button> */}
 
           <CustomCard style={{ marginBottom: '20px' }}>
             <CardBody>

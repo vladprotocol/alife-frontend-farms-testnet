@@ -158,6 +158,23 @@ const farms: FarmConfig[] = [
     quoteTokenAdresses: contracts.life,
     isTokenOnly: true,
   },
+  {
+    pid: 9,
+    mustHaveNft: 0,
+    risk: 5,
+    lpSymbol: 'BUSD-ALIFE LP',
+    lpAddresses: {
+      97: '0xa75c80e7Ca70505AAB6062cF15A2cFC71b6138C0',
+      56: '0xc140a87031617d4fcb7d51e428cd6876664e8348',
+    },
+    tokenSymbol: 'BUSD',
+    tokenAddresses: {
+      97: '0xFecBE190631196e73A879b317D8A51CC4fE6cB0B',
+      56: '0x42bA7BbDDEcb471c1e1Fe08636918952b6C19019',
+    },
+    quoteTokenSymbol: QuoteToken.BUSD,
+    quoteTokenAdresses: contracts.busd,
+  },
 ]
 
 export default farms
