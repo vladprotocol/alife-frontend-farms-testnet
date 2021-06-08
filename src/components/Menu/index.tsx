@@ -548,13 +548,25 @@ const Menu = (props) => {
                         Buy $ALIFE
                       </a>
                     </li>
-                    <li className="fdeactive">
-                      <img src="../images/dexguru.png" className="img-fluid" alt="" />
-                      DexGuru
+                    <li>
+                      <a
+                        href="https://dex.guru/token/0x42ba7bbddecb471c1e1fe08636918952b6c19019-bsc"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/dexguru.png" className="img-fluid" alt="" />
+                        DexGuru
+                      </a>
                     </li>
-                    <li className="fdeactive">
-                      <img src="../images/fcoingecko.svg" className="img-fluid" alt="" />
-                      CoinGecko
+                    <li>
+                      <a
+                        href="https://goswappcharts.web.app/?isbsc=true&tokenId=0x42ba7bbddecb471c1e1fe08636918952b6c19019"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img src="../images/fcoingecko.svg" className="img-fluid" alt="" />
+                        CoinGecko
+                      </a>
                     </li>
                     <li className="fdeactive">
                       <img src="../images/fcoinmarketcap.svg" className="img-fluid" alt="" />
