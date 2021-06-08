@@ -120,6 +120,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
         if (totalValue.comparedTo(0) > 0) {
           apy = apy.div(totalValue)
+          apy = apy.times(3)
         }
 
         return { ...farm, apy }
@@ -149,7 +150,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
             NEW ALIFE FARMING HAS STARTED
           </Heading>
 
-          {/* <Button
+          <Button
             as="a"
             size="sm"
             href="https://app1.vlad.finance/farms/history"
@@ -158,7 +159,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
             style={{ marginBottom: '10px' }}
           >
             Unstake Old Masterchef
-          </Button> */}
+          </Button>
 
           <CustomCard style={{ marginBottom: '20px' }}>
             <CardBody>

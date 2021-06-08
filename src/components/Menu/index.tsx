@@ -216,7 +216,7 @@ const Menu = (props) => {
                   <track kind="captions" />
                 </audio>
                 <a href="https://soundcloud.com/dj_ezra_is_back" target="_blank" rel="noreferrer">
-                  DJ - Ezra on on #SoundCloud
+                  DJ Ezra on #SoundCloud
                 </a>
               </div>
             </div>
@@ -564,8 +564,8 @@ const Menu = (props) => {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <img src="../images/fcoingecko.svg" className="img-fluid" alt="" />
-                        CoinGecko
+                        <img src="../images/fgoswapp.svg" className="img-fluid" alt="GoSwapp" />
+                        GoSwapp
                       </a>
                     </li>
                     <li className="fdeactive">
@@ -573,8 +573,8 @@ const Menu = (props) => {
                       CoinMarketCap
                     </li>
                     <li className="fdeactive">
-                      <img src="../images/fgoswapp.svg" className="img-fluid" alt="GoSwapp" />
-                      GoSwapp
+                      <img src="../images/fcoingecko.svg" className="img-fluid" alt="" />
+                      CoinGecko
                     </li>
                     <li className="fdeactive">
                       <img src="../images/fnomics.svg" className="img-fluid" alt="" />
