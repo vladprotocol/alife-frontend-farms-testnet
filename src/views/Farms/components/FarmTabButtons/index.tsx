@@ -76,6 +76,7 @@ const FarmTabButtons = ({ stakedOnly, setStakedOnly }) => {
           </ButtonMenuItem>
         </ButtonMenu>
       </Wrapper>
+      <div style={{ marginLeft: '740px' }}>* - Approximate Figures</div>
     </>
   )
 }
