@@ -39,9 +39,19 @@ const config: MenuEntry[] = [
     href: '/nft',
   },
   {
+    label: 'Mint New NFTs',
+    icon: 'NftIcon',
+    href: '/new-nft',
+  },
+  {
     label: 'My NFT Collection',
     icon: 'NftIcon',
     href: '/my-collection',
+  },
+  {
+    label: 'My New NFT Collection',
+    icon: 'NftIcon',
+    href: '/my-new-collection',
   },
   {
     label: 'Past Farms',
