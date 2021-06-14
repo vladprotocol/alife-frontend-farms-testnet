@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Heading, Button } from '@pancakeswap-libs/uikit'
-import { Link } from 'react-router-dom'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
+import { useHistory, Link } from 'react-router-dom'
 import HowItWorks from './components/HowItWorks'
 import NftList from './components/NftList'
 import NftProvider from './contexts/NftProvider'
@@ -47,6 +47,7 @@ const GoldenButton = styled(Button)`
 
 const Nft = () => {
   const TranslateString = useI18n()
+  const history = useHistory()
 
   return (
     <NftProvider>
@@ -58,13 +59,23 @@ const Nft = () => {
           <GoldenButton mt="24px">
             <Link to="/new-nft">New NFTs</Link>
           </GoldenButton>
-          <Heading as="h1" size="xxl" color="secondary" mb="24px">
-            STOS NFTs
+          <Heading as="h1" size="xl" color="#9f0d0d" mb="24px">
+            Base and Rare NFTs
           </Heading>
-          <Heading as="h2" size="lg" color="secondary">
-            {TranslateString(999, 'Trade in for STOS, or keep for your collection!')}
+          <Heading as="h2" size="lg" color="#9f0d0d">
+            {TranslateString(999, 'Trade in for LIFE, or keep for your collection!')}
           </Heading>
+          <CustomButton onClick={() => history.push(`nft`)} mt="24px">
+            Base and Rare NFTs
+          </CustomButton>
+          <CustomButton variant="subtle" onClick={() => history.push(`epic`)} mt="24px">
+            Epic NFTs
+          </CustomButton>
+          <GoldenButton onClick={() => history.push(`legendary`)} mt="24px">
+            Legendary NFTs
+          </GoldenButton>
         </StyledHero>
+
         <NftInfo />
         <NftList />
       </Page>

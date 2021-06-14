@@ -42,7 +42,7 @@ const StatusCard = () => {
   }
 
   if (balanceOf > 0) {
-    return <NftInWalletCard balanceOf={balanceOf} />
+    return <NftInWalletCard />
   }
 
   return <NoNftsToClaimCard />

@@ -13,7 +13,6 @@ import {
   useModal,
 } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { List } from 'antd'
 import useI18n from 'hooks/useI18n'
 import { Nft } from 'config/constants/types'
 import { AMOUNT_TO_CLAIM } from 'config/constants/newnfts'
@@ -79,10 +78,10 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     getTokenIds,
     reInitialize,
     allowMultipleClaims,
-    // rarity,
+    rarity,
     priceMultiplier,
     maxMintPerNft,
-    // tokenPerBurn,
+    tokenPerBurn,
     amounts,
     maxMintByNft,
     prices,
@@ -97,17 +96,33 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   // tokenPerBurn global price
 
   const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply } = nft
-  // const PRICE = prices[nftId] || tokenPerBurn // here we get the price
+  const PRICE = prices[nftId] || tokenPerBurn // here we get the price
+
+  const firstCharOfAccount = account != null && account.slice(0, 4)
+  const lastCharOfAccount = account != null && account.slice(-4)
+
+  const accountName = account != null && `${firstCharOfAccount}...${lastCharOfAccount}`
 
   const loggedIn = account !== null
+
+  // console.log('?hasClaimed', hasClaimed)
+  // console.log('?ownerById', ownerById)
 
   const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
 
   const MINTS = myMints[nftIndex] || 0
+
+  // not sure about this, you need to check if this oser own this nft in the view nft page.
+  // const youAreTheLastOwner = ownerById && ownerById[nftIndex] && ownerById[nftIndex].toString() === account.toString()
+
   const MINTED = amounts[nftIndex] ? parseInt(amounts[nftIndex].toString()) : 0
   const MAX_MINT = maxMintByNft[nftIndex] ? parseInt(maxMintByNft[nftIndex].toString()) : maxMintPerNft
 
   const walletCanClaim = maxMintPerNft === 0 || MINTED === undefined || MINTED < MAX_MINT
+
+  // console.log('CONTRACT/GALLERY INFO:', totalSupplyDistributed, rarity, priceMultiplier, maxMintPerNft, tokenPerBurn)
+  // console.log('LIMITS BY NFT:', tokenPerBurn, amounts, maxMintByNft, prices)
+  // console.log(nftId, 'walletCanClaim', walletCanClaim, maxMintPerNft, MINTED, MAX_MINT)
 
   const tokenIds = getTokenIds(nftId)
   const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
@@ -187,7 +202,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         )}
         {isInitialized && loggedIn && walletCanClaim && isSupplyAvailable && (
           <Button fullWidth onClick={onPresentClaimModal} mt="24px">
-            {TranslateString(999, 'Claim this NFT')} for {tokenAmount} STOS
+            {TranslateString(999, 'Claim this NFT')} for {tokenAmount} LIFE
           </Button>
         )}
         {isInitialized && (
@@ -199,7 +214,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         )}
         {isInitialized && canBurnNft && walletOwnsNft && (
           <Button variant="danger" fullWidth onClick={onPresentBurnModal} mt="24px">
-            {TranslateString(999, 'Trade in for STOS')}
+            {TranslateString(999, 'Trade in for LIFE')}
           </Button>
         )}
       </CardBody>
@@ -209,15 +224,9 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         </DetailsButton>
         {state.isOpen && (
           <InfoBlock>
-            <List
-              size="small"
-              dataSource={description.split('.')}
-              renderItem={(item) => (
-                <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'left' }}>
-                  {item}
-                </Text>
-              )}
-            />
+            <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
+              {description}
+            </Text>
             <InfoRow>
               <Text>{TranslateString(999, 'Number minted')}:</Text>
               <Value>
@@ -225,7 +234,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               </Value>
             </InfoRow>
             <InfoRow>
-              <Text>{TranslateString(999, 'Owned By Me')}:</Text>
+              <Text>{TranslateString(999, 'Minted By Me')}:</Text>
               <Value>{MINTS}</Value>
             </InfoRow>
           </InfoBlock>
