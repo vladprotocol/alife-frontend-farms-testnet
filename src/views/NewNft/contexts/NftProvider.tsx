@@ -11,7 +11,7 @@ interface NftProviderProps {
   children: ReactNode
 }
 
-type NftMap = {
+type BunnyMap = {
   [key: number]: number[]
 }
 
@@ -29,11 +29,13 @@ type State = {
   totalSupplyDistributed: number
   currentDistributedSupply: number
   balanceOf: number
-  nftMap: NftMap
+  nftMap: BunnyMap
 
   allowMultipleClaims: boolean
+  rarity: string
   priceMultiplier: number
   maxMintPerNft: number
+  tokenPerBurn: number
 }
 
 type Context = {
@@ -59,8 +61,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     nftMap: {},
 
     allowMultipleClaims: true,
+    rarity: '',
     priceMultiplier: 0,
     maxMintPerNft: 0,
+    tokenPerBurn: 0,
 
     amounts: [],
     maxMintByNft: [],
@@ -84,8 +88,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           currentDistributedSupplyArr,
 
           allowMultipleClaimsArr,
+          rarityArr,
           priceMultiplierArr,
           maxMintPerNftArr,
+          tokenPerBurnArr,
         ] = await multicall(nftFarm, [
           { address: NftFarm, name: 'startBlockNumber' },
           { address: NftFarm, name: 'endBlockNumber' },
@@ -93,8 +99,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           { address: NftFarm, name: 'totalSupplyDistributed' },
           { address: NftFarm, name: 'currentDistributedSupply' },
           { address: NftFarm, name: 'allowMultipleClaims' },
+          { address: NftFarm, name: 'rarity' },
           { address: NftFarm, name: 'priceMultiplier' },
           { address: NftFarm, name: 'maxMintPerNft' },
+          { address: NftFarm, name: 'tokenPerBurn' },
         ])
 
         // TODO: Figure out why these are coming back as arrays
@@ -113,8 +121,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           currentDistributedSupply: currentDistributedSupply.toNumber(),
           totalSupplyDistributed: totalSupplyDistributed.toNumber(),
           allowMultipleClaims: allowMultipleClaimsArr[0],
+          rarity: rarityArr[0].toString(),
           priceMultiplier: parseFloat(priceMultiplierArr[0].toString()),
           maxMintPerNft: parseInt(maxMintPerNftArr[0].toString()),
+          tokenPerBurn: getFromWei(tokenPerBurnArr[0]),
         }))
       } catch (error) {
         console.error('an error occured', error)
@@ -132,6 +142,8 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
         const getMinted = await multicall(nftFarm, [{ address: NftFarm, name: 'getMinted', params: [account] }])
 
+        // console.log('getMinted', getMinted)
+
         const hasClaimed = getMinted[0][0]
         const amounts = getToFloat(getMinted[0][1])
         const ownerById = getMinted[0][2]
@@ -144,19 +156,18 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         // console.log('ownerById', ownerById)
         // console.log('maxMintByNft', maxMintByNft)
         // console.log('prices', prices)
-        // console.log('myMints', myMints)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
-        let nftMap: NftMap = {}
+        let nftMap: BunnyMap = {}
 
         // If the "balanceOf" is greater than 0 then retrieve the tokenIds
         // owned by the wallet, then the nftId's associated with the tokenIds
         if (balanceOf > 0) {
-          const getTokenIdAndNftId = async (index: number) => {
+          const getTokenIdAndBunnyId = async (index: number) => {
             try {
               const tokenId = await nftContract.methods.tokenOfOwnerByIndex(account, index).call()
-              const nftId = await nftContract.methods.getNftId(tokenId).call()
+              const nftId = await nftContract.methods.getBunnyId(tokenId).call()
 
               return [parseInt(nftId, 10), parseInt(tokenId, 10)]
             } catch (error) {
@@ -167,7 +178,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           const tokenIdPromises = []
 
           for (let i = 0; i < balanceOf; i++) {
-            tokenIdPromises.push(getTokenIdAndNftId(i))
+            tokenIdPromises.push(getTokenIdAndBunnyId(i))
           }
 
           const tokenIdsOwnedByWallet = await Promise.all(tokenIdPromises)

@@ -8,7 +8,7 @@ const NoNftsToClaimCard = () => {
   const TranslateString = useI18n()
 
   return (
-    <SecondaryCard style={{ backgroundColor: '#27262c' }}>
+    <SecondaryCard>
       <CardContent imgSrc="/images/present-disabled.svg">
         <Heading mb="8px">{TranslateString(999, 'No NFTs to claim')}</Heading>
         <Text>
