@@ -4,7 +4,7 @@ import { Heading, LogoIcon, Text, Button } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import HowItWorks from './components/HowItWorks'
 import NftList from './components/NftList'
 import NftTable from './components/NftTable'
@@ -68,7 +68,12 @@ const Nft = () => {
             <Heading as="h1" size="xl" color="secondary" mb="24px">
               My NFT Collections
             </Heading>
-            <CustomButton mt="24px">Ticket NFTs</CustomButton>
+            <CustomButton variant="subtle" mt="24px">
+              <Link to="/my-collection">Mint NFTs (Genesis)</Link>
+            </CustomButton>
+            <GoldenButton mt="24px">
+              <Link to="/my-new-collection">Mint NFTs (New)</Link>
+            </GoldenButton>
           </StyledHero>
           <NftInfo />
           <NftTable />

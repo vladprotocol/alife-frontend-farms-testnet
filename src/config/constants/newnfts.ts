@@ -1,60 +1,107 @@
 import { Nft } from './types'
 
-export const NftFarm = '0x93E17B6Bceb77A1CcD5Aa3c2dD4Bfdd7FA328516'
-export const NFT = '0x02d9e77c7CF78Ac2F066534df823f615B341D8dF'
+export const NftFarm = '0x08d2cBc5EFd1B56034F4628bB32e947C0d86BbB1'
+export const NFT = '0x3F7C7C24fFA2ceFfaACE11B39D5b8a575A4B0674'
 export const AMOUNT_TO_CLAIM = '10'
 
-const NewNfts: Nft[] = [
+const Nfts: Nft[] = [
   {
-    name: 'Main Pass NFT',
-    metadata: '',
-    description:
-      'All inclusive Main Event Venue DJ Concert. Open Bar. Lottery draw for the afterparty exclusive. Transportation to and from all events from approved hotels.',
-    originalImage: 'https://gateway.pinata.cloud/ipfs/QmaAZXjDP9RaccmbqXBmxh9ByfLdxzgJHdb7mSbKVghzd4',
-    previewImage: 'preview1.png',
-    blurImage: 'swapsies-blur.png',
-    sortOrder: 999,
+    name: 'Count Pepes Chocula',
+    metadata: 'tier-NFT-base-dark-chocolate.json',
+    description: 'Dipped in chocolate and ready for a bite. Part of the base tier of Vlad NFTs.',
+    previewImage: 'preview-base-dark-chocolate.jpg',
+    originalImage:
+      'https://ipfs.io/ipfs/QmX9UuF41nfhnESX3DnVHhC4XwuYAcLEReGyN4CtE8P7Bg?filename=NFT-base-dark-chocolate.mp4',
     fileType: 'mp4',
+    blurImage: '',
+    sortOrder: 0,
     nftId: 0,
     tokenAmount: 10,
-    tokenSupply: 15,
-    nftFarmContract: '0xe876d9A1A8AA778c67bf04fe943677Df84eD99AA',
-    nftContract: '0x1605854923FC0bDC13F0336C06f4fB1c1e6e83eE',
+    tokenSupply: 2222,
+    nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
+    nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
   },
-  // {
-  //   name: 'Yacht Pass NFT',
-  //   metadata: '',
-  //   description:
-  //     'All inclusive Yacht Party. Fully Catered. Open Bar. Private DJ. Full day Punta Cana booze cruise sightseeing tour. Main Event NFT’s included! (25 STOS Value). Transportation to and from all events',
-  //   originalImage: 'https://gateway.pinata.cloud/ipfs/Qmd4dPZsBbqpG1dNr4DxkiVyz9wpVQAhUw2cvqshn9e2Na',
-  //   previewImage: 'preview2.png',
-  //   blurImage: 'drizzle-blur.png',
-  //   sortOrder: 999,
-  //   bunnyId: 1,
-  //   fileType: 'mp4',
-  //   nftId: 1,
-  //   tokenAmount: 15,
-  //   tokenSupply: 10,
-  //   nftFarmContract: '0xe876d9A1A8AA778c67bf04fe943677Df84eD99AA',
-  //   nftContract: '0x1605854923FC0bDC13F0336C06f4fB1c1e6e83eE',
-  // },
-  // {
-  //   name: 'VIP WEEK Pass NFT',
-  //   metadata: '',
-  //   description:
-  //     '5 Bed Villa from a list of oceanfront choices. Personal chef with daily menus. Transportation to and from the events. Yacht Party Admission. Main Event Admission + Afterparty. Party of 8 covered for Villa and all admissions. 4 days, 3 nights (extensions extra)',
-  //   originalImage: 'https://gateway.pinata.cloud/ipfs/QmdTZT6LS9AULcvwGSYuDS6oBQ7GuHqKWJcSu1ymX3crXV',
-  //   previewImage: 'preview3.png',
-  //   blurImage: 'blueberries-blur.png',
-  //   sortOrder: 999,
-  //   bunnyId: 2,
-  //   fileType: 'mp4',
-  //   nftId: 2,
-  //   tokenAmount: 20,
-  //   tokenSupply: 5,
-  //   nftFarmContract: '0xe876d9A1A8AA778c67bf04fe943677Df84eD99AA',
-  //   nftContract: '0x1605854923FC0bDC13F0336C06f4fB1c1e6e83eE',
-  // },
+  {
+    name: 'Vlad Pepes Drakul',
+    metadata: 'tier-NFT-base-main-nopaint.json',
+    description: 'The legend behind the meme in all his original glory. Part of the base tier of Vlad NFTs',
+    previewImage: 'preview-base-main-nopaint.jpg',
+    originalImage:
+      'https://ipfs.io/ipfs/QmWckPrzbjvf8jqUpdQ7jKLzdaSBTyPSV6x6obSUHHipqc?filename=NFT-base-main-nopaint.mp4',
+    fileType: 'mp4',
+    blurImage: '',
+    sortOrder: 1,
+    nftId: 1,
+    tokenAmount: 10,
+    tokenSupply: 2222,
+    nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
+    nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+  },
+  {
+    name: 'Pepes in Stone',
+    metadata: 'tier-NFT-base-marble.json',
+    description:
+      'The count has turned into a marble statue ready for display in the halls of Vladhalla. Part of the base tier of Vlad NFTs.',
+    previewImage: 'preview-base-marble.jpg',
+    originalImage: 'https://ipfs.io/ipfs/QmSnz85drLjCD4qNgaMwHFC6PFEkGrmYhM1LpHwZWpEWaQ?filename=NFT-base-marble.mp4',
+    fileType: 'mp4',
+    blurImage: '',
+    sortOrder: 2,
+    nftId: 2,
+    tokenAmount: 10,
+    tokenSupply: 2222,
+    nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
+    nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+  },
+  {
+    name: 'The path to Vladhalla',
+    metadata: '',
+    description: 'All who seek to find the path to Vladhalla must have strong hands along the way to immortality.',
+    previewImage: 'preview-path-to-vladhalla.jpg',
+    originalImage:
+      'https://ipfs.io/ipfs/QmQWAeV3aAWD2Kbvxmtt4H874AEf7M7N5FcBos4iZbkRcj?filename=NFT-rare-path-to-vladhalla.mp4',
+    fileType: 'mp4',
+    blurImage: '',
+    sortOrder: 3,
+    nftId: 3,
+    tokenAmount: 100,
+    tokenSupply: 666,
+    nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
+    nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+  },
+  {
+    name: 'Painted Pepe',
+    metadata: '',
+    description:
+      'As an homage to the original Vlad Pepes Drakul this retains his painted face hang him in your gallery for eternal viewing.',
+    previewImage: 'preview-painted-pepes.jpg',
+    originalImage:
+      'https://ipfs.io/ipfs/QmRqe92vpppkNS2aihmdvswHstAiHAF4jC2KUAiec5LKKk?filename=NFT-rare-painted-pepes.mp4',
+    fileType: 'mp4',
+    blurImage: '',
+    sortOrder: 4,
+    nftId: 4,
+    tokenAmount: 100,
+    tokenSupply: 666,
+    nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
+    nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+  },
+  {
+    name: 'All Hail VLAD',
+    metadata: '',
+    description: 'A coin like no other. It grants the holder eternal life when stored in their wallet.',
+    previewImage: 'preview-all-hail-vlad.jpg',
+    originalImage:
+      'https://ipfs.io/ipfs/QmWmdegkuvXShBs47G4GPqxfwnVbtKY5pYeAoAN3Xy37KV?filename=NFT-rare-all-hail-vlad.mp4',
+    fileType: 'mp4',
+    blurImage: '',
+    sortOrder: 5,
+    nftId: 5,
+    tokenAmount: 100,
+    tokenSupply: 666,
+    nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
+    nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+  },
 ]
 
-export default NewNfts
+export default Nfts
