@@ -8,12 +8,12 @@ import BigNumber from 'bignumber.js'
 // TODO: Figure out how to add current account to contracts to write methods can be used
 
 export const getNftMintingContract = (contractOptions?: ContractOptions) => {
-  const nftMintingFarmAbi = (nftFarm as unknown) as AbiItem
+  const nftMintingFarmAbi = nftFarm as unknown as AbiItem
   return getContract(nftMintingFarmAbi, NftFarm, contractOptions)
 }
 
 export const getNftContract = (contractOptions?: ContractOptions) => {
-  const nftAbi = (nft as unknown) as AbiItem
+  const nftAbi = nft as unknown as AbiItem
   return getContract(nftAbi, NFT, contractOptions)
 }
 

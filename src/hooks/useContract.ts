@@ -31,12 +31,12 @@ const useContract = (abi: AbiItem, address: string, contractOptions?: ContractOp
  */
 
 export const useIfoContract = (address: string) => {
-  const ifoAbi = (ifo as unknown) as AbiItem
+  const ifoAbi = ifo as unknown as AbiItem
   return useContract(ifoAbi, address)
 }
 
 export const useERC20 = (address: string) => {
-  const erc20Abi = (erc20 as unknown) as AbiItem
+  const erc20Abi = erc20 as unknown as AbiItem
   return useContract(erc20Abi, address)
 }
 
@@ -45,40 +45,39 @@ export const useCake = () => {
 }
 
 export const useRabbitMintingFarm = (address: string) => {
-  const nftMintingFarmAbi = (nftFarm as unknown) as AbiItem
+  const nftMintingFarmAbi = nftFarm as unknown as AbiItem
   return useContract(nftMintingFarmAbi, address)
 }
 
 export const usePancakeRabbits = (address: string) => {
-  const nftAbi = (nft as unknown) as AbiItem
+  const nftAbi = nft as unknown as AbiItem
   return useContract(nftAbi, address)
 }
 
 export const useNewNFTFarmContract = (address: string) => {
-  const nftFarmAbi = (nftFarm as unknown) as AbiItem
+  const nftFarmAbi = nftFarm as unknown as AbiItem
   return useContract(nftFarmAbi, address)
 }
 
-
 export const useLottery = () => {
-  const abi = (lottery as unknown) as AbiItem
+  const abi = lottery as unknown as AbiItem
   return useContract(abi, getLotteryAddress())
 }
 
 export const useLotteryTicket = () => {
-  const abi = (lotteryTicket as unknown) as AbiItem
+  const abi = lotteryTicket as unknown as AbiItem
   return useContract(abi, getLotteryTicketAddress())
 }
 
 export const useMasterchef = () => {
-  const abi = (masterChef as unknown) as AbiItem
+  const abi = masterChef as unknown as AbiItem
   return useContract(abi, getMasterChefAddress())
 }
 
 export const useSousChef = (id) => {
   const config = poolsConfig.find((pool) => pool.sousId === id)
   const rawAbi = config.poolCategory === PoolCategory.BINANCE ? sousChefBnb : sousChef
-  const abi = (rawAbi as unknown) as AbiItem
+  const abi = rawAbi as unknown as AbiItem
   return useContract(abi, config.contractAddress[process.env.REACT_APP_CHAIN_ID])
 }
 
