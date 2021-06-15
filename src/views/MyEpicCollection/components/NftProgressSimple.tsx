@@ -7,9 +7,8 @@ import InfoRow from './InfoRow'
 
 const NftProgressSimple = () => {
   const TranslateString = useI18n()
-  const { isInitialized, currentDistributedSupply, totalSupplyDistributed, countBurnt, myMints } = useContext(
-    NftProviderContext,
-  )
+  const { isInitialized, currentDistributedSupply, totalSupplyDistributed, countBurnt, myMints } =
+    useContext(NftProviderContext)
 
   let myNFTs = 0
 

@@ -51,12 +51,12 @@ const Nft = () => {
   const [NFTs, setNFTs] = useState(nfts)
 
   const filterNFTs = (rarity: string) => {
-    const filteredNFTs = nfts.filter((nft) => nft.rarity === rarity);
-    setNFTs(filteredNFTs);
+    const filteredNFTs = nfts.filter((nft) => nft.rarity === rarity)
+    setNFTs(filteredNFTs)
   }
 
   useEffect(() => {
-    filterNFTs('Base');
+    filterNFTs('Base')
   }, [])
 
   return (

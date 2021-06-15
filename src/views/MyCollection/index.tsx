@@ -68,7 +68,9 @@ const Nft = () => {
             <Heading as="h1" size="xl" color="#9f0d0d" mb="24px">
               My NFT Collections
             </Heading>
-            <CustomButton variant="subtle"  mt="24px">Mint NFTs (Genesis)</CustomButton>
+            <CustomButton variant="subtle" mt="24px">
+              Mint NFTs (Genesis)
+            </CustomButton>
             <GoldenButton mt="24px">
               <Link to="/my-new-collection">Mint NFTs (New)</Link>
             </GoldenButton>
