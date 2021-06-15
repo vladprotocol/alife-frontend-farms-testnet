@@ -20,6 +20,7 @@ const Nfts: Nft[] = [
     tokenSupply: 2222,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+    rarity: 'Base'
   },
   {
     name: 'Vlad Pepes Drakul',
@@ -36,6 +37,7 @@ const Nfts: Nft[] = [
     tokenSupply: 2222,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+    rarity: 'Base'
   },
   {
     name: 'Pepes in Stone',
@@ -52,6 +54,7 @@ const Nfts: Nft[] = [
     tokenSupply: 2222,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+    rarity: 'Rare'
   },
   {
     name: 'The path to Vladhalla',
@@ -68,6 +71,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+    rarity: 'Epic'
   },
   {
     name: 'Painted Pepe',
@@ -85,6 +89,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+    rarity: 'Legendary'
   },
   {
     name: 'All Hail VLAD',
@@ -101,6 +106,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
+    rarity: 'Epic'
   },
 ]
 
