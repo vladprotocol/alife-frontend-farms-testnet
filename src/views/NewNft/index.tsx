@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Heading, Button } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
-import { useHistory, Link } from 'react-router-dom'
-import HowItWorks from './components/HowItWorks'
+import { Link } from 'react-router-dom'
+import nfts from 'config/constants/newnfts'
 import NftList from './components/NftList'
 import NftProvider from './contexts/NftProvider'
 import NftInfo from './components/NftInfo'
@@ -47,7 +47,17 @@ const GoldenButton = styled(Button)`
 
 const Nft = () => {
   const TranslateString = useI18n()
-  const history = useHistory()
+
+  const [NFTs, setNFTs] = useState(nfts)
+
+  const filterNFTs = (rarity: string) => {
+    const filteredNFTs = nfts.filter((nft) => nft.rarity === rarity);
+    setNFTs(filteredNFTs);
+  }
+
+  useEffect(() => {
+    filterNFTs('Base');
+  }, [])
 
   return (
     <NftProvider>
@@ -65,19 +75,22 @@ const Nft = () => {
           <Heading as="h2" size="lg" color="#9f0d0d">
             {TranslateString(999, 'Trade in for LIFE, or keep for your collection!')}
           </Heading>
-          <CustomButton onClick={() => history.push(`nft`)} mt="24px">
-            Base and Rare NFTs
+          <CustomButton onClick={() => filterNFTs('Base')} mt="24px">
+            Base NFTs
           </CustomButton>
-          <CustomButton variant="subtle" onClick={() => history.push(`epic`)} mt="24px">
+          <CustomButton variant="success" onClick={() => filterNFTs('Rare')} mt="24px">
+            Rare NFTs
+          </CustomButton>
+          <CustomButton variant="subtle" onClick={() => filterNFTs('Epic')} mt="24px">
             Epic NFTs
           </CustomButton>
-          <GoldenButton onClick={() => history.push(`legendary`)} mt="24px">
+          <GoldenButton onClick={() => filterNFTs('Legendary')} mt="24px">
             Legendary NFTs
           </GoldenButton>
         </StyledHero>
 
         <NftInfo />
-        <NftList />
+        <NftList data={NFTs} />
       </Page>
     </NftProvider>
   )

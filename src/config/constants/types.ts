@@ -95,4 +95,5 @@ export type Nft = {
   tokenSupply: number
   nftFarmContract: string
   nftContract: string
+  rarity?: string
 }
