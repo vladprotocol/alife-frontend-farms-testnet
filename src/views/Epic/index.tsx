@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Heading, Button } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import HowItWorks from './components/HowItWorks'
 import NftList from './components/NftList'
 import NftProvider from './contexts/NftProvider'
@@ -53,6 +53,12 @@ const Nft = () => {
     <NftProvider>
       <Page>
         <StyledHero>
+          <CustomButton variant="subtle" mt="24px">
+            <Link to="/nft">Genesis NFTs</Link>
+          </CustomButton>
+          <GoldenButton mt="24px">
+            <Link to="/new-nft">New NFTs</Link>
+          </GoldenButton>
           <Heading as="h1" size="xl" color="#9f0d0d" mb="24px">
             Epic NFTs
           </Heading>
