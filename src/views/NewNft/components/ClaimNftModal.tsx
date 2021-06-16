@@ -8,7 +8,7 @@ import { getLifeAddress } from 'utils/addressHelpers'
 import { Nft } from 'config/constants/types'
 import useTokenBalance from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
-import { useERC20, useRabbitMintingFarm } from 'hooks/useContract'
+import { useERC20, useNFTFarmV2Contract } from 'hooks/useContract'
 import InfoRow from './InfoRow'
 import { useNftAllowance } from '../../../hooks/useAllowance'
 import { useNftApprove } from '../../../hooks/useApprove'
@@ -39,7 +39,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
-  const nftMintingContract = useRabbitMintingFarm(NftFarm)
+  const nftMintingContract = useNFTFarmV2Contract(NftFarm)
   const contraToken = useERC20(getLifeAddress())
   const allowance = useNftAllowance(contraToken, NftFarm, pendingTx)
   const onApprove = useNftApprove(contraToken, NftFarm)
@@ -56,7 +56,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
 
     try {
       await nftMintingContract.methods
-        .mintNFT(nft.nftId)
+        .mint(nft.nftId)
         .send({ from: account })
         .on('sending', () => {
           setIsLoading(true)

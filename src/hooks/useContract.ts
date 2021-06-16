@@ -8,6 +8,7 @@ import { PoolCategory } from 'config/constants/types'
 import ifo from 'config/abi/ifo.json'
 import erc20 from 'config/abi/erc20.json'
 import nftFarm from 'config/abi/NftFarm.json'
+import nftFarmV2 from 'config/abi/NftFarmV2.json'
 import nft from 'config/abi/NFT.json'
 import lottery from 'config/abi/lottery.json'
 import lotteryTicket from 'config/abi/lotteryNft.json'
@@ -56,6 +57,11 @@ export const usePancakeRabbits = (address: string) => {
 
 export const useNewNFTFarmContract = (address: string) => {
   const nftFarmAbi = nftFarm as unknown as AbiItem
+  return useContract(nftFarmAbi, address)
+}
+
+export const useNFTFarmV2Contract = (address: string) => {
+  const nftFarmAbi = nftFarmV2 as unknown as AbiItem
   return useContract(nftFarmAbi, address)
 }
 

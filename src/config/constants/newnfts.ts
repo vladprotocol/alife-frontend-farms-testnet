@@ -1,7 +1,7 @@
 import { Nft } from './types'
 
 export const NftFarm = '0xEb3af3C7ECaD4927E6e650BFf0C3841d49E36c9B'
-export const NFT = '0x3F7C7C24fFA2ceFfaACE11B39D5b8a575A4B0674'
+export const NFT = '0xa81ab2d03b9e3a62bdbb837d417a5e221f754e14'
 export const AMOUNT_TO_CLAIM = '10'
 
 const Nfts: Nft[] = [
@@ -54,7 +54,7 @@ const Nfts: Nft[] = [
     tokenSupply: 2222,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
-    rarity: 'Rare',
+    rarity: 'Base',
   },
   {
     name: 'The path to Vladhalla',
@@ -71,7 +71,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
-    rarity: 'Epic',
+    rarity: 'Rare',
   },
   {
     name: 'Painted Pepe',
@@ -89,7 +89,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
-    rarity: 'Legendary',
+    rarity: 'Rare',
   },
   {
     name: 'All Hail VLAD',
@@ -106,7 +106,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
-    rarity: 'Epic',
+    rarity: 'Rare',
   },
   {
     name: 'All Hail VLAD',
@@ -174,7 +174,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
-    rarity: 'Epic',
+    rarity: 'Legendary',
   },
   {
     name: 'All Hail VLAD',
@@ -191,7 +191,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
-    rarity: 'Epic',
+    rarity: 'Legendary',
   },
   {
     name: 'All Hail VLAD',
@@ -208,7 +208,7 @@ const Nfts: Nft[] = [
     tokenSupply: 666,
     nftFarmContract: '0x3627Ca89675b42489aD39619A92dd0Ce24CA90bB',
     nftContract: '0xa521D5FA64D0aAdB4ee607BAb20142aA173e4392',
-    rarity: 'Epic',
+    rarity: 'Legendary',
   },
 ]
 

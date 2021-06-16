@@ -125,7 +125,9 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   // console.log(nftId, 'walletCanClaim', walletCanClaim, maxMintPerNft, MINTED, MAX_MINT)
 
   const tokenIds = getTokenIds(nftId)
-  const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
+  // const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
+
+  const isSupplyAvailable = true
   const walletOwnsNft = tokenIds && tokenIds.length > 0
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
 
