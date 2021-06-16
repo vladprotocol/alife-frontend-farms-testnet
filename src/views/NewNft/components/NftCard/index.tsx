@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState, useContext, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import {
   Card,
@@ -20,7 +20,7 @@ import { useHistory } from 'react-router-dom'
 import InfoRow from '../InfoRow'
 import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
-import { getNftContract } from '../../utils/contracts'
+import { getNewNftContract } from '../../utils/contracts'
 import ClaimNftModal from '../ClaimNftModal'
 import BurnNftModal from '../BurnNftModal'
 import TransferNftModal from '../TransferNftModal'
@@ -65,8 +65,10 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     isLoading: false,
     isOpen: false,
     nftCount: 0,
-    nftBurnCount: 0,
+    nftBurnCount: 0
   })
+  const [minted, setMinted] = useState(0);
+  const [maxMint, setMaxMint] = useState(0);
   const TranslateString = useI18n()
   const {
     isInitialized,
@@ -127,14 +129,27 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   const tokenIds = getTokenIds(nftId)
   // const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
 
-  const isSupplyAvailable = true
+  useEffect(() => {
+    const getNftInfoState = async () => {
+      const nftContract = getNewNftContract();
+      const nftInfoState = await nftContract.methods.nftInfoState(100).call()
+      const { minted: mintedValue, maxMint: maxMintValue } = nftInfoState;
+      setMinted(mintedValue);
+      setMaxMint(maxMintValue);
+    }
+    getNftInfoState()
+  });
+
+  
+
+  const isSupplyAvailable = maxMint < minted;
   const walletOwnsNft = tokenIds && tokenIds.length > 0
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
 
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
     try {
-      const { methods } = getNftContract()
+      const { methods } = getNewNftContract()
       const nftCount = await methods.nftCount(nftId).call()
       const nftBurnCount = await methods.nftBurnCount(nftId).call()
 
