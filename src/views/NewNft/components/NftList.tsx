@@ -8,7 +8,7 @@ const NftList = (props) => {
   return (
     <NftGrid>
       {orderBy(nfts, 'sortOrder').map((nft) => (
-        <div key={nft.name}>
+        <div key={nft.nftId}>
           <NftCard nft={nft} />
         </div>
       ))}
