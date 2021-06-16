@@ -1,7 +1,7 @@
 import { AbiItem, fromWei } from 'web3-utils'
 import { getContract } from 'utils/web3'
 import { ContractOptions } from 'web3-eth-contract'
-import nftFarm from 'config/abi/NftFarm.json'
+import nftFarm from 'config/abi/NftFarmV2.json'
 import nft from 'config/abi/NFT.json'
 import { NftFarm, NFT } from 'config/constants/newnfts'
 import BigNumber from 'bignumber.js'
