@@ -132,17 +132,17 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   useEffect(() => {
     const getNftInfoState = async () => {
       const nftContract = getNewNftContract();
-      const nftInfoState = await nftContract.methods.nftInfoState(100).call()
+      const nftInfoState = await nftContract.methods.nftInfoState(nftId).call()
       const { minted: mintedValue, maxMint: maxMintValue } = nftInfoState;
-      setMinted(mintedValue);
-      setMaxMint(maxMintValue);
+      setMinted(parseInt(mintedValue));
+      setMaxMint(parseInt(maxMintValue));
     }
     getNftInfoState()
   });
 
   
 
-  const isSupplyAvailable = maxMint < minted;
+  const isSupplyAvailable = minted < maxMint;
   const walletOwnsNft = tokenIds && tokenIds.length > 0
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
 
