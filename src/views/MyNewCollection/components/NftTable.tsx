@@ -153,7 +153,7 @@ const NftTable = () => {
           fileType: '',
           blurImage: '',
           sortOrder: 1,
-          nftId: 0,
+          nftId: parseInt(record.nftId),
           tokenAmount: 0,
           tokenSupply: 0,
           nftFarmContract: '',

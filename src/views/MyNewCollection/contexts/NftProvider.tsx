@@ -184,6 +184,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
             try {
               const tokenId = await nftContract.methods.tokenOfOwnerByIndex(account, index).call()
               const tokenURI = await nftContract.methods.tokenURI(parseInt(tokenId, 10)).call()
+              const nftId = await nftContract.methods.getNftId(parseInt(tokenId, 10)).call()
               const approvedStatus = await nftContract.methods.getApproved(parseInt(tokenId, 10)).call()
               let isApproved = false
               if (approvedStatus !== '0x0000000000000000000000000000000000000000') {
@@ -205,6 +206,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
                 nftPreviewImage,
                 nftDetailLink,
                 isApproved,
+                nftId
               }
             } catch (error) {
               return null
