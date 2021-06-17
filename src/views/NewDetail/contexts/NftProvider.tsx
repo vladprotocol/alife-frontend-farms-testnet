@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useEffect, useRef, useState } from 're
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useBlock from 'hooks/useBlock'
-import nftFarm from 'config/abi/NftFarm.json'
+import nftFarmV2 from 'config/abi/NftFarmV2.json'
 import { NftFarm } from 'config/constants/newnfts'
 import multicall from 'utils/multicall'
 import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray } from '../utils/contracts'
@@ -32,8 +32,10 @@ type State = {
   nftMap: NftMap
 
   allowMultipleClaims: boolean
+  rarity: string
   priceMultiplier: number
   maxMintPerNft: number
+  tokenPerBurn: number
 }
 
 type Context = {
@@ -59,8 +61,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     nftMap: {},
 
     allowMultipleClaims: true,
+    rarity: '',
     priceMultiplier: 0,
     maxMintPerNft: 0,
+    tokenPerBurn: 0,
 
     amounts: [],
     maxMintByNft: [],
@@ -76,45 +80,51 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchContractData = async () => {
       try {
-        const [
-          startBlockNumberArr,
-          endBlockNumberArr,
-          countBurntArr,
-          totalSupplyDistributedArr,
-          currentDistributedSupplyArr,
+        // const [
+        //   // startBlockNumberArr,
+        //   // endBlockNumberArr,
+        //   // countBurntArr,
+        //   // totalSupplyDistributedArr,
+        //   // currentDistributedSupplyArr,
 
-          allowMultipleClaimsArr,
-          priceMultiplierArr,
-          maxMintPerNftArr,
-        ] = await multicall(nftFarm, [
-          { address: NftFarm, name: 'startBlockNumber' },
-          { address: NftFarm, name: 'endBlockNumber' },
-          { address: NftFarm, name: 'countBurnt' },
-          { address: NftFarm, name: 'totalSupplyDistributed' },
-          { address: NftFarm, name: 'currentDistributedSupply' },
-          { address: NftFarm, name: 'allowMultipleClaims' },
-          { address: NftFarm, name: 'priceMultiplier' },
-          { address: NftFarm, name: 'maxMintPerNft' },
-        ])
+        //   // allowMultipleClaimsArr,
+        //   // rarityArr,
+        //   // priceMultiplierArr,
+        //   // maxMintPerNftArr,
+        //   // tokenPerBurnArr,
+        // ] = await multicall(nftFarm, [
+        //   // { address: NftFarm, name: 'startBlockNumber' },
+        //   // { address: NftFarm, name: 'endBlockNumber' },
+        //   // { address: NftFarm, name: 'countBurnt' },
+        //   // { address: NftFarm, name: 'totalSupplyDistributed' },
+        //   // { address: NftFarm, name: 'currentDistributedSupply' },
+        //   // { address: NftFarm, name: 'allowMultipleClaims' },
+        //   // { address: NftFarm, name: 'rarity' },
+        //   // { address: NftFarm, name: 'priceMultiplier' },
+        //   // { address: NftFarm, name: 'maxMintPerNft' },
+        //   // { address: NftFarm, name: 'tokenPerBurn' },
+        // ])
 
         // TODO: Figure out why these are coming back as arrays
-        const [startBlockNumber]: [BigNumber] = startBlockNumberArr
-        const [endBlockNumber]: [BigNumber] = endBlockNumberArr
-        const [countBurnt]: [BigNumber] = countBurntArr
-        const [totalSupplyDistributed]: [BigNumber] = totalSupplyDistributedArr
-        const [currentDistributedSupply]: [BigNumber] = currentDistributedSupplyArr
+        // const [startBlockNumber]: [BigNumber] = startBlockNumberArr
+        // const [endBlockNumber]: [BigNumber] = endBlockNumberArr
+        // const [countBurnt]: [BigNumber] = countBurntArr
+        // const [totalSupplyDistributed]: [BigNumber] = totalSupplyDistributedArr
+        // const [currentDistributedSupply]: [BigNumber] = currentDistributedSupplyArr
 
         setState((prevState) => ({
           ...prevState,
           isInitialized: true,
-          countBurnt: countBurnt.toNumber(),
-          startBlockNumber: startBlockNumber.toNumber(),
-          endBlockNumber: endBlockNumber.toNumber(),
-          currentDistributedSupply: currentDistributedSupply.toNumber(),
-          totalSupplyDistributed: totalSupplyDistributed.toNumber(),
-          allowMultipleClaims: allowMultipleClaimsArr[0],
-          priceMultiplier: parseFloat(priceMultiplierArr[0].toString()),
-          maxMintPerNft: parseInt(maxMintPerNftArr[0].toString()),
+          // countBurnt: countBurnt.toNumber(),
+          // startBlockNumber: startBlockNumber.toNumber(),
+          // endBlockNumber: endBlockNumber.toNumber(),
+          // currentDistributedSupply: currentDistributedSupply.toNumber(),
+          // totalSupplyDistributed: totalSupplyDistributed.toNumber(),
+          // allowMultipleClaims: allowMultipleClaimsArr[0],
+          // rarity: rarityArr[0].toString(),
+          // priceMultiplier: parseFloat(priceMultiplierArr[0].toString()),
+          // maxMintPerNft: parseInt(maxMintPerNftArr[0].toString()),
+          // tokenPerBurn: getFromWei(tokenPerBurnArr[0]),
         }))
       } catch (error) {
         console.error('an error occured', error)
@@ -130,7 +140,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       try {
         const nftContract = getNftContract()
 
-        const getMinted = await multicall(nftFarm, [{ address: NftFarm, name: 'getMinted', params: [account] }])
+        const getMinted = await multicall(nftFarmV2, [{ address: NftFarm, name: 'getMinted', params: [account] }])
 
         const hasClaimed = getMinted[0][0]
         const amounts = getToFloat(getMinted[0][1])
@@ -208,7 +218,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
     const fetchNonLoggedInContractData = async () => {
       try {
-        const getMinted = await multicall(nftFarm, [
+        const getMinted = await multicall(nftFarmV2, [
           { address: NftFarm, name: 'getMinted', params: ['0x0000000000000000000000000000000000000000'] },
         ])
         const hasClaimed = getMinted[0][0]

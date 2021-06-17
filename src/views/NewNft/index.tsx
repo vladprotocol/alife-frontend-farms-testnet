@@ -67,7 +67,7 @@ const Nft = () => {
             Base and Rare NFTs
           </Heading>
           <Heading as="h2" size="lg" color="#9f0d0d">
-            {TranslateString(999, 'Trade in for LIFE, or keep for your collection!')}
+            {TranslateString(999, 'Trade in for ALIFE, or keep for your collection!')}
           </Heading>
           <CustomButton onClick={() => filterNFTs('Base')} mt="24px">
             Base NFTs

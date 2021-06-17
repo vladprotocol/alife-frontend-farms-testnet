@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState, useContext, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import {
   Card,
@@ -19,10 +19,11 @@ import useI18n from 'hooks/useI18n'
 import { Nft } from 'config/constants/types'
 import { AMOUNT_TO_CLAIM } from 'config/constants/newnfts'
 import Page from 'components/layout/Page'
+import { useHistory } from 'react-router-dom'
 import InfoRow from '../InfoRow'
 import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
-import { getNftContract } from '../../utils/contracts'
+import { getNewNftContract } from '../../utils/contracts'
 import ClaimNftModal from '../ClaimNftModal'
 import BurnNftModal from '../BurnNftModal'
 import TransferNftModal from '../TransferNftModal'
@@ -84,6 +85,8 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     nftCount: 0,
     nftBurnCount: 0,
   })
+  const [minted, setMinted] = useState(0)
+  const [maxMint, setMaxMint] = useState(0)
   const TranslateString = useI18n()
   const {
     isInitialized,
@@ -95,8 +98,10 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     getTokenIds,
     reInitialize,
     allowMultipleClaims,
+    rarity,
     priceMultiplier,
     maxMintPerNft,
+    tokenPerBurn,
     amounts,
     maxMintByNft,
     prices,
@@ -104,27 +109,13 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   } = useContext(NftProviderContext)
   const { account } = useWallet()
 
-  console.log('CONTRACT/GALLERY INFO:', totalSupplyDistributed, priceMultiplier, maxMintPerNft)
-  console.log('LIMITS BY NFT:', amounts, maxMintByNft, prices)
-
   // maxMintPerNft limit max amount that a nft can be minted
   // maxMintByNft array containing individual amount of mint per nft index
   // prices array containing individual prices of a mint per nft index
   // tokenPerBurn global price
 
-  console.log(ownerById)
-
   const { nftId, name, previewImage, originalImage, fileType, description, metadata, tokenAmount, tokenSupply } = nft
-
-  const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
-
-  const MINTS = myMints[nftIndex] || 0
-
-  const MINTED = amounts[nftIndex] ? parseInt(amounts[nftIndex].toString()) : 0
-  const MAX_MINT = maxMintByNft[nftIndex] ? parseInt(maxMintByNft[nftIndex].toString()) : maxMintPerNft
-
-  const hasClaimedArr: any = hasClaimed[0]
-  const ownerByIdArr: any = ownerById[0]
+  const PRICE = prices[nftId] || tokenPerBurn // here we get the price
 
   const firstCharOfAccount = account != null && account.slice(0, 4)
   const lastCharOfAccount = account != null && account.slice(-4)
@@ -136,19 +127,44 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   // console.log('?hasClaimed', hasClaimed)
   // console.log('?ownerById', ownerById)
 
+  const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
+
+  const MINTS = myMints[nftIndex] || 0
+
+  // not sure about this, you need to check if this oser own this nft in the view nft page.
+  // const youAreTheLastOwner = ownerById && ownerById[nftIndex] && ownerById[nftIndex].toString() === account.toString()
+
+  const MINTED = amounts[nftIndex] ? parseInt(amounts[nftIndex].toString()) : 0
+  const MAX_MINT = maxMintByNft[nftIndex] ? parseInt(maxMintByNft[nftIndex].toString()) : maxMintPerNft
+
   const walletCanClaim = maxMintPerNft === 0 || MINTED === undefined || MINTED < MAX_MINT
+
+  // console.log('CONTRACT/GALLERY INFO:', totalSupplyDistributed, rarity, priceMultiplier, maxMintPerNft, tokenPerBurn)
+  // console.log('LIMITS BY NFT:', tokenPerBurn, amounts, maxMintByNft, prices)
+  // console.log(nftId, 'walletCanClaim', walletCanClaim, maxMintPerNft, MINTED, MAX_MINT)
 
   const tokenIds = getTokenIds(nftId)
   // const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
 
-  const isSupplyAvailable = true
+  useEffect(() => {
+    const getNftInfoState = async () => {
+      const nftContract = getNewNftContract()
+      const nftInfoState = await nftContract.methods.nftInfoState(nftId).call()
+      const { minted: mintedValue, maxMint: maxMintValue } = nftInfoState
+      setMinted(parseInt(mintedValue))
+      setMaxMint(parseInt(maxMintValue))
+    }
+    getNftInfoState()
+  })
+
+  const isSupplyAvailable = minted < maxMint
   const walletOwnsNft = tokenIds && tokenIds.length > 0
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
 
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
     try {
-      const { methods } = getNftContract()
+      const { methods } = getNewNftContract()
       const nftCount = await methods.nftCount(nftId).call()
       const nftBurnCount = await methods.nftBurnCount(nftId).call()
 
@@ -221,20 +237,20 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         </Header>
         {isInitialized && loggedIn && walletCanClaim && isSupplyAvailable && (
           <Button onClick={onPresentClaimModal} mt="24px">
-            {TranslateString(999, 'Claim this NFT')} for {tokenAmount} STOS
+            {TranslateString(999, 'Claim this NFT')} for {tokenAmount} ALIFE
           </Button>
         )}
         {isInitialized && loggedIn && walletCanClaim && isSupplyAvailable && (
           <CustomButton
             onClick={() =>
               window.open(
-                'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x50f4220C82c9325dC99f729C3328FB5c338BEaae',
+                'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x42bA7BbDDEcb471c1e1Fe08636918952b6C19019',
                 '_blank',
               )
             }
             mt="24px"
           >
-            {TranslateString(999, 'Buy STOS')}
+            {TranslateString(999, 'Buy ALIFE')}
           </CustomButton>
         )}
         {isInitialized && walletOwnsNft && (
@@ -258,7 +274,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             <InfoRow>
               <Text>{TranslateString(999, 'Number minted')}:</Text>
               <Value>
-                {MINTED}/{tokenSupply}
+                {MINTED}/{maxMint}
               </Value>
             </InfoRow>
             <InfoRow>
