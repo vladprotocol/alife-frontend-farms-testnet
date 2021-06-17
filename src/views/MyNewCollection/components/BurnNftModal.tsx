@@ -75,12 +75,12 @@ const BurnNftModal: React.FC<BurnNftModalProps> = ({ nft, tokenIds, onSuccess, o
         </InfoRow>
         <InfoRow>
           <Text>{TranslateString(999, 'You will receive')}:</Text>
-          <Value>${AMOUNT_TO_CLAIM} STOS</Value>
+          <Value>${AMOUNT_TO_CLAIM} ALIFE</Value>
         </InfoRow>
       </ModalContent>
       <ModalContent>
         <Text color="failure">
-          {TranslateString(999, 'When you trade in this NFT to receive STOS, you will lose access to it forever!')}
+          {TranslateString(999, 'When you trade in this NFT to receive ALIFE, you will lose access to it forever!')}
         </Text>
         <Text color="failure">{TranslateString(999, 'It will be burned and removed from circulation')}</Text>
       </ModalContent>

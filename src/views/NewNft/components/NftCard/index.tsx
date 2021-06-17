@@ -217,7 +217,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         )}
         {isInitialized && loggedIn && walletCanClaim && isSupplyAvailable && (
           <Button fullWidth onClick={onPresentClaimModal} mt="24px">
-            {TranslateString(999, 'Claim this NFT')} for {tokenAmount} LIFE
+            {TranslateString(999, 'Claim this NFT')} for {tokenAmount} ALIFE
           </Button>
         )}
         {isInitialized && (
@@ -229,7 +229,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         )}
         {isInitialized && canBurnNft && walletOwnsNft && (
           <Button variant="danger" fullWidth onClick={onPresentBurnModal} mt="24px">
-            {TranslateString(999, 'Trade in for LIFE')}
+            {TranslateString(999, 'Trade in for ALIFE')}
           </Button>
         )}
       </CardBody>
