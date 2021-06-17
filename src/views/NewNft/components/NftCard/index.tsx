@@ -65,10 +65,10 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     isLoading: false,
     isOpen: false,
     nftCount: 0,
-    nftBurnCount: 0
+    nftBurnCount: 0,
   })
-  const [minted, setMinted] = useState(0);
-  const [maxMint, setMaxMint] = useState(0);
+  const [minted, setMinted] = useState(0)
+  const [maxMint, setMaxMint] = useState(0)
   const TranslateString = useI18n()
   const {
     isInitialized,
@@ -131,18 +131,16 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
 
   useEffect(() => {
     const getNftInfoState = async () => {
-      const nftContract = getNewNftContract();
+      const nftContract = getNewNftContract()
       const nftInfoState = await nftContract.methods.nftInfoState(nftId).call()
-      const { minted: mintedValue, maxMint: maxMintValue } = nftInfoState;
-      setMinted(parseInt(mintedValue));
-      setMaxMint(parseInt(maxMintValue));
+      const { minted: mintedValue, maxMint: maxMintValue } = nftInfoState
+      setMinted(parseInt(mintedValue))
+      setMaxMint(parseInt(maxMintValue))
     }
     getNftInfoState()
-  });
+  })
 
-  
-
-  const isSupplyAvailable = minted < maxMint;
+  const isSupplyAvailable = minted < maxMint
   const walletOwnsNft = tokenIds && tokenIds.length > 0
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
 
@@ -225,7 +223,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         {isInitialized && (
           <Button fullWidth onClick={() => history.push(`new-detail/${nftId}`)} mt="24px">
             <ViewNft>
-              View NFT ({MINTED}/{tokenSupply} MINTED)
+              View NFT ({MINTED}/{maxMint} MINTED)
             </ViewNft>
           </Button>
         )}
@@ -247,7 +245,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             <InfoRow>
               <Text>{TranslateString(999, 'Number minted')}:</Text>
               <Value>
-                {MINTED}/{tokenSupply}
+                {MINTED}/{maxMint}
               </Value>
             </InfoRow>
             <InfoRow>

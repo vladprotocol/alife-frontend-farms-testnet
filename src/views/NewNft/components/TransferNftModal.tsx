@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import Web3 from 'web3'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Input, Modal, Text } from '@pancakeswap-libs/uikit'
-import { NFT } from 'config/constants/newnfts'
+import { NFT, NftFarm } from 'config/constants/newnfts'
 import { Nft } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
-import { usePancakeRabbits } from 'hooks/useContract'
+import { useNFTFarmV2Contract } from 'hooks/useContract'
 import InfoRow from './InfoRow'
 
 interface TransferNftModalProps {
@@ -36,24 +36,29 @@ const Label = styled.label`
   margin-bottom: 8px;
   margin-top: 24px;
 `
-
+// tokenIds is retrieved dynamically from contracts.
 const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSuccess, onDismiss }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [value, setValue] = useState('')
+  const [values, setValues] = useState({
+    address: '',
+    tokenId: tokenIds[0],
+  })
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
-  const nftContract = usePancakeRabbits(NFT)
+
+  const NFTFarmV2Contract = useNFTFarmV2Contract(NftFarm)
 
   const handleConfirm = async () => {
     try {
-      const isValidAddress = Web3.utils.isAddress(value)
+      const isValidAddress = Web3.utils.isAddress(values.address)
 
       if (!isValidAddress) {
         setError(TranslateString(999, 'Please enter a valid wallet address'))
       } else {
-        await nftContract.methods
-          .transferFrom(account, value, tokenIds[0])
+        const tradeId = await NFTFarmV2Contract.methods.getTradeIdByNftId(account, nft.nftId).call()
+        await NFTFarmV2Contract.methods
+          .transfer(tradeId, values.address)
           .send({ from: account })
           .on('sending', () => {
             setIsLoading(true)
@@ -74,8 +79,8 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
   }
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = evt.target
-    setValue(inputValue)
+    const { value: inputValue, name } = evt.target
+    setValues({ ...values, [name]: inputValue })
   }
 
   return (
@@ -96,17 +101,32 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
           name="address"
           type="text"
           placeholder={TranslateString(999, 'Paste address')}
-          value={value}
+          value={values.address}
           onChange={handleChange}
           isWarning={error}
           disabled={isLoading}
         />
+        {/* <Label htmlFor="transferAddress">{TranslateString(999, 'Token ID')}:</Label>
+        <Input
+          id="tokenId"
+          name="tokenId"
+          type="number"
+          placeholder={TranslateString(999, 'Enter tokenId')}
+          value={values.tokenId}
+          onChange={handleChange}
+          isWarning={error}
+          disabled={isLoading}
+        /> */}
       </ModalContent>
       <Actions>
         <Button fullWidth variant="secondary" onClick={onDismiss}>
           {TranslateString(462, 'Cancel')}
         </Button>
-        <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading || !value}>
+        <Button
+          fullWidth
+          onClick={handleConfirm}
+          disabled={!account || isLoading || !values.address || !values.tokenId}
+        >
           {TranslateString(464, 'Confirm')}
         </Button>
       </Actions>

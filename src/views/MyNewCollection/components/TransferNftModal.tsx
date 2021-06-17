@@ -56,7 +56,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
       if (!isValidAddress) {
         setError(TranslateString(999, 'Please enter a valid wallet address'))
       } else {
-        const tradeId = await NFTFarmV2Contract.methods.getTradeIdByNftId(account, nft.nftId).call();
+        const tradeId = await NFTFarmV2Contract.methods.getTradeIdByNftId(account, nft.nftId).call()
         await NFTFarmV2Contract.methods
           .transfer(tradeId, values.address)
           .send({ from: account })
