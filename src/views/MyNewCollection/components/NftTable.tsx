@@ -41,7 +41,6 @@ const NftTable = () => {
   const [error, setError] = useState(null)
   const { nftTableData, reInitialize } = useContext(NftProviderContext)
 
-
   const TranslateString = useI18n()
 
   const onTransfer = useCallback(async () => {

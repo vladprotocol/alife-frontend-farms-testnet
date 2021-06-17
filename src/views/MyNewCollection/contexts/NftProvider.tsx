@@ -206,7 +206,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
                 nftPreviewImage,
                 nftDetailLink,
                 isApproved,
-                nftId
+                nftId,
               }
             } catch (error) {
               return null
