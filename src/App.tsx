@@ -17,12 +17,15 @@ const Farms = lazy(() => import('./views/Farms'))
 // const Ifos = lazy(() => import('./views/Ifos'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const Nft = lazy(() => import('./views/Nft'))
+const NewNft = lazy(() => import('./views/NewNft'))
 const Legendary = lazy(() => import('./views/Legendary'))
 const Epic = lazy(() => import('./views/Epic'))
 const MyCollection = lazy(() => import('./views/MyCollection'))
+const MyNewCollection = lazy(() => import('./views/MyNewCollection'))
 const MyEpicCollection = lazy(() => import('./views/MyEpicCollection'))
 const MyLegendaryCollection = lazy(() => import('./views/MyLegendaryCollection'))
 const Detail = lazy(() => import('./views/Detail'))
+const NewDetail = lazy(() => import('./views/NewDetail'))
 const LegendaryDetail = lazy(() => import('./views/LegendaryDetail'))
 const EpicDetail = lazy(() => import('./views/EpicDetail'))
 
@@ -70,6 +73,9 @@ const App: React.FC = () => {
             <Route path="/nft">
               <Nft />
             </Route>
+            <Route path="/new-nft">
+              <NewNft />
+            </Route>
             <Route path="/legendary">
               <Legendary />
             </Route>
@@ -79,6 +85,9 @@ const App: React.FC = () => {
             <Route path="/my-collection">
               <MyCollection />
             </Route>
+            <Route path="/my-new-collection">
+              <MyNewCollection />
+            </Route>
             <Route path="/my-epic-collection">
               <MyEpicCollection />
             </Route>
@@ -86,6 +95,7 @@ const App: React.FC = () => {
               <MyLegendaryCollection />
             </Route>
             <Route path="/detail/:id" component={Detail} />
+            <Route path="/new-detail/:id" component={NewDetail} />
             <Route path="/legendary-detail/:id" component={LegendaryDetail} />
             <Route path="/epic-detail/:id" component={EpicDetail} />
             {/* Redirect */}
