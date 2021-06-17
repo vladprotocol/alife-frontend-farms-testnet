@@ -53,12 +53,6 @@ const Nft = () => {
     <NftProvider>
       <Page>
         <StyledHero>
-          <CustomButton variant="subtle" mt="24px">
-            Genesis NFTs
-          </CustomButton>
-          <GoldenButton mt="24px">
-            <Link to="/new-nft">New NFTs</Link>
-          </GoldenButton>
           <Heading as="h1" size="xl" color="#9f0d0d" mb="24px">
             Base and Rare NFTs
           </Heading>
