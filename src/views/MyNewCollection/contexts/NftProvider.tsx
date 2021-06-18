@@ -1,11 +1,12 @@
 import React, { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 import BigNumber from 'bignumber.js'
+import { isArray } from 'lodash'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useBlock from 'hooks/useBlock'
 import nftFarmV2 from 'config/abi/NftFarmV2.json'
 import nfts, { NftFarm } from 'config/constants/newnfts'
 import multicall from 'utils/multicall'
-import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray } from '../utils/contracts'
+import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray, getNewNftContract } from '../utils/contracts'
 import { getUrlPartsInfo } from '../../../utils'
 import getNftDetailData from '../../../utils/getNftDetailData'
 
@@ -38,7 +39,8 @@ type State = {
   rarity: string
   priceMultiplier: number
   maxMintPerNft: number
-  tokenPerBurn: number
+  tokenPerBurn: number,
+  isApproved: boolean
 }
 
 type Context = {
@@ -74,6 +76,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     prices: [],
     myMints: [],
     nftTableData: [],
+    isApproved: false,
   })
   const { account } = useWallet()
   const currentBlock = useBlock()
@@ -144,6 +147,8 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       try {
         const nftContract = getNftContract()
 
+        const newNftContract = getNewNftContract()
+
         const getMinted = await multicall(nftFarmV2, [{ address: NftFarm, name: 'getMinted', params: [account] }])
 
         const hasClaimed = getMinted[0][0]
@@ -161,6 +166,8 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         // console.log('myMints', myMints)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
+
+        const isApproved = await nftContract.methods.isApprovedForAll(account, NftFarm).call()
 
         let nftMap: NftMap = {}
 
@@ -180,34 +187,20 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
             }
           }
 
-          const getNftData = async (index: number) => {
+          const getNftData = async (tradeId: number, nft: number) => {
             try {
-              const tokenId = await nftContract.methods.tokenOfOwnerByIndex(account, index).call()
-              const tokenURI = await nftContract.methods.tokenURI(parseInt(tokenId, 10)).call()
-              const nftId = await nftContract.methods.getNftId(parseInt(tokenId, 10)).call()
-              const approvedStatus = await nftContract.methods.getApproved(parseInt(tokenId, 10)).call()
-              let isApproved = false
-              if (approvedStatus !== '0x0000000000000000000000000000000000000000') {
-                isApproved = true
-              }
-              const { name: nftName, rarity } = await getNftDetailData(tokenURI)
+                const nftDetailLink = `/new-detail/${nft}`
+                const nftPreviewImage = nfts.filter((data) => nft === data.nftId).map((data) => data.previewImage)
+                const nftName = nfts.filter((data) => nft === data.nftId).map((data) => data.name)
 
-              const { fullUrlArray } = getUrlPartsInfo(tokenURI)
-              const hash = fullUrlArray[3]
-              const hashId = parseInt(fullUrlArray[4].substring(0, fullUrlArray[4].length - 5), 10)
-              const nftDetailLink = `/detail/${hashId}`
-
-              const nftPreviewImage = nfts.filter((nft) => nftName === nft.name).map((nft) => nft.previewImage)
-
-              return {
-                tokenId: parseInt(tokenId, 10),
-                type: `${hash} ,  ${hashId}`,
-                nftName,
-                nftPreviewImage,
-                nftDetailLink,
-                isApproved,
-                nftId,
-              }
+                return {
+                  tradeId,
+                  nftName,
+                  nftPreviewImage,
+                  nftDetailLink,
+                  nftId: nft
+                }
+              
             } catch (error) {
               return null
             }
@@ -217,9 +210,18 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           const nftTablePromises = []
 
           for (let i = 0; i < balanceOf; i++) {
-            nftTablePromises.push(getNftData(i))
             tokenIdPromises.push(getTokenIdAndNftId(i))
           }
+
+          nfts.forEach(async (nft) => {
+            const tradeIds = await newNftContract.methods.getTradesByNftIdAndUser(account, nft.nftId).call()
+            console.log("tradeIds", tradeIds);
+            if(isArray(tradeIds) && tradeIds.length > 0) {
+              tradeIds.forEach((tradeId) => {
+                nftTablePromises.push(getNftData(parseInt(tradeId, 10), nft.nftId))  
+              })
+            }
+          });
 
           const tokenIdsOwnedByWallet = await Promise.all(tokenIdPromises)
           nftTableData = await Promise.all(nftTablePromises)
@@ -253,6 +255,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           prices,
           myMints,
           nftTableData,
+          isApproved
         }))
       } catch (error) {
         console.error('an error occured', error)

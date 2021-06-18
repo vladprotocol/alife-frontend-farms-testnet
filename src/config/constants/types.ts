@@ -96,4 +96,5 @@ export type Nft = {
   nftFarmContract: string
   nftContract: string
   rarity?: string
+  tradeId?: number
 }
