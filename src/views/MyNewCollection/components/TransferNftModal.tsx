@@ -42,6 +42,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
   const [values, setValues] = useState({
     address: '',
     tokenId: tokenIds[0],
+    tradeId: nft.tradeId
   })
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
@@ -56,7 +57,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
       if (!isValidAddress) {
         setError(TranslateString(999, 'Please enter a valid wallet address'))
       } else {
-        const tradeId = await NFTFarmV2Contract.methods.getTradeIdByNftId(account, nft.nftId).call()
+        const tradeId = nft.tradeId;
         await NFTFarmV2Contract.methods
           .transfer(tradeId, values.address)
           .send({ from: account })
@@ -125,7 +126,7 @@ const TransferNftModal: React.FC<TransferNftModalProps> = ({ nft, tokenIds, onSu
         <Button
           fullWidth
           onClick={handleConfirm}
-          disabled={!account || isLoading || !values.address || !values.tokenId}
+          disabled={!account || isLoading || !values.address}
         >
           {TranslateString(464, 'Confirm')}
         </Button>
