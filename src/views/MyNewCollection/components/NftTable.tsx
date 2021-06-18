@@ -36,10 +36,16 @@ const NftTable = () => {
 
   const { account } = useWallet()
   const [requestedApproval, setRequestedApproval] = useState(false)
+  const [isApprovedStatus, setIsApprovedStatus] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const [error, setError] = useState(null)
-  const { nftTableData, reInitialize } = useContext(NftProviderContext)
+  const { nftTableData, reInitialize, isApproved } = useContext(NftProviderContext)
+
+  useEffect(() => {
+    setIsApprovedStatus(isApproved);
+  }, [isApproved]);
+
 
   const TranslateString = useI18n()
 
@@ -68,7 +74,7 @@ const NftTable = () => {
 
         console.log('nftContract', nftContract, NftFarm, tokenId)
         await nftContract.methods
-          .approve(NftFarm, tokenId)
+          .setApprovalForAll(NftFarm, 'true')
           .send({ from: account })
           .on('sending', () => {
             setIsLoading(true)
@@ -86,7 +92,6 @@ const NftTable = () => {
           isDataFetched: true,
           nftTableData,
         }))
-
         reInitialize()
         setRequestedApproval(false)
       } catch (e) {
@@ -125,9 +130,9 @@ const NftTable = () => {
       },
     },
     {
-      title: 'Token ID',
-      dataIndex: 'tokenId',
-      key: 'tokenId',
+      title: 'Trade ID',
+      dataIndex: 'tradeId',
+      key: 'tradeId',
     },
     {
       title: 'NFT Details',
@@ -158,8 +163,8 @@ const NftTable = () => {
           nftFarmContract: '',
           nftContract: '',
           bunnyId: 0,
+          tradeId: record.tradeId
         }
-        const isApproved = record.isApproved
         const tokenIds = [record.tokenId]
         const [onPresentTransferModal] = ModalWrapper(
           <TransferNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />,
