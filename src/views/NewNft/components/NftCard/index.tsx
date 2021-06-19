@@ -12,6 +12,7 @@ import {
   CardFooter,
   useModal,
 } from '@pancakeswap-libs/uikit'
+import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
 import { Nft } from 'config/constants/types'
@@ -70,6 +71,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   })
   const [minted, setMinted] = useState(0)
   const [maxMint, setMaxMint] = useState(0)
+  const [price, setPrice] = useState(new BigNumber(0))
   const TranslateString = useI18n()
   const {
     isInitialized,
@@ -139,15 +141,18 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     const getNftInfoState = async () => {
       const newFarmContract = getNewNftContract()
       const nftInfoState = await newFarmContract.methods.nftInfoState(nftId).call()
-      const { minted: mintedValue, maxMint: maxMintValue } = nftInfoState
+      const { minted: mintedValue, maxMint: maxMintValue, price: priceValue } = nftInfoState
       setMinted(parseInt(mintedValue))
       setMaxMint(parseInt(maxMintValue))
+      setPrice(new BigNumber(priceValue).div(new BigNumber(10).pow(18)))
     }
     getNftInfoState()
   })
 
   const isSupplyAvailable = minted < maxMint
-  const walletOwnsNft = tokenIds && tokenIds.length > 0
+  // const walletOwnsNft = tokenIds && tokenIds.length > 0
+  const walletOwnsNft = MINTS > 0
+
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
 
   const fetchDetails = useCallback(async () => {
@@ -268,7 +273,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         )}
         {isInitialized && loggedIn && walletCanClaim && isSupplyAvailable && (
           <Button fullWidth onClick={onPresentClaimModal} mt="24px">
-            {TranslateString(999, 'Claim this NFT')} for {tokenAmount} ALIFE
+            {TranslateString(999, 'Claim this NFT')} for {price.toString()} ALIFE
           </Button>
         )}
         {isInitialized && (
@@ -278,11 +283,11 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             </ViewNft>
           </Button>
         )}
-        {isInitialized && canBurnNft && walletOwnsNft && (
+        {/* {isInitialized && canBurnNft && walletOwnsNft && (
           <Button variant="danger" fullWidth onClick={onPresentBurnModal} mt="24px">
             {TranslateString(999, 'Trade in for ALIFE')}
           </Button>
-        )}
+        )} */}
       </CardBody>
       <CardFooter p="0">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>

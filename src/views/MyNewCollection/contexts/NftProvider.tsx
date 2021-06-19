@@ -6,7 +6,14 @@ import useBlock from 'hooks/useBlock'
 import nftFarmV2 from 'config/abi/NftFarmV2.json'
 import nfts, { NftFarm } from 'config/constants/newnfts'
 import multicall from 'utils/multicall'
-import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray, getNewNftContract } from '../utils/contracts'
+import {
+  getNftContract,
+  getFromWei,
+  getToFloat,
+  getToInt,
+  getFromWayArray,
+  getNewNftContract,
+} from '../utils/contracts'
 import { getUrlPartsInfo } from '../../../utils'
 import getNftDetailData from '../../../utils/getNftDetailData'
 
@@ -39,7 +46,7 @@ type State = {
   rarity: string
   priceMultiplier: number
   maxMintPerNft: number
-  tokenPerBurn: number,
+  tokenPerBurn: number
   isApproved: boolean
 }
 
@@ -189,18 +196,17 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
           const getNftData = async (tradeId: number, nft: number) => {
             try {
-                const nftDetailLink = `/new-detail/${nft}`
-                const nftPreviewImage = nfts.filter((data) => nft === data.nftId).map((data) => data.previewImage)
-                const nftName = nfts.filter((data) => nft === data.nftId).map((data) => data.name)
+              const nftDetailLink = `/new-detail/${nft}`
+              const nftPreviewImage = nfts.filter((data) => nft === data.nftId).map((data) => data.previewImage)
+              const nftName = nfts.filter((data) => nft === data.nftId).map((data) => data.name)
 
-                return {
-                  tradeId,
-                  nftName,
-                  nftPreviewImage,
-                  nftDetailLink,
-                  nftId: nft
-                }
-              
+              return {
+                tradeId,
+                nftName,
+                nftPreviewImage,
+                nftDetailLink,
+                nftId: nft,
+              }
             } catch (error) {
               return null
             }
@@ -215,13 +221,13 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
           nfts.forEach(async (nft) => {
             const tradeIds = await newNftContract.methods.getTradesByNftIdAndUser(account, nft.nftId).call()
-            console.log("tradeIds", tradeIds);
-            if(isArray(tradeIds) && tradeIds.length > 0) {
+            console.log('tradeIds', tradeIds)
+            if (isArray(tradeIds) && tradeIds.length > 0) {
               tradeIds.forEach((tradeId) => {
-                nftTablePromises.push(getNftData(parseInt(tradeId, 10), nft.nftId))  
+                nftTablePromises.push(getNftData(parseInt(tradeId, 10), nft.nftId))
               })
             }
-          });
+          })
 
           const tokenIdsOwnedByWallet = await Promise.all(tokenIdPromises)
           nftTableData = await Promise.all(nftTablePromises)
@@ -255,7 +261,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           prices,
           myMints,
           nftTableData,
-          isApproved
+          isApproved,
         }))
       } catch (error) {
         console.error('an error occured', error)
