@@ -36,6 +36,7 @@ type State = {
   priceMultiplier: number
   maxMintPerNft: number
   tokenPerBurn: number
+  isApproved: boolean
 }
 
 type Context = {
@@ -70,6 +71,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     maxMintByNft: [],
     prices: [],
     myMints: [],
+    isApproved: false,
   })
   const { account } = useWallet()
   const currentBlock = useBlock()
@@ -160,6 +162,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
         let nftMap: NftMap = {}
 
+        const isApproved = await nftContract.methods.isApprovedForAll(account, NftFarm).call()
         // If the "balanceOf" is greater than 0 then retrieve the tokenIds
         // owned by the wallet, then the nftId's associated with the tokenIds
         if (balanceOf > 0) {
@@ -210,6 +213,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           maxMintByNft,
           prices,
           myMints,
+          isApproved,
         }))
       } catch (error) {
         console.error('an error occured', error)
