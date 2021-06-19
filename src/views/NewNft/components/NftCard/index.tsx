@@ -147,7 +147,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
       setPrice(new BigNumber(priceValue).div(new BigNumber(10).pow(18)))
     }
     getNftInfoState()
-  })
+  }, [nftId, isInitialized])
 
   const isSupplyAvailable = minted < maxMint
   // const walletOwnsNft = tokenIds && tokenIds.length > 0
