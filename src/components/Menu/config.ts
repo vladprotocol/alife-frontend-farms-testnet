@@ -49,6 +49,11 @@ const config: MenuEntry[] = [
     href: '/my-collection',
   },
   {
+    label: 'NFT Marketplace',
+    icon: 'NftIcon',
+    href: '/marketplace',
+  },
+  {
     label: 'Past Farms',
     icon: 'PoolIcon',
     href: 'https://life.vlad.finance',

@@ -98,3 +98,32 @@ export type Nft = {
   rarity?: string
   tradeId?: number
 }
+
+export type SellableNft = {
+  name: string
+  metadata: string
+  description: string
+  originalImage: string
+  previewImage: string
+  fileType: string
+  blurImage: string
+  sortOrder: number
+  nftId: number
+  tokenAmount: number
+  tokenSupply: number
+  nftFarmContract: string
+  nftContract: string
+  rarity?: string
+  tradeId?: number
+  allowSell: boolean
+  sellMinPrice: number
+  totalArtistFee: number
+  totalGovernanceFee: number
+  lastSellIn: string
+  lastSellPrice: number
+  qtdSells: number
+  totalCollected: number
+  totalDevFee: number
+  sellableTradeIds: Array<number>
+  totalQuantity: number
+}

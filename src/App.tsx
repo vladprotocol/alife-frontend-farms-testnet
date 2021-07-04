@@ -17,6 +17,7 @@ const Farms = lazy(() => import('./views/Farms'))
 // const Ifos = lazy(() => import('./views/Ifos'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const Nft = lazy(() => import('./views/Nft'))
+const NftMarketplace = lazy(() => import('./views/NftMarketplace'))
 const NewNft = lazy(() => import('./views/NewNft'))
 const Legendary = lazy(() => import('./views/Legendary'))
 const Epic = lazy(() => import('./views/Epic'))
@@ -72,6 +73,9 @@ const App: React.FC = () => {
             {/* </Route> */}
             <Route path="/nft">
               <Nft />
+            </Route>
+            <Route path="/marketplace">
+              <NftMarketplace />
             </Route>
             <Route path="/new-nft">
               <NewNft />
