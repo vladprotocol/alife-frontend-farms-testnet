@@ -17,7 +17,7 @@ import {
 
 import { Link } from 'react-router-dom'
 import { Table } from 'antd'
-import { usePancakeRabbits } from 'hooks/useContract'
+import { usePancakeRabbits, useNFTFarmV2Contract } from 'hooks/useContract'
 import useI18n from 'hooks/useI18n'
 import { NftFarm, NFT } from 'config/constants/newnfts'
 import orderBy from 'lodash/orderBy'
@@ -25,6 +25,7 @@ import NftCard from './NftCard'
 import NftGrid from './NftGrid'
 import { NftProviderContext } from '../contexts/NftProvider'
 import TransferNftModal from './TransferNftModal'
+import SellNftModal from './SellNftModal'
 import { getNftContract } from '../utils/contracts'
 
 const NftTable = () => {
@@ -58,20 +59,16 @@ const NftTable = () => {
         nftTableData,
       }))
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }, [nftTableData])
   const nftContract = usePancakeRabbits(NFT)
 
   const handleApprove = useCallback(
     async (tokenId) => {
-      console.log('tokenId', tokenId)
       try {
         setState((prevState) => ({ ...prevState, isLoading: true }))
         setRequestedApproval(true)
-        console.log('onApprove', tokenId)
-
-        console.log('nftContract', nftContract, NftFarm, tokenId)
         await nftContract.methods
           .setApprovalForAll(NftFarm, 'true')
           .send({ from: account })
@@ -198,6 +195,61 @@ const NftTable = () => {
       },
       key: '',
     },
+    {
+      title: 'Sell NFT',
+      dataIndex: '',
+      render: (text, record) => {
+        const nft = {
+          name: record.nftName,
+          metadata: '',
+          description: '',
+          originalImage: '',
+          previewImage: '',
+          fileType: '',
+          blurImage: '',
+          sortOrder: 1,
+          nftId: parseInt(record.nftId),
+          tokenAmount: 0,
+          tokenSupply: 0,
+          nftFarmContract: '',
+          nftContract: '',
+          bunnyId: 0,
+          tradeId: record.tradeId,
+        }
+        const tokenIds = [record.tokenId]
+        const [onPresentSellModal] = ModalWrapper(
+          <SellNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />,
+        )
+        if (isApproved) {
+          return (
+            <Button
+              fullWidth
+              variant="primary"
+              mt="24px"
+              onClick={() => {
+                onPresentSellModal()
+              }}
+            >
+              {TranslateString(999, 'Sell')}
+            </Button>
+          )
+        }
+        return (
+          <Button
+            fullWidth
+            variant="primary"
+            mt="24px"
+            onClick={() => {
+              handleApprove(parseInt(record.tokenId, 10))
+            }}
+            disabled={requestedApproval}
+          >
+            Approve
+          </Button>
+        )
+      },
+      key: '',
+    }
   ]
 
   return <Table columns={columns} dataSource={nftTableData} style={{ marginTop: '25px' }} />
