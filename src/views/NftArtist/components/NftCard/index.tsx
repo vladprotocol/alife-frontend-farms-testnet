@@ -242,7 +242,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               Sold Out
             </Tag>
           )}
-          {isInitialized && walletCanClaim && (
+          {isInitialized && walletOwnsNft && (
             <Tag outline variant="secondary">
               {TranslateString(999, 'In Wallet')}
             </Tag>
