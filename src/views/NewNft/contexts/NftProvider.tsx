@@ -140,7 +140,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
         const hasClaimed = getMinted[0][0]
         const amounts = getToFloat(getMinted[0][1])
-        const myMints = getToInt(getMinted[0][5])
+        const myMints = getToInt(getMinted[0][2])
 
         // console.log('hasClaimed', hasClaimed)
         // console.log('amounts', amounts)
