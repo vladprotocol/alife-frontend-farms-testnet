@@ -18,10 +18,7 @@ type NftMap = {
 type State = {
   isInitialized: boolean
   hasClaimed: number[]
-  ownerById: number[]
   amounts: number[]
-  maxMintByNft: number[]
-  prices: number[]
   myMints: number[]
   countBurnt: number
   endBlockNumber: number
@@ -52,7 +49,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
   const [state, setState] = useState<State>({
     isInitialized: false,
     hasClaimed: [],
-    ownerById: [],
     countBurnt: 0,
     startBlockNumber: 0,
     endBlockNumber: 0,
@@ -68,8 +64,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     tokenPerBurn: 0,
 
     amounts: [],
-    maxMintByNft: [],
-    prices: [],
     myMints: [],
     isApproved: false,
   })
@@ -146,16 +140,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
         const hasClaimed = getMinted[0][0]
         const amounts = getToFloat(getMinted[0][1])
-        const ownerById = getMinted[0][2]
-        const maxMintByNft = getToInt(getMinted[0][3])
-        const prices = getFromWayArray(getMinted[0][4])
         const myMints = getToInt(getMinted[0][5])
 
         // console.log('hasClaimed', hasClaimed)
         // console.log('amounts', amounts)
-        // console.log('ownerById', ownerById)
-        // console.log('maxMintByNft', maxMintByNft)
-        // console.log('prices', prices)
         // console.log('myMints', myMints)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
@@ -205,13 +193,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           ...prevState,
           isInitialized: true,
           hasClaimed,
-          ownerById,
           balanceOf,
           nftMap,
 
           amounts,
-          maxMintByNft,
-          prices,
           myMints,
           isApproved,
         }))
