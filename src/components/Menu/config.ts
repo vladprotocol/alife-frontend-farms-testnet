@@ -44,7 +44,7 @@ const config: MenuEntry[] = [
     href: '/new-nft',
   },
   {
-    label: 'Mint NFTs (Artist)',
+    label: 'Mint by Artist',
     icon: 'NftIcon',
     href: '/nft-artist',
   },
