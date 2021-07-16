@@ -77,7 +77,7 @@ const Nft = () => {
               <CustomLink to="/my-collection">Mint NFTs (Genesis)</CustomLink>
             </CustomButton>
             <GoldenButton mt="24px">
-              <CustomLink to="/my-new-collection">Mint NFTs (Shibari)</CustomLink>
+              Mint NFTs (Shibari)
             </GoldenButton>
           </StyledHero>
           <NftInfo />
