@@ -267,7 +267,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
               Sold Out
             </Tag>
           )}
-          {isInitialized && walletOwnsNft && (
+          {isInitialized && loggedIn && walletOwnsNft && (
             <Tag outline variant="secondary">
               {TranslateString(999, 'In Wallet')}
             </Tag>
@@ -278,7 +278,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             {TranslateString(999, 'Claim this NFT')} for {price.toString()} ALIFE
           </Button>
         )}
-        {isInitialized && loggedIn && walletCanClaim && isSupplyAvailable && (
+        {isInitialized && walletCanClaim && isSupplyAvailable && (
           <CustomButton
             onClick={() =>
               window.open(
@@ -291,7 +291,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             {TranslateString(999, 'Buy ALIFE')}
           </CustomButton>
         )}
-        {isInitialized && walletOwnsNft && !isApproved && (
+        {isInitialized && loggedIn && walletOwnsNft && !isApproved && (
           <Button
             fullWidth
             variant="primary"
@@ -303,7 +303,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             Approve Transfer
           </Button>
         )}
-        {isInitialized && walletOwnsNft && isApproved && (
+        {isInitialized && loggedIn && walletOwnsNft && isApproved && (
           <Button fullWidth variant="secondary" mt="24px" onClick={onPresentTransferModal}>
             {TranslateString(999, 'Transfer')}
           </Button>
