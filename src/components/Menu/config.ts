@@ -39,7 +39,7 @@ const config: MenuEntry[] = [
     href: '/nft',
   },
   {
-    label: 'Mint NFTs (New)',
+    label: 'Mint NFTs (Shibari)',
     icon: 'NftIcon',
     href: '/new-nft',
   },
