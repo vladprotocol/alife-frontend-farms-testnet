@@ -8,8 +8,8 @@ const Nfts: Nft[] = [
   {
     name: 'Pink Spider',
     metadata: 'tier-NFT-base-dark-chocolate.json',
-    description: 'Dipped in chocolate and ready for a bite. Part of the base tier of Vlad NFTs.',
-    previewImage: 'preview-base-dark-chocolate.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    previewImage: 'pink-spider-min.png',
     originalImage:
       'https://ipfs.io/ipfs/QmX9UuF41nfhnESX3DnVHhC4XwuYAcLEReGyN4CtE8P7Bg?filename=NFT-base-dark-chocolate.mp4',
     fileType: 'png',
@@ -25,8 +25,8 @@ const Nfts: Nft[] = [
   {
     name: 'Pink Fox',
     metadata: 'tier-NFT-base-main-nopaint.json',
-    description: 'The legend behind the meme in all his original glory. Part of the base tier of Vlad NFTs',
-    previewImage: 'preview-base-main-nopaint.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    previewImage: 'pink-fox-min.png',
     originalImage:
       'https://ipfs.io/ipfs/QmWckPrzbjvf8jqUpdQ7jKLzdaSBTyPSV6x6obSUHHipqc?filename=NFT-base-main-nopaint.mp4',
     fileType: 'png',
@@ -43,8 +43,8 @@ const Nfts: Nft[] = [
     name: 'Pink Bunny',
     metadata: 'tier-NFT-base-marble.json',
     description:
-      'The count has turned into a marble statue ready for display in the halls of Vladhalla. Part of the base tier of Vlad NFTs.',
-    previewImage: 'preview-base-marble.jpg',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    previewImage: 'pink-bunny-min.png',
     originalImage: 'https://ipfs.io/ipfs/QmSnz85drLjCD4qNgaMwHFC6PFEkGrmYhM1LpHwZWpEWaQ?filename=NFT-base-marble.mp4',
     fileType: 'png',
     blurImage: '',
@@ -59,8 +59,8 @@ const Nfts: Nft[] = [
   {
     name: 'Pink Dragon',
     metadata: '',
-    description: 'All who seek to find the path to Vladhalla must have strong hands along the way to immortality.',
-    previewImage: 'preview-path-to-vladhalla.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    previewImage: 'pink-dragon-min.png',
     originalImage:
       'https://ipfs.io/ipfs/QmQWAeV3aAWD2Kbvxmtt4H874AEf7M7N5FcBos4iZbkRcj?filename=NFT-rare-path-to-vladhalla.mp4',
     fileType: 'png',
@@ -77,8 +77,8 @@ const Nfts: Nft[] = [
     name: 'Pink B&B',
     metadata: '',
     description:
-      'As an homage to the original Vlad Pepes Drakul this retains his painted face hang him in your gallery for eternal viewing.',
-    previewImage: 'preview-painted-pepes.jpg',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    previewImage: 'bull-and-bear-min.png',
     originalImage:
       'https://ipfs.io/ipfs/QmRqe92vpppkNS2aihmdvswHstAiHAF4jC2KUAiec5LKKk?filename=NFT-rare-painted-pepes.mp4',
     fileType: 'png',
