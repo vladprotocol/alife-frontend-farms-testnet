@@ -29,6 +29,11 @@ const CustomButton = styled(Button)`
   margin-right: 20px;
 `
 
+
+const CustomLink = styled(Link)`
+  font-family: 'Reggae One';
+`
+
 const GoldenButton = styled(Button)`
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(110, 80, 20, 0.4), inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
     inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
@@ -69,10 +74,10 @@ const Nft = () => {
               My NFT Collections
             </Heading>
             <CustomButton variant="subtle" mt="24px">
-              <Link to="/my-collection">Mint NFTs (Genesis)</Link>
+              <CustomLink to="/my-collection">Mint NFTs (Genesis)</CustomLink>
             </CustomButton>
             <GoldenButton mt="24px">
-              <Link to="/my-new-collection">Mint NFTs (New)</Link>
+              Mint NFTs (Shibari)
             </GoldenButton>
           </StyledHero>
           <NftInfo />

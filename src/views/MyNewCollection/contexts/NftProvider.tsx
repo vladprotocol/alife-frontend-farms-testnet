@@ -196,7 +196,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
           const getNftData = async (tradeId: number, nft: number) => {
             try {
-              const nftDetailLink = `/new-detail/${nft}`
+              const nftDetailLink = `/shibari-detail/${nft}`
               const nftPreviewImage = nfts.filter((data) => nft === data.nftId).map((data) => data.previewImage)
               const nftName = nfts.filter((data) => nft === data.nftId).map((data) => data.name)
 
