@@ -41,7 +41,7 @@ const config: MenuEntry[] = [
   {
     label: 'Mint NFTs (Shibari)',
     icon: 'NftIcon',
-    href: '/new-nft',
+    href: '/shibari-nft',
   },
   // {
   //   label: 'NFT by Artist',

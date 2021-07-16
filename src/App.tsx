@@ -74,7 +74,7 @@ const App: React.FC = () => {
             <Route path="/nft">
               <Nft />
             </Route>
-            <Route path="/new-nft">
+            <Route path="/shibari-nft">
               <NewNft />
             </Route>
             <Route path="/nft-artist">
@@ -89,7 +89,7 @@ const App: React.FC = () => {
             <Route path="/my-collection">
               <MyCollection />
             </Route>
-            <Route path="/my-new-collection">
+            <Route path="/my-shibari-collection">
               <MyNewCollection />
             </Route>
             <Route path="/my-epic-collection">
@@ -99,7 +99,7 @@ const App: React.FC = () => {
               <MyLegendaryCollection />
             </Route>
             <Route path="/detail/:id" component={Detail} />
-            <Route path="/new-detail/:id" component={NewDetail} />
+            <Route path="/shibari-detail/:id" component={NewDetail} />
             <Route path="/legendary-detail/:id" component={LegendaryDetail} />
             <Route path="/epic-detail/:id" component={EpicDetail} />
             {/* Redirect */}
