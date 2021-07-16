@@ -69,7 +69,7 @@ const Nft = () => {
           <Heading as="h2" size="lg" color="#9f0d0d">
             {TranslateString(999, 'Trade in for ALIFE, or keep for your collection!')}
           </Heading>
-          <CustomButton onClick={() => filterNFTs('Base')} mt="24px">
+          {/* <CustomButton onClick={() => filterNFTs('Base')} mt="24px">
             Base NFTs
           </CustomButton>
           <CustomButton variant="success" onClick={() => filterNFTs('Rare')} mt="24px">
@@ -80,7 +80,7 @@ const Nft = () => {
           </CustomButton>
           <GoldenButton onClick={() => filterNFTs('Legendary')} mt="24px">
             Legendary NFTs
-          </GoldenButton>
+          </GoldenButton> */}
         </StyledHero>
 
         <NftInfo />
