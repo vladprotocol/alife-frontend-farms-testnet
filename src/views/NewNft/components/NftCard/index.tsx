@@ -136,13 +136,20 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     const getNftInfoState = async () => {
       const newFarmContract = getNewNftContract()
       const nftInfoState = await newFarmContract.methods.nftInfoState(nftId).call()
-      const { minted: mintedValue, maxMint: maxMintValue, price: priceValue } = nftInfoState
+      const { minted: mintedValue, maxMint: maxMintValue, price: priceValue, multiplier } = nftInfoState
       setMinted(parseInt(mintedValue))
       setMaxMint(parseInt(maxMintValue))
-      setPrice(new BigNumber(priceValue).div(new BigNumber(10).pow(18)))
+      const oldPrice = (priceValue / (10 ** 18));
+      const multiplierValue = (multiplier / (10 ** 6));
+      let newPrice = oldPrice
+
+      if (amounts && mintedValue) {
+        newPrice = Math.round(oldPrice * multiplierValue ** mintedValue * 100) / 100
+      }
+      setPrice(new BigNumber(newPrice))
     }
     getNftInfoState()
-  }, [nftId, isInitialized])
+  }, [nftId, isInitialized, amounts, nftIndex])
 
   const isSupplyAvailable = minted < maxMint
   // const walletOwnsNft = tokenIds && tokenIds.length > 0
