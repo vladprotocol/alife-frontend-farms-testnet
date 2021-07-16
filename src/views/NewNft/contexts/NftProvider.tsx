@@ -1,11 +1,12 @@
 import React, { createContext, ReactNode, useEffect, useRef, useState } from 'react'
+import _ from 'lodash'
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useBlock from 'hooks/useBlock'
 import nftFarmV2 from 'config/abi/NftFarmV2.json'
-import { NftFarm } from 'config/constants/newnfts'
+import Nfts, { NftFarm } from 'config/constants/newnfts'
 import multicall from 'utils/multicall'
-import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray } from '../utils/contracts'
+import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray, getNewNftContract } from '../utils/contracts'
 
 interface NftProviderProps {
   children: ReactNode
@@ -142,9 +143,8 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         const amounts = getToFloat(getMinted[0][1])
         const myMints = getToInt(getMinted[0][2])
 
+
         // console.log('hasClaimed', hasClaimed)
-        // console.log('amounts', amounts)
-        // console.log('myMints', myMints)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
@@ -165,13 +165,35 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
             }
           }
 
+          const getMaxMint = async (nftId: number) => {
+            try {
+              const newFarmContract = getNewNftContract()
+              const nftInfoState = await newFarmContract.methods.nftInfoState(nftId).call()
+              const { maxMint } = nftInfoState
+              return parseInt(maxMint)
+            } catch (error) {
+              return null
+            }
+          }
+
           const tokenIdPromises = []
+          const maxMintPromises = []
 
           for (let i = 0; i < balanceOf; i++) {
             tokenIdPromises.push(getTokenIdAndNftId(i))
           }
 
+          Nfts.forEach((nft) => {
+            maxMintPromises.push(getMaxMint(nft.nftId))
+          });
+
           const tokenIdsOwnedByWallet = await Promise.all(tokenIdPromises)
+          const maxMintArray = await Promise.all(maxMintPromises)
+          setState((prevState) => ({
+            ...prevState,
+            totalSupplyDistributed: _.sum(maxMintArray),
+            currentDistributedSupply: _.sum(myMints)
+          }))
 
           // While improbable a wallet can own more than one of the same nft so the format is:
           // { [nftId]: [array of tokenIds] }
@@ -198,7 +220,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
           amounts,
           myMints,
-          isApproved,
+          isApproved
         }))
       } catch (error) {
         console.error('an error occured', error)
