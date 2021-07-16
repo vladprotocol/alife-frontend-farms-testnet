@@ -64,7 +64,7 @@ const Nft = () => {
       <Page>
         <StyledHero>
           <Heading as="h1" size="xl" color="#9f0d0d" mb="24px">
-            Base and Rare NFTs
+            Pink Shibari Collection
           </Heading>
           <Heading as="h2" size="lg" color="#9f0d0d">
             {TranslateString(999, 'Trade in for ALIFE, or keep for your collection!')}
