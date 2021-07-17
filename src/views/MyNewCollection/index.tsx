@@ -74,10 +74,10 @@ const Nft = () => {
               My NFT Collections
             </Heading>
             <CustomButton variant="subtle" mt="24px">
-              <CustomLink to="/my-collection">Mint NFTs (Genesis)</CustomLink>
+              <CustomLink to="/my-collection">Genesis Collection</CustomLink>
             </CustomButton>
             <GoldenButton mt="24px">
-              Mint NFTs (Shibari)
+              Pink Shibari Collection
             </GoldenButton>
           </StyledHero>
           <NftInfo />
