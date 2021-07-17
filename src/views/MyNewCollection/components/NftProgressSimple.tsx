@@ -6,7 +6,7 @@ import InfoRow from './InfoRow'
 
 const NftProgressSimple = () => {
   const TranslateString = useI18n()
-  const { balanceOf } = useContext(NftProviderContext)
+  const { balanceOf, currentDistributedSupply } = useContext(NftProviderContext)
 
   return (
     <Card>
@@ -14,7 +14,7 @@ const NftProgressSimple = () => {
         <InfoRow>
           <Text>{TranslateString(999, 'My Shibari NFTs')}:</Text>
           <Text>
-            <strong>{balanceOf}</strong>
+            <strong>{currentDistributedSupply}</strong>
           </Text>
         </InfoRow>
       </CardBody>

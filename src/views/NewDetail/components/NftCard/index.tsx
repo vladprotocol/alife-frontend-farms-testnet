@@ -1,4 +1,5 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import {
   Card,
@@ -275,7 +276,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
         </Header>
         {isInitialized && loggedIn && walletCanClaim && isSupplyAvailable && (
           <Button onClick={onPresentClaimModal} mt="24px">
-            {TranslateString(999, 'Claim this NFT')} for {price.toString()} ALIFE
+            {TranslateString(999, 'Claim this NFT')} for {_.round(parseFloat(price.toString()))} ALIFE
           </Button>
         )}
         {isInitialized && walletCanClaim && isSupplyAvailable && (
