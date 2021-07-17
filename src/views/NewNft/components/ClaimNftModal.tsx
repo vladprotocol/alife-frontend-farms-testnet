@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Modal, Text } from '@pancakeswap-libs/uikit'
 import { getBalanceNumber } from 'utils/formatBalance'
+import BigNumber from 'bignumber.js'
 import { NftFarm, AMOUNT_TO_CLAIM } from 'config/constants/newnfts'
 import { getLifeAddress } from 'utils/addressHelpers'
 import { Nft } from 'config/constants/types'
@@ -16,7 +17,8 @@ import { useNftApprove } from '../../../hooks/useApprove'
 interface ClaimNftModalProps {
   nft: Nft
   onSuccess: () => any
-  onDismiss?: () => void
+  onDismiss?: () => void,
+  price?: BigNumber
 }
 
 const Value = styled(Text)`
@@ -33,7 +35,7 @@ const Actions = styled.div`
   grid-gap: 8px;
 `
 
-const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss }) => {
+const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss, price }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [pendingTx, setPendingTx] = useState(false)
   const [error, setError] = useState(null)
@@ -82,7 +84,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
   }, [cakeInWallet, setError])
 
   return (
-    <Modal title={`Claim NFT for ${nft.tokenAmount} ALIFE`} onDismiss={onDismiss}>
+    <Modal title={`Claim NFT for ${price} ALIFE`} onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">

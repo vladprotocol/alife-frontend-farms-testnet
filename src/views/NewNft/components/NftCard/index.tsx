@@ -221,7 +221,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     reInitialize()
   }
 
-  const [onPresentClaimModal] = useModal(<ClaimNftModal nft={nft} onSuccess={handleSuccess} />)
+  const [onPresentClaimModal] = useModal(<ClaimNftModal nft={nft} price={price} onSuccess={handleSuccess} />)
   const [onPresentBurnModal] = useModal(<BurnNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />)
   const [onPresentTransferModal] = useModal(
     <TransferNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />,
