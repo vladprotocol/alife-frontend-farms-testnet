@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 import BigNumber from 'bignumber.js'
-import { isArray } from 'lodash'
+import _, { isArray } from 'lodash'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useBlock from 'hooks/useBlock'
 import nftFarmV2 from 'config/abi/NftFarmV2.json'
@@ -163,14 +163,13 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         const ownerById = getMinted[0][2]
         const maxMintByNft = getToInt(getMinted[0][3])
         const prices = getFromWayArray(getMinted[0][4])
-        const myMints = getToInt(getMinted[0][5])
+        const myMints = getToInt(getMinted[0][2])
 
         // console.log('hasClaimed', hasClaimed)
         // console.log('amounts', amounts)
         // console.log('ownerById', ownerById)
         // console.log('maxMintByNft', maxMintByNft)
         // console.log('prices', prices)
-        // console.log('myMints', myMints)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
@@ -262,6 +261,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           myMints,
           nftTableData,
           isApproved,
+          currentDistributedSupply: _.sum(myMints)
         }))
       } catch (error) {
         console.error('an error occured', error)

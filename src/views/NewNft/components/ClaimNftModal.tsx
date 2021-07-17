@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Modal, Text } from '@pancakeswap-libs/uikit'
@@ -84,7 +85,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
   }, [cakeInWallet, setError])
 
   return (
-    <Modal title={`Claim NFT for ${price} ALIFE`} onDismiss={onDismiss}>
+    <Modal title={`Claim NFT for ${_.round(parseFloat(price.toString()))} ALIFE`} onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">
