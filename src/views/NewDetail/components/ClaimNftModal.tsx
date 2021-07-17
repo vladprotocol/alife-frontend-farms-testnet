@@ -9,14 +9,16 @@ import { Nft } from 'config/constants/types'
 import useTokenBalance from 'hooks/useTokenBalance'
 import useI18n from 'hooks/useI18n'
 import { useERC20, useNFTFarmV2Contract } from 'hooks/useContract'
+import BigNumber from 'bignumber.js'
 import InfoRow from './InfoRow'
 import { useNftAllowance } from '../../../hooks/useAllowance'
 import { useNftApprove } from '../../../hooks/useApprove'
 
 interface ClaimNftModalProps {
   nft: Nft
-  onSuccess: () => any
-  onDismiss?: () => void
+  onSuccess: () => any  
+  onDismiss?: () => void,
+  price?: BigNumber
 }
 
 const Value = styled(Text)`
@@ -33,7 +35,7 @@ const Actions = styled.div`
   grid-gap: 8px;
 `
 
-const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss }) => {
+const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss, price }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [pendingTx, setPendingTx] = useState(false)
   const [error, setError] = useState(null)
@@ -82,7 +84,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
   }, [cakeInWallet, setError])
 
   return (
-    <Modal title={`Claim NFT for ${nft.tokenAmount} ALIFE`} onDismiss={onDismiss}>
+    <Modal title={`Claim NFT for ${price} ALIFE`} onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">
