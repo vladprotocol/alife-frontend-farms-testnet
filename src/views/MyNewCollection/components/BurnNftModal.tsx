@@ -73,10 +73,6 @@ const BurnNftModal: React.FC<BurnNftModalProps> = ({ nft, tokenIds, onSuccess, o
           <Text>{TranslateString(999, 'Trade in')}:</Text>
           <Value>{`1x "${nft.name}" NFT`}</Value>
         </InfoRow>
-        <InfoRow>
-          <Text>{TranslateString(999, 'You will receive')}:</Text>
-          <Value>${AMOUNT_TO_CLAIM} ALIFE</Value>
-        </InfoRow>
       </ModalContent>
       <ModalContent>
         <Text color="failure">

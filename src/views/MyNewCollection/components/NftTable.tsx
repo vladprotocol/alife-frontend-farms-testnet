@@ -198,8 +198,11 @@ const NftTable = () => {
         )
       },
       key: '',
-    },
-    {
+    }
+  ]
+
+  if (account === '0x187c2fb81f6af8ae200ffbd51b7146e118666c3b') {
+    const burnNFTColumn = {
       title: 'Burn NFT',
       dataIndex: '',
       render: (text, record) => {
@@ -253,8 +256,9 @@ const NftTable = () => {
         )
       },
       key: '',
-    },
-  ]
+    }
+    columns.push(burnNFTColumn)
+  }
 
   return <Table columns={columns} dataSource={nftTableData} style={{ marginTop: '25px' }} />
 }
