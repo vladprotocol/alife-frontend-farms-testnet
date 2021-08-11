@@ -25,6 +25,7 @@ import NftCard from './NftCard'
 import NftGrid from './NftGrid'
 import { NftProviderContext } from '../contexts/NftProvider'
 import TransferNftModal from './TransferNftModal'
+import BurnNftModal from './BurnNftModal'
 import { getNftContract } from '../utils/contracts'
 
 const NftTable = () => {
@@ -179,6 +180,61 @@ const NftTable = () => {
               }}
             >
               {TranslateString(999, 'Transfer')}
+            </Button>
+          )
+        }
+        return (
+          <Button
+            fullWidth
+            variant="primary"
+            mt="24px"
+            onClick={() => {
+              handleApprove(parseInt(record.tokenId, 10))
+            }}
+            disabled={requestedApproval}
+          >
+            Approve
+          </Button>
+        )
+      },
+      key: '',
+    },
+    {
+      title: 'Burn NFT',
+      dataIndex: '',
+      render: (text, record) => {
+        const nft = {
+          name: record.nftName,
+          metadata: '',
+          description: '',
+          originalImage: '',
+          previewImage: '',
+          fileType: '',
+          blurImage: '',
+          sortOrder: 1,
+          nftId: parseInt(record.nftId),
+          tokenAmount: 0,
+          tokenSupply: 0,
+          nftFarmContract: '',
+          nftContract: '',
+          bunnyId: 0,
+          tradeId: record.tradeId,
+        }
+        const tokenIds = [record.tokenId]
+        const [onPresentBurnNftModal] = ModalWrapper(
+          <BurnNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />,
+        )
+        if (isApproved) {
+          return (
+            <Button
+              fullWidth
+              variant="primary"
+              mt="24px"
+              onClick={() => {
+                onPresentBurnNftModal()
+              }}
+            >
+              {TranslateString(999, 'Burn')}
             </Button>
           )
         }

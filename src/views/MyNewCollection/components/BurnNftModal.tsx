@@ -5,7 +5,7 @@ import { Button, Checkbox, Modal, Text } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import { Nft } from 'config/constants/types'
 import { NftFarm, AMOUNT_TO_CLAIM } from 'config/constants/newnfts'
-import { useRabbitMintingFarm } from 'hooks/useContract'
+import { useNFTFarmV2Contract } from 'hooks/useContract'
 import InfoRow from './InfoRow'
 
 interface BurnNftModalProps {
@@ -35,14 +35,14 @@ const BurnNftModal: React.FC<BurnNftModalProps> = ({ nft, tokenIds, onSuccess, o
   const [accepted, setAccepted] = useState(false)
   const TranslateString = useI18n()
   const { account } = useWallet()
-  const nftMintingContract = useRabbitMintingFarm(NftFarm)
+  const nftMintingContract = useNFTFarmV2Contract(NftFarm)
 
   const handleConfirm = async () => {
     try {
       const [tokenId] = tokenIds
 
       await nftMintingContract.methods
-        .burnNFT(tokenId)
+        .burn(nft.tradeId)
         .send({ from: account })
         .on('sending', () => {
           setIsLoading(true)
