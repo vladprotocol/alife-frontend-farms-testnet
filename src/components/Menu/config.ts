@@ -43,6 +43,11 @@ const config: MenuEntry[] = [
     icon: 'NftIcon',
     href: '/shibari-nft',
   },
+  {
+    label: 'Gift NFTs',
+    icon: 'NftIcon',
+    href: '/gift-nft',
+  },
   // {
   //   label: 'NFT by Artist',
   //   icon: 'NftIcon',
