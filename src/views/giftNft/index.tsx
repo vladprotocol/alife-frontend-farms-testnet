@@ -3,12 +3,37 @@ import styled from 'styled-components'
 import { Heading, Button } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch, Route } from 'react-router-dom'
 import nfts from 'config/constants/giftnfts'
+import FlexLayout from 'components/layout/Flex'
+import NftTabButtons from './components/NftTabButtons'
 import NftList from './components/NftList'
 import NftCard from './components/NftCard'
 import NftProvider from './contexts/NftProvider'
 import NftInfo from './components/NftInfo'
+
+const SendGift = (NFTs) => {
+  return (
+    <div>
+      {/* <NftInfo /> */}
+      <NftCard nft={NFTs} />
+    </div>
+  )
+}
+const SentGift = () => {
+  return (
+    <div>
+      <p>Sent Gift</p>
+    </div>
+  )
+}
+const OwnedGift = () => {
+  return (
+    <div>
+      <p>Owned Gift</p>
+    </div>
+  )
+}
 
 const StyledHero = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.textSubtle};
@@ -48,16 +73,15 @@ const GoldenButton = styled(Button)`
 
 const Nft = () => {
   const TranslateString = useI18n()
+  const { path } = useRouteMatch()
 
   const [NFTs, setNFTs] = useState(nfts[0])
-
 
   const randomNFTs = (rarity: string) => {
     // TODO select the random NFTS to be gifted
 
     setNFTs(nfts[0])
   }
-
 
   useEffect(() => {
     randomNFTs('Base')
@@ -85,10 +109,20 @@ const Nft = () => {
           <GoldenButton onClick={() => filterNFTs('Legendary')} mt="24px">
             Legendary NFTs
           </GoldenButton> */}
-        </StyledHero>
 
-        <NftInfo />
-        <NftCard nft={NFTs} />
+          <NftTabButtons />
+        </StyledHero>
+        <FlexLayout>
+          <Route exact path={`${path}`}>
+            {SendGift(NFTs)}
+          </Route>
+          <Route exact path={`${path}/owned-gifts`}>
+            {OwnedGift()}
+          </Route>
+          <Route exact path={`${path}/sent-gifts`}>
+            {SentGift()}
+          </Route>
+        </FlexLayout>
       </Page>
     </NftProvider>
   )
