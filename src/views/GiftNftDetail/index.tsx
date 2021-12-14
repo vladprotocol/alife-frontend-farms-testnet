@@ -35,8 +35,7 @@ const Section = styled.div`
 const Detail = (props) => {
   const { match } = props
   const id = parseInt(match.params.id)
-  console.log('Gift nft details', { id })
-  const nft1 = nfts.find((nft) => nft.nftId === id)
+  const nft1 = nfts.filter((nft) => nft.nftId === id)
 
   return (
     <Page>
@@ -48,7 +47,7 @@ const Detail = (props) => {
 
       <Grid>
         <Section>
-          <NftCard nft={nft1} />
+          <NftCard nft={nft1[0]} />
         </Section>
         <Section>Input</Section>
       </Grid>
