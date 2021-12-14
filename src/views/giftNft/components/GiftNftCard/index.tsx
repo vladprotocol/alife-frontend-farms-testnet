@@ -25,6 +25,8 @@ import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
 import { getNewNftContract } from '../../utils/contracts'
 import ClaimNftModal from '../ClaimNftModal'
+import GiftNftModal from '../GiftNftModal'
+
 import BurnNftModal from '../BurnNftModal'
 import TransferNftModal from '../TransferNftModal'
 
@@ -134,6 +136,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   const tokenIds = getTokenIds(nftId)
   // const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
 
+  const goGiftNft = () => history.push(`/gift-nft-detail/${nftId}`)
   useEffect(() => {
     const getNftInfoState = async () => {
       const newFarmContract = getNewNftContract()
@@ -224,6 +227,8 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   }
 
   const [onPresentClaimModal] = useModal(<ClaimNftModal nft={nft} price={price} onSuccess={handleSuccess} />)
+  const [onPresentGiftModal] = useModal(<GiftNftModal nft={nft} onSuccess={handleSuccess} />)
+
   const [onPresentBurnModal] = useModal(<BurnNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />)
   const [onPresentTransferModal] = useModal(
     <TransferNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />,
@@ -242,7 +247,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
           )}
         </Header>
 
-        <Button fullWidth onClick={onPresentClaimModal} mt="24px">
+        <Button fullWidth onClick={goGiftNft} mt="24px">
           {TranslateString(999, 'Gift this NFT')}
         </Button>
       </CardBody>
