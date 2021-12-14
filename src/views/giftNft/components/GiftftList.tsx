@@ -1,6 +1,6 @@
 import React from 'react'
 import orderBy from 'lodash/orderBy'
-import NftCard from './NftCard'
+import NftCard from './GiftNftCard'
 import NftGrid from './NftGrid'
 
 const NftList = (props) => {

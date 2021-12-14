@@ -3,37 +3,16 @@ import styled from 'styled-components'
 import { Heading, Button } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import Page from 'components/layout/Page'
-import { Link, useRouteMatch, Route } from 'react-router-dom'
+import { useRouteMatch, Route } from 'react-router-dom'
 import nfts from 'config/constants/giftnfts'
-import FlexLayout from 'components/layout/Flex'
-import NftTabButtons from './components/NftTabButtons'
-import NftList from './components/NftList'
-import NftCard from './components/NftCard'
-import NftProvider from './contexts/NftProvider'
-import NftInfo from './components/NftInfo'
 
-const SendGift = (NFTs) => {
-  return (
-    <div>
-      {/* <NftInfo /> */}
-      <NftCard nft={NFTs} />
-    </div>
-  )
-}
-const SentGift = () => {
-  return (
-    <div>
-      <p>Sent Gift</p>
-    </div>
-  )
-}
-const OwnedGift = () => {
-  return (
-    <div>
-      <p>Owned Gift</p>
-    </div>
-  )
-}
+import NftTabButtons from './components/NftTabButtons'
+
+import NftProvider from './contexts/NftProvider'
+
+import SendGift from './components/SendGift'
+import SentGift from './components/SentGift'
+import OwnedGift from './components/OwnedGift'
 
 const StyledHero = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.textSubtle};
@@ -97,32 +76,19 @@ const Nft = () => {
           <Heading as="h2" size="lg" color="#9f0d0d">
             {TranslateString(999, 'Gift a NFT with your tokens')}
           </Heading>
-          {/* <CustomButton onClick={() => filterNFTs('Base')} mt="24px">
-            Base NFTs
-          </CustomButton>
-          <CustomButton variant="success" onClick={() => filterNFTs('Rare')} mt="24px">
-            Rare NFTs
-          </CustomButton>
-          <CustomButton variant="subtle" onClick={() => filterNFTs('Epic')} mt="24px">
-            Epic NFTs
-          </CustomButton>
-          <GoldenButton onClick={() => filterNFTs('Legendary')} mt="24px">
-            Legendary NFTs
-          </GoldenButton> */}
 
           <NftTabButtons />
         </StyledHero>
-        <FlexLayout>
-          <Route exact path={`${path}`}>
-            {SendGift(NFTs)}
-          </Route>
-          <Route exact path={`${path}/owned-gifts`}>
-            {OwnedGift()}
-          </Route>
-          <Route exact path={`${path}/sent-gifts`}>
-            {SentGift()}
-          </Route>
-        </FlexLayout>
+
+        <Route exact path={`${path}`}>
+          <SendGift nftList={nfts} />
+        </Route>
+        <Route exact path={`${path}/owned-gifts`}>
+          <OwnedGift nftList={nfts} />
+        </Route>
+        <Route exact path={`${path}/sent-gifts`}>
+          <SentGift nftList={nfts} />
+        </Route>
       </Page>
     </NftProvider>
   )
