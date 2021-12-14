@@ -217,6 +217,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           const nftTablePromises = []
 
           for (let i = 0; i < balanceOf; i++) {
+            nftTablePromises.push(getNftData(i))
             tokenIdPromises.push(getTokenIdAndNftId(i))
           }
 
