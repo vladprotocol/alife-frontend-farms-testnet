@@ -8,6 +8,9 @@ export const getCakeAddress = () => {
 export const getLifeAddress = () => {
   return addresses.life[chainId]
 }
+export const getDemoAddress = () => {
+  return addresses.demo[chainId]
+}
 export const getMasterChefAddress = () => {
   return addresses.masterChef[chainId]
 }

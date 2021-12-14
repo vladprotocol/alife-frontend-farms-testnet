@@ -18,6 +18,7 @@ const Farms = lazy(() => import('./views/Farms'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const Nft = lazy(() => import('./views/Nft'))
 const NewNft = lazy(() => import('./views/NewNft'))
+const PunkNft = lazy(() => import('./views/PunkNft'))
 const NftArtist = lazy(() => import('./views/NftArtist'))
 const Legendary = lazy(() => import('./views/Legendary'))
 const Epic = lazy(() => import('./views/Epic'))
@@ -27,6 +28,7 @@ const MyEpicCollection = lazy(() => import('./views/MyEpicCollection'))
 const MyLegendaryCollection = lazy(() => import('./views/MyLegendaryCollection'))
 const Detail = lazy(() => import('./views/Detail'))
 const NewDetail = lazy(() => import('./views/NewDetail'))
+const PunkDetail = lazy(() => import('./views/PunkDetail'))
 const LegendaryDetail = lazy(() => import('./views/LegendaryDetail'))
 const EpicDetail = lazy(() => import('./views/EpicDetail'))
 
@@ -77,6 +79,9 @@ const App: React.FC = () => {
             <Route path="/shibari-nft">
               <NewNft />
             </Route>
+            <Route path="/punk-nft">
+              <PunkNft />
+            </Route>
             <Route path="/nft-artist">
               <NftArtist />
             </Route>
@@ -100,6 +105,7 @@ const App: React.FC = () => {
             </Route>
             <Route path="/detail/:id" component={Detail} />
             <Route path="/shibari-detail/:id" component={NewDetail} />
+            <Route path="/punk-detail/:id" component={PunkDetail} />
             <Route path="/legendary-detail/:id" component={LegendaryDetail} />
             <Route path="/epic-detail/:id" component={EpicDetail} />
             {/* Redirect */}
