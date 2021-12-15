@@ -10,6 +10,7 @@ import ContractAddresses from 'config/constants/contracts'
 import { Card, CardBody, Button, CardFooter, Input } from '@pancakeswap-libs/uikit'
 import Tokens from 'config/constants/tokens'
 import { GiftProviderContext } from 'views/GiftNftDetail/contexts/GiftProvider'
+import { useNftGift,useERC20 } from 'hooks/useContract' 
 
 import InfoRow from '../InfoRow'
 
@@ -47,9 +48,9 @@ const StyledSelectOptions = styled.option`
   outline: none;
 `
 function SendGiftForm({ nft }) {
-  const { checkAllowance, isApproved, isInitialized, tokenContract, fetchGiftNftContract } =
+  const { checkAllowance, isApproved, isInitialized, tokenContract } =
     useContext(GiftProviderContext)
-
+    const giftContract =  useNftGift();
   const { name, originalImage, nftId } = nft
   const { account, ethereum } = useWallet()
   const loggedIn = account !== null
@@ -59,6 +60,7 @@ function SendGiftForm({ nft }) {
   })
   const [selectedToken, setSelectedToken] = useState(null)
   const [form, setForm] = useState(null)
+  const [tokenBalance,setTokenBalance] = useState(0);
   const [error, setError] = useState(null)
   const getTokens = useCallback(() => {
     setTimeout(() => setTokens(Tokens), 500)
@@ -99,19 +101,18 @@ function SendGiftForm({ nft }) {
         return
       }
       setLoading(true)
-      const giftContract = await fetchGiftNftContract()
       const tokenAmount = ethers.utils.parseUnits(form.tokenAmount, 'ether')
-      await giftContract.methods
+      const tx = await giftContract.methods
         .mint(form.reciever, selectedToken, tokenAmount, parseInt(nftId), form.giftName, form.message, originalImage)
         .send({ from: account })
-
       setLoading(false)
     } catch (e) {
       setLoading(false)
       console.log({ e })
       console.error(e)
     }
-  }, [fetchGiftNftContract, account, selectedToken, form, formValidation, nftId, originalImage])
+  }, [ account, selectedToken, form, formValidation, nftId, originalImage,giftContract])
+
 
   useEffect(() => {
     async function onTokenChange() {
