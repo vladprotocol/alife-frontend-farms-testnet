@@ -1,7 +1,14 @@
-import React from 'react'
+import React from 'react';
+import NftList from "./NftList"
 
-const OwnedGift = (props) => {
-  return <div>OwnedGift</div>
+const OwnedGift =({nftList})=>{
+return(
+  <div> 
+
+<NftList nfts={nftList}/>
+
+  </div>
+)
 }
 
 export default OwnedGift
