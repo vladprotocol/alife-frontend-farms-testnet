@@ -16,6 +16,11 @@ const Tokens: Token[] = [
     contractAddress: '0x1745162A8B3f6ADf470A9D1d03fbaFE3D4A68320',
     symbol: 'test',
   },
+  {
+    name:'MyToken',
+    symbol:'MTK',
+    contractAddress:'0xc4cecc3c1f0daa1ec391832e507a1a4d44abb2f2'
+  }
 ]
 
 export default Tokens

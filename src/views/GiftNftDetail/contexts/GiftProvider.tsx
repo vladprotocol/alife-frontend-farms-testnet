@@ -28,6 +28,7 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
     isInitialized: false,
     isApproved: false,
     tokenContract: null,
+    tokenBalance: null,
   })
   const { account, ethereum } = useWallet()
 
@@ -40,9 +41,6 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
     }
   }, [])
 
-  const fetchGiftNftContract = useCallback(async () => {
-    return getNftContract(giftNftAbi, ContractAddresses.giftNFT[CONTRACT_ADDRESS_TEST])
-  }, [])
 
   const checkAllowance = useCallback(
     async (tokenAddress) => {
@@ -57,7 +55,6 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
       const allowance = await contract.methods
         .allowance(account, ContractAddresses.giftNFT[CONTRACT_ADDRESS_TEST])
         .call()
-      console.log({ allowance })
       if (allowance > 0) {
         setState((prev) => ({ ...prev, isApproved: true }))
       } else {
@@ -68,13 +65,16 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
     [ethereum, account, reInitialize],
   )
 
+
+
+
+
   return (
     <GiftProviderContext.Provider
       value={{
         ...state,
         reInitialize,
         checkAllowance,
-        fetchGiftNftContract,
         isApproved: state.isApproved,
         isInitialized: state.isInitialized,
         tokenContract: state.tokenContract,
