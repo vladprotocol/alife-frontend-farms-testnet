@@ -43,7 +43,7 @@ const StyledSelectOptions = styled.option`
   outline: none;
 `
 function SendGiftForm({ nft }) {
-  const { checkAllowance } = useContext(GiftProviderContext)
+  const { checkAllowance, isApproved, isInitialized } = useContext(GiftProviderContext)
   const { account, ethereum } = useWallet()
   const [tokens, setTokens] = useState(null)
   const [selectedToken, setSelectedToken] = useState(null)
@@ -131,9 +131,11 @@ function SendGiftForm({ nft }) {
         </InfoRow>
       </CardBody>
       <CardFooter>
-        <Button fullWidth variant="primary" mt="24px">
-          Approve Transfer
-        </Button>
+        {isInitialized && !isApproved && (
+          <Button fullWidth variant="primary" mt="24px">
+            Approve Transfer
+          </Button>
+        )}
       </CardFooter>
     </Card>
   )
