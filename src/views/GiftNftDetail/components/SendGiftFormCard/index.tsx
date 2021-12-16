@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
+
 import { getContract } from 'utils/erc20'
 import { provider } from 'web3-core'
 import styled from 'styled-components'
@@ -7,10 +8,12 @@ import { ethers } from 'ethers'
 
 import ContractAddresses from 'config/constants/contracts'
 
-import { Card, CardBody, Button, CardFooter, Input } from '@pancakeswap-libs/uikit'
+import { Card, CardBody, Button, CardFooter, Input, useModal } from '@pancakeswap-libs/uikit'
 import Tokens from 'config/constants/tokens'
 import { GiftProviderContext } from 'views/GiftNftDetail/contexts/GiftProvider'
-import { useNftGift,useERC20 } from 'hooks/useContract' 
+import { useNftGift, useERC20 } from 'hooks/useContract'
+
+import GiftNftModal from '../GiftNftModal'
 
 import InfoRow from '../InfoRow'
 
@@ -48,9 +51,8 @@ const StyledSelectOptions = styled.option`
   outline: none;
 `
 function SendGiftForm({ nft }) {
-  const { checkAllowance, isApproved, isInitialized, tokenContract } =
-    useContext(GiftProviderContext)
-    const giftContract =  useNftGift();
+  const { checkAllowance, isApproved, isInitialized, tokenContract } = useContext(GiftProviderContext)
+  const giftContract = useNftGift()
   const { name, originalImage, nftId } = nft
   const { account, ethereum } = useWallet()
   const loggedIn = account !== null
@@ -60,7 +62,7 @@ function SendGiftForm({ nft }) {
   })
   const [selectedToken, setSelectedToken] = useState(null)
   const [form, setForm] = useState(null)
-  const [tokenBalance,setTokenBalance] = useState(0);
+  const [tokenBalance, setTokenBalance] = useState(0)
   const [error, setError] = useState(null)
   const getTokens = useCallback(() => {
     setTimeout(() => setTokens(Tokens), 500)
@@ -87,15 +89,22 @@ function SendGiftForm({ nft }) {
     }
   }, [tokenContract, selectedToken, account, checkAllowance])
   const formValidation = useCallback(() => {
-    const KEYS = ['reciever', 'token', 'tokenAmount', 'giftName', 'message']
-    const hasAllKeys = KEYS.every((item) => form[item] !== null || form[item] !== undefined)
+    console.log('form validation entered', form)
+    const KEYS = ['reciever', 'tokenAmount', 'giftName', 'message']
+    if (!form) return false
+    console.log(Object.keys[form])
+    const hasAllKeys = KEYS.every((item) => {
+      return Object.keys(form).includes(item)
+    })
     return hasAllKeys
   }, [form])
+
   const handleSendGift = useCallback(async () => {
     try {
       if (!selectedToken) return
 
       const hasAllData = formValidation()
+      console.log({ hasAllData })
       if (!hasAllData) {
         setError('All fields should be filled !!!')
         return
@@ -111,8 +120,9 @@ function SendGiftForm({ nft }) {
       console.log({ e })
       console.error(e)
     }
-  }, [ account, selectedToken, form, formValidation, nftId, originalImage,giftContract])
+  }, [account, selectedToken, form, formValidation, nftId, originalImage, giftContract])
 
+  const [onSendGift] = useModal(<GiftNftModal nft={nft} onSuccess={handleSendGift} />)
 
   useEffect(() => {
     async function onTokenChange() {
@@ -197,7 +207,7 @@ function SendGiftForm({ nft }) {
           </Button>
         )}
         {isInitialized && loggedIn && isApproved && !state.isLoading && (
-          <Button fullWidth variant="primary" mt="24px" onClick={handleSendGift}>
+          <Button fullWidth variant="primary" mt="24px" onClick={onSendGift}>
             Send Gift
           </Button>
         )}

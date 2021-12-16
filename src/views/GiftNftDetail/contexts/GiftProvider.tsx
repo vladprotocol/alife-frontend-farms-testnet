@@ -41,7 +41,6 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
     }
   }, [])
 
-
   const checkAllowance = useCallback(
     async (tokenAddress) => {
       if (!account) return
@@ -64,10 +63,6 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
     },
     [ethereum, account, reInitialize],
   )
-
-
-
-
 
   return (
     <GiftProviderContext.Provider
