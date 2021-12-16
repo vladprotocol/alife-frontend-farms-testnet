@@ -75,7 +75,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     tokenPerBurn,
     amounts,
     myMints,
-    
     isApproved,
   } = useContext(NftProviderContext)
   const { account } = useWallet()

@@ -31,8 +31,8 @@ type State = {
   myMints: number[]
   myNfts: number[]
   myGifts: number[]
-  myGiftsdetails:any[],
-  myNftdetails:any[],
+  myGiftsdetails: any[]
+  myNftdetails: any[]
   countBurnt: number
   endBlockNumber: number
   startBlockNumber: number
@@ -79,8 +79,8 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     amounts: [],
     myMints: [],
     myGifts: [],
-    myGiftsdetails:[],
-    myNftdetails:[],
+    myGiftsdetails: [],
+    myNftdetails: [],
     myNfts: [],
     isApproved: false,
   })
@@ -265,50 +265,54 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         const contract = getNftwithTokenContract()
         const data = await contract.methods.getNFTdetails(index).call()
         const giftId = Number(data.giftId)
-        const  nftdetails = Nfts.find((nft)=>giftId ===nft.nftId)
-        return nftdetails;
+        const nftdetails = Nfts.find((nft) => giftId === nft.nftId)
+        return nftdetails
       } catch (err) {
         console.log(err)
-        return null;
+        return null
       }
     }
 
     const fetchNftGifted = async () => {
       try {
-        let dataPromises 
+        console.log('fetch nft gifted')
+        const dataPromises = []
         const contract = getNftwithTokenContract()
-        const tokens = await contract.methods.listTokenByMinter(account).call()
-        
-        tokens.forEach( token  => {
-          dataPromises = fetchNftData(token);
-        });
-        const data = await Promise.all(dataPromises)
-        console.log(data)
+        const nftIdsSent = await contract.methods.listTokenByMinter(account).call()
+
+        console.log('fetch nft gifted', { nftIdsSent })
+
+        nftIdsSent.forEach((token) => {
+          dataPromises.push(fetchNftData(token))
+        })
+        const data = [...(await Promise.all(dataPromises))].filter((item) => item !== undefined)
+        console.log('fetch nft gifted', { data })
         setState((prevState) => ({
           ...prevState,
-          myNfts: tokens,
-          myNftdetails:data
+          myNfts: nftIdsSent,
+          myGiftsdetails: [...data],
         }))
       } catch (err) {
         console.log(err)
       }
     }
 
+    // OwnedNft
     const fetchNftRecieved = async () => {
       try {
-        const dataPromises =[]
+        console.log('Fetch owned NFT')
+        const dataPromises = []
         const contract = getNftwithTokenContract()
         const tokens = await contract.methods.listTokenByOwner(account).call()
-        tokens.forEach( token  => {
-          dataPromises.push(fetchNftData(token));
-          
-        });
+        tokens.forEach((token) => {
+          dataPromises.push(fetchNftData(token))
+        })
         const data = await Promise.all(dataPromises)
-        console.log(data)
+        console.log('Fetch owned NFT', { data })
         setState((prevState) => ({
           ...prevState,
           myGifts: tokens,
-          myGiftsdetails:data
+          myNftdetails: data,
         }))
       } catch (err) {
         console.log(err)

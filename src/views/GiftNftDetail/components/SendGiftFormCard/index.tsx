@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
+
 import { getContract } from 'utils/erc20'
 import { provider } from 'web3-core'
 import styled from 'styled-components'
@@ -7,10 +8,12 @@ import { ethers } from 'ethers'
 
 import ContractAddresses from 'config/constants/contracts'
 
-import { Card, CardBody, Button, CardFooter, Input } from '@pancakeswap-libs/uikit'
+import { Card, CardBody, Button, CardFooter, Input, useModal } from '@pancakeswap-libs/uikit'
 import Tokens from 'config/constants/tokens'
 import { GiftProviderContext } from 'views/GiftNftDetail/contexts/GiftProvider'
 import { useNftGift, useERC20 } from 'hooks/useContract'
+
+import GiftNftModal from '../GiftNftModal'
 
 import InfoRow from '../InfoRow'
 
@@ -119,6 +122,8 @@ function SendGiftForm({ nft }) {
     }
   }, [account, selectedToken, form, formValidation, nftId, originalImage, giftContract])
 
+  const [onSendGift] = useModal(<GiftNftModal nft={nft} onSuccess={handleSendGift} />)
+
   useEffect(() => {
     async function onTokenChange() {
       setLoading(true)
@@ -202,7 +207,7 @@ function SendGiftForm({ nft }) {
           </Button>
         )}
         {isInitialized && loggedIn && isApproved && !state.isLoading && (
-          <Button fullWidth variant="primary" mt="24px" onClick={handleSendGift}>
+          <Button fullWidth variant="primary" mt="24px" onClick={onSendGift}>
             Send Gift
           </Button>
         )}
