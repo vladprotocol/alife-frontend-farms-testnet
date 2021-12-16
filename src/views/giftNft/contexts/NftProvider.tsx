@@ -6,7 +6,15 @@ import useBlock from 'hooks/useBlock'
 import nftFarmV2 from 'config/abi/NftFarmV2.json'
 import Nfts, { NftFarm } from 'config/constants/newnfts'
 import multicall from 'utils/multicall'
-import { getNftContract, getFromWei, getToFloat, getToInt, getFromWayArray, getNewNftContract } from '../utils/contracts'
+import {
+  getNftContract,
+  getFromWei,
+  getToFloat,
+  getToInt,
+  getFromWayArray,
+  getNewNftContract,
+  getNftwithTokenContract,
+} from '../utils/contracts'
 
 interface NftProviderProps {
   children: ReactNode
@@ -21,6 +29,10 @@ type State = {
   hasClaimed: number[]
   amounts: number[]
   myMints: number[]
+  myNfts: number[]
+  myGifts: number[]
+  myGiftsdetails:any[],
+  myNftdetails:any[],
   countBurnt: number
   endBlockNumber: number
   startBlockNumber: number
@@ -66,6 +78,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
     amounts: [],
     myMints: [],
+    myGifts: [],
+    myGiftsdetails:[],
+    myNftdetails:[],
+    myNfts: [],
     isApproved: false,
   })
   const { account } = useWallet()
@@ -143,7 +159,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         const amounts = getToFloat(getMinted[0][1])
         const myMints = getToInt(getMinted[0][2])
 
-
         // console.log('hasClaimed', hasClaimed)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
@@ -185,14 +200,14 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
           Nfts.forEach((nft) => {
             maxMintPromises.push(getMaxMint(nft.nftId))
-          });
+          })
 
           const tokenIdsOwnedByWallet = await Promise.all(tokenIdPromises)
           const maxMintArray = await Promise.all(maxMintPromises)
           setState((prevState) => ({
             ...prevState,
             totalSupplyDistributed: _.sum(maxMintArray),
-            currentDistributedSupply: _.sum(myMints)
+            currentDistributedSupply: _.sum(myMints),
           }))
 
           // While improbable a wallet can own more than one of the same nft so the format is:
@@ -220,7 +235,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
           amounts,
           myMints,
-          isApproved
+          isApproved,
         }))
       } catch (error) {
         console.error('an error occured', error)
@@ -245,9 +260,65 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         console.error('an error occured', error)
       }
     }
+    const fetchNftData = async (index: number) => {
+      try {
+        const contract = getNftwithTokenContract()
+        const data = await contract.methods.getNFTdetails(index).call()
+        const giftId = Number(data.giftId)
+        const  nftdetails = Nfts.find((nft)=>giftId ===nft.nftId)
+        return nftdetails;
+      } catch (err) {
+        console.log(err)
+        return null;
+      }
+    }
+
+    const fetchNftGifted = async () => {
+      try {
+        let dataPromises 
+        const contract = getNftwithTokenContract()
+        const tokens = await contract.methods.listTokenByMinter(account).call()
+        
+        tokens.forEach( token  => {
+          dataPromises = fetchNftData(token);
+        });
+        const data = await Promise.all(dataPromises)
+        console.log(data)
+        setState((prevState) => ({
+          ...prevState,
+          myNfts: tokens,
+          myNftdetails:data
+        }))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    const fetchNftRecieved = async () => {
+      try {
+        const dataPromises =[]
+        const contract = getNftwithTokenContract()
+        const tokens = await contract.methods.listTokenByOwner(account).call()
+        tokens.forEach( token  => {
+          dataPromises.push(fetchNftData(token));
+          
+        });
+        const data = await Promise.all(dataPromises)
+        console.log(data)
+        setState((prevState) => ({
+          ...prevState,
+          myGifts: tokens,
+          myGiftsdetails:data
+        }))
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
     if (account) {
       fetchContractData()
+      fetchNftGifted()
+      fetchNftRecieved()
     } else {
       fetchNonLoggedInContractData()
     }
@@ -274,6 +345,17 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       setState((prevState) => ({ ...prevState, isInitialized: false }))
     }
   }
+
+  // const fetchNftData = async (index: number) => {
+  //   try {
+  //     const contract = getNftwithTokenContract()
+  //     const data = await contract.methods.getNFTdetails(index).call()
+  //     console.log(data)
+  //     // return data;
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   return (
     <NftProviderContext.Provider value={{ ...state, canBurnNft, getTokenIds, reInitialize }}>
