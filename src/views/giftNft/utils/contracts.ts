@@ -3,7 +3,9 @@ import { getContract } from 'utils/web3'
 import { ContractOptions } from 'web3-eth-contract'
 import nftFarm from 'config/abi/NftFarmV2.json'
 import nft from 'config/abi/NFT.json'
-import { NftFarm, NFT } from 'config/constants/newnfts'
+import nftwithToken from 'config/abi/NftWithToken.json'
+
+import { NftFarm, NFT, NftWithToken } from 'config/constants/newnfts'
 import BigNumber from 'bignumber.js'
 // TODO: Figure out how to add current account to contracts to write methods can be used
 
@@ -20,6 +22,12 @@ export const getNftContract = (contractOptions?: ContractOptions) => {
 export const getNewNftContract = (contractOptions?: ContractOptions) => {
   const nftAbi = nftFarm as unknown as AbiItem
   return getContract(nftAbi, NftFarm, contractOptions)
+}
+
+export const getNftwithTokenContract = (contractOptions?: ContractOptions) => {
+  const nftAbi = nftwithToken as unknown as AbiItem
+  const contract = getContract(nftAbi, NftWithToken, contractOptions)
+  return contract
 }
 
 export const getFromWei = (v: any) => {
