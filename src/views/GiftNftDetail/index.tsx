@@ -2,9 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Heading, LogoIcon, Text, Button } from '@pancakeswap-libs/uikit'
 import nfts from 'config/constants/giftnfts'
-
 import Page from 'components/layout/Page'
+import GiftProvider from './contexts/GiftProvider'
+
 import NftCard from './components/NftCard'
+import GiftForm from './components/SendGiftFormCard'
 
 const StyledHero = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.textSubtle};
@@ -30,6 +32,7 @@ const Grid = styled.div`
 `
 const Section = styled.div`
   width: 50%;
+  padding: 10px;
 `
 
 const Detail = (props) => {
@@ -38,20 +41,24 @@ const Detail = (props) => {
   const nft1 = nfts.filter((nft) => nft.nftId === id)
 
   return (
-    <Page>
-      <StyledHero>
-        <CustomHeading as="h1" size="xxl" color="#9f0d0d" mb="24px">
-          Gift NFT
-        </CustomHeading>
-      </StyledHero>
+    <GiftProvider>
+      <Page>
+        <StyledHero>
+          <CustomHeading as="h1" size="xxl" color="#9f0d0d" mb="24px">
+            Gift NFT
+          </CustomHeading>
+        </StyledHero>
 
-      <Grid>
-        <Section>
-          <NftCard nft={nft1[0]} />
-        </Section>
-        <Section>Input</Section>
-      </Grid>
-    </Page>
+        <Grid>
+          <Section>
+            <NftCard nft={nft1[0]} />
+          </Section>
+          <Section>
+            <GiftForm nft={nft1[0]} />
+          </Section>
+        </Grid>
+      </Page>
+    </GiftProvider>
   )
 }
 

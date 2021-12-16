@@ -98,3 +98,9 @@ export type Nft = {
   rarity?: string
   tradeId?: number
 }
+
+export type Token = {
+  name: string
+  contractAddress: string
+  symbol: string
+}
