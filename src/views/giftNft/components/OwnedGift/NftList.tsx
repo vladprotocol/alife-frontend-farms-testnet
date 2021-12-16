@@ -5,7 +5,7 @@ import NftGrid from '../NftGrid'
 
 const NftList = (props) => {
   const { nfts } = props
-  console.log(nfts)
+  console.log('owned nft list', { nfts })
   return (
     <NftGrid>
       {orderBy(nfts, 'sortOrder').map((nft) => (

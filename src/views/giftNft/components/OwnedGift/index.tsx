@@ -1,17 +1,15 @@
-import React, { useContext, useEffect } from 'react'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
+import React, { useContext } from 'react'
+
 import NftList from './NftList'
-import nfts from '../../../../config/constants/newnfts'
+
 import { NftProviderContext } from '../../contexts/NftProvider'
 
+const OwnedGift = () => {
+  const { myNftdetails } = useContext(NftProviderContext)
 
-
-const OwnedGift = ({ nftList }) => {
-  const {myGifts,myGiftsdetails} = useContext(NftProviderContext);
-  
   return (
     <div>
-      <NftList nfts={myGiftsdetails} />
+      <NftList nfts={myNftdetails} />
     </div>
   )
 }
