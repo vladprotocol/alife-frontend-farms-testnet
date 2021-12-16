@@ -22,9 +22,14 @@ import InfoRow from '../InfoRow'
 import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
 import { getNewNftContract } from '../../utils/contracts'
+import ClaimNftModal from './ClaimNftModal'
 
+interface GiftNft extends Nft {
+  isClaimed: boolean
+  tokenId: number
+}
 interface NftCardProps {
-  nft: Nft
+  nft: GiftNft
 }
 
 const Header = styled(InfoRow)`
@@ -60,40 +65,13 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
 
   const TranslateString = useI18n()
 
-  const {
-    isInitialized,
-    hasClaimed,
-    canBurnNft,
-    totalSupplyDistributed,
-    currentDistributedSupply,
-    getTokenIds,
-    reInitialize,
-    allowMultipleClaims,
-    rarity,
-    priceMultiplier,
-    maxMintPerNft,
-    tokenPerBurn,
-    amounts,
-    myMints,
-    isApproved,
-  } = useContext(NftProviderContext)
+  const { reInitialize } = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
-  const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply } = nft
+  const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply, isClaimed } = nft
   const loggedIn = account != null
 
-  const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
-
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
-
-  const MINTS = myMints[nftIndex] || 0
-
-  // not sure about this, you need to check if this oser own this nft in the view nft page.
-  // const youAreTheLastOwner = ownerById && ownerById[nftIndex] && ownerById[nftIndex].toString() === account.toString()
-
-  const MINTED = amounts[nftIndex] ? parseInt(amounts[nftIndex].toString()) : 0
-
-  const walletCanClaim = maxMintPerNft === 0 || MINTED === undefined || MINTED < maxMint
 
   const handleClick = async () => {
     if (state.isOpen) {
@@ -108,6 +86,8 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
       }
     }
   }
+
+  const handleClaimNft = () => reInitialize()
 
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
@@ -127,15 +107,29 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
       console.error(err)
     }
   }, [nftId])
+
+  const [onClaimNft] = useModal(<ClaimNftModal nft={nft} onSuccess={handleClaimNft} />)
   // console.log(nft)
   return (
     <Card>
       <Image src={`/images/nfts/${previewImage}`} alt={name} />
 
       <CardBody>
-        <Header>{/* <Heading>Owned Gift</Heading> */}</Header>
+        <Header>
+          <Heading>{name}</Heading>{' '}
+        </Header>
+        {loggedIn && isClaimed && (
+          <Button fullWidth variant="primary" mt="24px" disabled>
+            Already Claimed
+          </Button>
+        )}
+        {loggedIn && !isClaimed && (
+          <Button fullWidth variant="primary" mt="24px" onClick={onClaimNft}>
+            Claim NFT
+          </Button>
+        )}
       </CardBody>
-      <CardFooter p="0">
+      <CardFooter p="2">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
           {state.isLoading ? TranslateString(999, 'Loading...') : TranslateString(999, 'Details')}
         </DetailsButton>
@@ -144,16 +138,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
               {description}
             </Text>
-            <InfoRow>
-              <Text>{TranslateString(999, 'Number minted')}:</Text>
-              <Value>
-                {MINTED}/{maxMint}
-              </Value>
-            </InfoRow>
-            <InfoRow>
-              <Text>Owned By Me:</Text>
-              <Value>{MINTS}</Value>
-            </InfoRow>
           </InfoBlock>
         )}
       </CardFooter>

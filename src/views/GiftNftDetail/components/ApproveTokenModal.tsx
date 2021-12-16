@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Modal, Text } from '@pancakeswap-libs/uikit'
 
-import { Nft } from 'config/constants/types'
+import { Token } from 'config/constants/types'
 
 import useI18n from 'hooks/useI18n'
 
 import InfoRow from './InfoRow'
 
 interface GiftNftProps {
-  nft: Nft
+  token: Token
   onSuccess: () => any
   onDismiss?: () => void
 }
@@ -30,7 +30,7 @@ const Actions = styled.div`
   grid-gap: 8px;
 `
 
-const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => {
+const GiftNftModal: React.FC<GiftNftProps> = ({ token, onSuccess, onDismiss }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [pendingTx, setPendingTx] = useState(false)
   const [error, setError] = useState(null)
@@ -62,16 +62,16 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
           </Text>
         )}
         <InfoRow>
-          <Text>{TranslateString(999, 'You will send')}:</Text>
-          <Value>{`1x "${nft.name}" NFT`}</Value>
+          <Text>{TranslateString(999, `You will allow VLAD to spend ${token.name} on your behalf`)}:</Text>
+          <Value>{` "${token.name}" ${token.symbol}`}</Value>
         </InfoRow>
       </ModalContent>
       <Actions>
         <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading}>
-          {TranslateString(464, 'Confirm')}
+          {TranslateString(464, 'Approve')}
         </Button>
         <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
-          Cancel
+          {TranslateString(464, 'Cancel')}
         </Button>
       </Actions>
     </Modal>

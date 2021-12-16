@@ -14,6 +14,7 @@ import { GiftProviderContext } from 'views/GiftNftDetail/contexts/GiftProvider'
 import { useNftGift, useERC20 } from 'hooks/useContract'
 
 import GiftNftModal from '../GiftNftModal'
+import ApproveTokenModal from '../ApproveTokenModal'
 
 import InfoRow from '../InfoRow'
 
@@ -123,6 +124,12 @@ function SendGiftForm({ nft }) {
   }, [account, selectedToken, form, formValidation, nftId, originalImage, giftContract])
 
   const [onSendGift] = useModal(<GiftNftModal nft={nft} onSuccess={handleSendGift} />)
+  const [onApproveToken] = useModal(
+    <ApproveTokenModal
+      token={Tokens.find((item) => item.contractAddress === selectedToken)}
+      onSuccess={handleApprove}
+    />,
+  )
 
   useEffect(() => {
     async function onTokenChange() {
@@ -202,7 +209,7 @@ function SendGiftForm({ nft }) {
         {error ? <p>{error}</p> : ''}
         {state && state.isLoading && <p>Loading....</p>}
         {isInitialized && loggedIn && !isApproved && !state.isLoading && (
-          <Button onClick={handleApprove} fullWidth variant="primary" mt="24px">
+          <Button onClick={onApproveToken} fullWidth variant="primary" mt="24px">
             Approve Transfer
           </Button>
         )}
