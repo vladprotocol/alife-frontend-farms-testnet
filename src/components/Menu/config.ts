@@ -48,6 +48,7 @@ const config: MenuEntry[] = [
     icon: 'NftIcon',
     href: '/gift-nft',
   },
+
   // {
   //   label: 'NFT by Artist',
   //   icon: 'NftIcon',

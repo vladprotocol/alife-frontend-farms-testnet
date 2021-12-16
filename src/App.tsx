@@ -19,6 +19,7 @@ const NotFound = lazy(() => import('./views/NotFound'))
 const Nft = lazy(() => import('./views/Nft'))
 const NewNft = lazy(() => import('./views/NewNft'))
 const GiftNft = lazy(() => import('./views/giftNft'))
+
 const NftArtist = lazy(() => import('./views/NftArtist'))
 const Legendary = lazy(() => import('./views/Legendary'))
 const Epic = lazy(() => import('./views/Epic'))
@@ -85,6 +86,7 @@ const App: React.FC = () => {
             <Route path="/gift-nft">
               <GiftNft />
             </Route>
+
             <Route path="/legendary">
               <Legendary />
             </Route>
