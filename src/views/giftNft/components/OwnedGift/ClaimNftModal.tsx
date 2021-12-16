@@ -3,6 +3,7 @@ import _ from 'lodash'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Modal, Text } from '@pancakeswap-libs/uikit'
+import { useNftGift } from 'hooks/useContract'
 
 import BigNumber from 'bignumber.js'
 
@@ -12,8 +13,12 @@ import useI18n from 'hooks/useI18n'
 
 import InfoRow from '../InfoRow'
 
+interface GiftNft extends Nft {
+  isClaimed: boolean
+  tokenId: number
+}
 interface ClaimNftModalProps {
-  nft: Nft
+  nft: GiftNft
   onSuccess: () => any
   onDismiss?: () => void
   price?: BigNumber
@@ -39,31 +44,32 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
-
+  const giftContract = useNftGift()
   const handleConfirm = async () => {
     try {
-      //   await nftMintingContract.methods
-      //     .mint(nft.nftId)
-      //     .send({ from: account })
-      //     .on('sending', () => {
-      //       setIsLoading(true)
-      //     })
-      //     .on('receipt', () => {
-      //       onDismiss()
-      //       onSuccess()
-      //     })
-      //     .on('error', () => {
-      //       console.error(error)
-      //       setError('Unable to claim NFT')
-      //       setIsLoading(false)
-      //     })
+      await giftContract.methods
+        .claimToken(Number(nft.tokenId))
+        .send({ from: account })
+        .on('sending', () => {
+          setIsLoading(true)
+        })
+        .on('receipt', () => {
+          setError('Successfully claimed NFT')
+          onDismiss()
+          onSuccess()
+        })
+        .on('error', () => {
+          console.error(error)
+          setError('Unable to claim NFT')
+          setIsLoading(false)
+        })
     } catch (err) {
       console.error('Unable to claim NFT:', err)
     }
   }
 
   return (
-    <Modal title={`Claim this NFT`} onDismiss={onDismiss}>
+    <Modal title="Claim this NFT" onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">
@@ -71,13 +77,16 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
           </Text>
         )}
         <InfoRow>
-          <Text>{TranslateString(999, 'You will receive')}:</Text>
-          <Value>{`1x "${nft.name}" NFT`}</Value>
+          <Text>{TranslateString(999, 'You will claim')}:</Text>
+          <Value>{`${nft.name} NFT`}</Value>
         </InfoRow>
       </ModalContent>
       <Actions>
         <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading}>
           {TranslateString(464, 'Confirm')}
+        </Button>
+        <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
+          Cancel
         </Button>
       </Actions>
     </Modal>

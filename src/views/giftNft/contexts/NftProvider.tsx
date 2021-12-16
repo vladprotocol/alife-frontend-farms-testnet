@@ -89,6 +89,8 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
   const { isInitialized } = state
 
+  // const
+
   // Static data
   useEffect(() => {
     const fetchContractData = async () => {
@@ -264,9 +266,11 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       try {
         const contract = getNftwithTokenContract()
         const data = await contract.methods.getNFTdetails(index).call()
+
         const giftId = Number(data.giftId)
         const nftdetails = Nfts.find((nft) => giftId === nft.nftId)
-        return nftdetails
+
+        return { ...nftdetails, isClaimed: data.isClaimed, tokenId: index }
       } catch (err) {
         console.log(err)
         return null
@@ -275,18 +279,15 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
     const fetchNftGifted = async () => {
       try {
-        console.log('fetch nft gifted')
         const dataPromises = []
         const contract = getNftwithTokenContract()
         const nftIdsSent = await contract.methods.listTokenByMinter(account).call()
-
-        console.log('fetch nft gifted', { nftIdsSent })
 
         nftIdsSent.forEach((token) => {
           dataPromises.push(fetchNftData(token))
         })
         const data = [...(await Promise.all(dataPromises))].filter((item) => item !== undefined)
-        console.log('fetch nft gifted', { data })
+
         setState((prevState) => ({
           ...prevState,
           myNfts: nftIdsSent,
@@ -300,7 +301,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     // OwnedNft
     const fetchNftRecieved = async () => {
       try {
-        console.log('Fetch owned NFT')
         const dataPromises = []
         const contract = getNftwithTokenContract()
         const tokens = await contract.methods.listTokenByOwner(account).call()
@@ -308,7 +308,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           dataPromises.push(fetchNftData(token))
         })
         const data = await Promise.all(dataPromises)
-        console.log('Fetch owned NFT', { data })
         setState((prevState) => ({
           ...prevState,
           myGifts: tokens,
@@ -326,7 +325,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     } else {
       fetchNonLoggedInContractData()
     }
-  }, [isInitialized, account, setState])
+  }, [isInitialized, account])
 
   useEffect(() => {
     return () => {

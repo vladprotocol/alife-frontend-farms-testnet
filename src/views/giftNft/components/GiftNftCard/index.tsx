@@ -66,7 +66,6 @@ const ViewNft = styled(Text)`
 `
 
 const NftCard: React.FC<NftCardProps> = ({ nft }) => {
-  console.log({ nft })
   const [state, setState] = useState({
     isLoading: false,
     isOpen: false,
