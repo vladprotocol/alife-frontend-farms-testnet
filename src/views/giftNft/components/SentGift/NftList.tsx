@@ -10,6 +10,7 @@ const NftList = (props) => {
       
     
           {orderBy(nfts, 'sortOrder').map((nft) => (
+          
         <div key={nft.nftId}>
           <NftCard nft={nft} />
         </div>))}

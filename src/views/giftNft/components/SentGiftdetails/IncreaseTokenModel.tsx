@@ -13,6 +13,8 @@ import InfoRow from '../InfoRow'
 interface GiftNft extends Nft{
     isClaimed:boolean
     tokenId:number
+    tokenname:string
+    amount:number
 }
 interface IncreaseTokenModalProps {
   nft: GiftNft
@@ -45,7 +47,7 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
   const { account } = useWallet();
   const giftContract = useNftGift();
   const [form, setForm] = useState(null)
-
+console.log({nft})
 
   
   const handleChange = (e) => {
@@ -71,7 +73,7 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
     }
   }
     return(
-        <Modal title="Claim this NFT " onDismiss={onDismiss}>
+        <Modal title="Increase Token in NFT GIFT " onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">
@@ -79,9 +81,15 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
           </Text>
         )}
         <InfoRow>
-          <Text>{TranslateString(999, 'Increasing')}:</Text>
+          <Text>{TranslateString(999, 'GIFT NFT')}:</Text>
           <Value>{`${nft.name} NFT`}</Value>
+          
         </InfoRow>
+          <InfoRow>
+          <Text>{TranslateString(999, 'Current Tokens')}:</Text>
+          <Value>{`${nft.amount} ${nft.tokenname}`}</Value>
+          </InfoRow>
+
         <Label htmlFor='increaseAmount'>{TranslateString(999,'Increasing Amount')}</Label>
         <Input id="increaseAmount"
         name="amount"
@@ -102,7 +110,7 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
         <Button 
             fullWidth
             onClick={onDismiss}>
-            {TranslateString(464,"Cancel")}
+            Cancel
             </Button>
       </Actions>
     </Modal>

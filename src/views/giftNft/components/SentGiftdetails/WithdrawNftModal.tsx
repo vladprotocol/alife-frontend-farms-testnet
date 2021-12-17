@@ -66,7 +66,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
 
   
   return (
-    <Modal title="Claim this NFT " onDismiss={onDismiss}>
+    <Modal title="Withdraw this NFT " onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">
@@ -74,7 +74,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
           </Text>
         )}
         <InfoRow>
-          <Text>{TranslateString(999, 'You will claim')}:</Text>
+          <Text>{TranslateString(999, 'You will withdraw tokens from')}:</Text>
           <Value>{`${nft.name} NFT`}</Value>
         </InfoRow>
       </ModalContent>
@@ -90,7 +90,7 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
         <Button 
             fullWidth
             disabled ={!account || isLoading}>
-            {TranslateString(464,"Cancel")}
+            Cancel
             </Button>
       </Actions>
     </Modal>

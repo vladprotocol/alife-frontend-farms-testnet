@@ -126,7 +126,7 @@ const NftCard = ({ nft }) => {
         <Header>
           <Heading>{name}</Heading>
           <Tag>
-        {tokenname}
+        {amount} {tokenname}
           </Tag>
         </Header>
               <br/>
