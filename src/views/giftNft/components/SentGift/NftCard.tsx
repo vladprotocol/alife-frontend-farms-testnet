@@ -30,6 +30,7 @@ interface GiftNft extends Nft {
   tokenminted:number
   giftName: string
   giftMessage: string
+  tokenId:number
 }
 interface NftCardProps {
   nft: GiftNft
@@ -108,7 +109,8 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   } = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
-  const { nftId,name,previewImage, originalImage, description, tokenAmount, tokenSupply,isClaimed,tokenname,amount,tokenminted,giftName,giftMessage} = nft
+  console.log({nft});
+  const { nftId,tokenId,name,previewImage, originalImage, description, tokenAmount, tokenSupply,isClaimed,tokenname,amount,tokenminted,giftName,giftMessage} = nft
   const loggedIn = account != null
 
   const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
@@ -167,7 +169,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
           </Header>
 
           {isInitialized && (
-          <Button fullWidth onClick={() => history.push(`/sent-gift-nft-detail/${nftId}`)} mt="24px">
+          <Button fullWidth onClick={() => history.push(`/sent-gift-nft-detail/${tokenId}`)} mt="24px">
             <ViewNft>
               View NFT 
             </ViewNft>

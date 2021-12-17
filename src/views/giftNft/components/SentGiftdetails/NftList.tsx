@@ -42,8 +42,9 @@ const[nftdata,setNftData] = useState(null);
   
     useEffect(()=> getNftSentDetails(),[getNftSentDetails])
     useEffect(()=>{
-      if(!myGiftsdetails && myGiftsdetails.length<1) return 
-      const nft1 = myGiftsdetails.find((nft)=>nft.nftId === id)
+      if(!myGiftsdetails && myGiftsdetails.length<1) return
+
+      const nft1 = myGiftsdetails.find((nft)=>Number(nft.tokenId) === id)
       setNftData(nft1);
     },[id,myGiftsdetails])
 
