@@ -104,3 +104,12 @@ export type Token = {
   contractAddress: string
   symbol: string
 }
+
+export type GiftNFT = {
+  name: string
+  description: string
+  previewImage: string
+  originalImage: string
+  nftId:number
+
+}

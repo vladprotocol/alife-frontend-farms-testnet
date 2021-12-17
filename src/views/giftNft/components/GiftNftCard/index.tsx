@@ -259,16 +259,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
               {description}
             </Text>
-            <InfoRow>
-              <Text>{TranslateString(999, 'Number minted')}:</Text>
-              <Value>
-                {MINTED}/{maxMint}
-              </Value>
-            </InfoRow>
-            <InfoRow>
-              <Text>Owned By Me:</Text>
-              <Value>{MINTS}</Value>
-            </InfoRow>
+            
           </InfoBlock>
         )}
       </CardFooter>

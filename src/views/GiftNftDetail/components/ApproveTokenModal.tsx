@@ -45,9 +45,11 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ token, onSuccess, onDismiss }) =
       setError('Successfully gifted NFT')
       setCompleteTx(true)
       setIsLoading(false)
+      onDismiss()
     } catch (err) {
       setIsLoading(false)
       setError('Unable to gift NFT')
+      onDismiss()
       console.error('Unable to mint NFT:', err)
     }
   }
@@ -66,6 +68,7 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ token, onSuccess, onDismiss }) =
         </InfoRow>
       </ModalContent>
       <Actions>
+
         {completedTx && (
           <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
             Done
