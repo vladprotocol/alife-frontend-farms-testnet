@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useBlock from 'hooks/useBlock'
 import nftFarmV2 from 'config/abi/NftFarmV2.json'
-import Nfts, { NftFarm } from 'config/constants/newnfts'
+import Nfts, { NftFarm } from 'config/constants/giftnfts'
 import multicall from 'utils/multicall'
 import { useNftGift,useERC20 } from 'hooks/useContract'
 import {
@@ -57,6 +57,7 @@ type Context = {
   reInitialize: () => void
   getNftSentDetails:()=>void
   getNftRecievedDetails:()=>void
+  fetchNftData:(index:number)=>any
 } & State
 
 export const NftProviderContext = createContext<Context | null>(null)
@@ -346,7 +347,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       nftIdsReceieved.forEach((token) => {
         dataPromises.push(fetchNftData(token))
       })
-      const data = await Promise.all(dataPromises)
+     const data = [...(await Promise.all(dataPromises))].filter((item) => item !== null)     
       setState((prevState) => ({
         ...prevState,
         myGifts: nftIdsReceieved,
@@ -374,7 +375,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
   
 
   return (
-    <NftProviderContext.Provider value={{ ...state, canBurnNft, getTokenIds, reInitialize,getNftSentDetails,getNftRecievedDetails }}>
+    <NftProviderContext.Provider value={{ ...state, canBurnNft, getTokenIds, reInitialize,getNftSentDetails,getNftRecievedDetails,fetchNftData }}>
       {children}
     </NftProviderContext.Provider>
   )

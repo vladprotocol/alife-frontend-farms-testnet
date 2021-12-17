@@ -38,22 +38,27 @@ const SentGift = (props) => {
 const {id} = props
 console.log(id)
 
-    const { myGifts, myNfts, myGiftsdetails } = useContext(NftProviderContext)
+    const { myGifts, myNfts, myGiftsdetails,getNftSentDetails } = useContext(NftProviderContext)
+    useEffect(()=> getNftSentDetails,[getNftSentDetails])
     console.log(myGiftsdetails)
     const nft1 = myGiftsdetails.filter((nft)=>nft.nftId === id)
-    console.log(nft1)
+
   return (
+
     <div>
+      { myGiftsdetails &&(
         <Page>
                 <StyledHero>
+                  
                 <CustomHeading as="h1" size="xxl" color="#9f0d0d" mb="24px">
                 {nft1[0] && nft1[0].name}
-          </CustomHeading>               
+          </CustomHeading>              
            </StyledHero>
-           {/* <Grid> */}
-               <NftCard nft={nft1}/>
-           {/* </Grid> */}
-            </Page>
+           
+               <NftCard nft={nft1[0]}/>
+            </Page>)}
+
+
         
       {/* <NftList nfts={myGiftsdetails} /> */}
     </div>

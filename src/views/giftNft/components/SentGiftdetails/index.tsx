@@ -44,14 +44,8 @@ const Detail = (props) => {
     return(
         <NftProvider>
             <Page>
-                <StyledHero>
-                {/* <CustomHeading as="h1" size="xxl" color="#9f0d0d" mb="24px">
-                {nft1[0] && nft1[0].name}
-          </CustomHeading>                */}
-           </StyledHero>
-           {/* <Grid> */}
+               
                <NftList id={id}/>
-           {/* </Grid> */}
             </Page>
         </NftProvider>
     )}
