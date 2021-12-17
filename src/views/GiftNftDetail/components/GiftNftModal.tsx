@@ -32,7 +32,8 @@ const Actions = styled.div`
 
 const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [pendingTx, setPendingTx] = useState(false)
+  const [completedTx, setCompleteTx] = useState(false)
+
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
@@ -45,6 +46,7 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
       setIsLoading(true)
       await onSuccess()
       setError('Successfully gifted NFT')
+      setCompleteTx(true)
       setIsLoading(false)
     } catch (err) {
       setIsLoading(false)
@@ -67,12 +69,21 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
         </InfoRow>
       </ModalContent>
       <Actions>
-        <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading}>
-          {TranslateString(464, 'Confirm')}
-        </Button>
-        <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
-          Cancel
-        </Button>
+        {completedTx && (
+          <Button fullWidth onClick={onDismiss}>
+            Done
+          </Button>
+        )}
+        {!completedTx && (
+          <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading}>
+            {TranslateString(464, 'Confirm')}
+          </Button>
+        )}
+        {!completedTx && (
+          <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
+            Cancel
+          </Button>
+        )}
       </Actions>
     </Modal>
   )
