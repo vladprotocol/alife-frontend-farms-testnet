@@ -18,6 +18,7 @@ import useI18n from 'hooks/useI18n'
 import InfoRow from '../InfoRow'
 import Image from "../Image"
 import WithdrawNftModal from './WithdrawNftModal';
+import IncreaseTokenModal from './IncreaseTokenModel'
 import {NftProviderContext} from '../../contexts/NftProvider'
 
 
@@ -91,6 +92,9 @@ const NftCard = ({ nft }) => {
   const handleClaimNft =()=>reInitialize()
 
   const [onWithdrawNft] = useModal(<WithdrawNftModal nft ={nft[0]} onSuccess={handleClaimNft}/>)
+  
+  const[onIncreaseToken] = useModal(<IncreaseTokenModal nft={nft[0]}onSuccess={handleClaimNft}/>)
+
 
   const handleClick = async () => {
     if (state.isOpen) {
@@ -123,7 +127,7 @@ const NftCard = ({ nft }) => {
         {loggedIn && !isClaimed &&(
         <Button 
         onClick={onWithdrawNft} mt="24px"
-        >
+>
           {TranslateString(999, 'Withdraw Token')}
         </Button>)}
 
@@ -134,8 +138,7 @@ const NftCard = ({ nft }) => {
         )}
         
         {"  "}
-        <Button 
-        >
+        <Button onClick={onIncreaseToken}>
           {TranslateString(999, 'Increase Token Amount')}
         </Button>
       </CardBody>
