@@ -110,6 +110,5 @@ export type GiftNFT = {
   description: string
   previewImage: string
   originalImage: string
-  nftId:number
-
+  nftId: number
 }
