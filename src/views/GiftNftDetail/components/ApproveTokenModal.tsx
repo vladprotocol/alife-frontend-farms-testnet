@@ -32,23 +32,24 @@ const Actions = styled.div`
 
 const GiftNftModal: React.FC<GiftNftProps> = ({ token, onSuccess, onDismiss }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [pendingTx, setPendingTx] = useState(false)
+  const [completedTx, setCompleteTx] = useState(false)
+
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
-
-  // console.log('getLifeAddress', getLifeAddress(), NftFarm, allowance)
-  // console.log('allowance', allowance)
 
   const handleConfirm = async () => {
     try {
       setIsLoading(true)
       await onSuccess()
       setError('Successfully gifted NFT')
+      setCompleteTx(true)
       setIsLoading(false)
+      onDismiss()
     } catch (err) {
       setIsLoading(false)
       setError('Unable to gift NFT')
+      onDismiss()
       console.error('Unable to mint NFT:', err)
     }
   }
@@ -67,12 +68,22 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ token, onSuccess, onDismiss }) =
         </InfoRow>
       </ModalContent>
       <Actions>
-        <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading}>
-          {TranslateString(464, 'Approve')}
-        </Button>
-        <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
-          {TranslateString(464, 'Cancel')}
-        </Button>
+
+        {completedTx && (
+          <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
+            Done
+          </Button>
+        )}
+        {!completedTx && (
+          <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading}>
+            {TranslateString(464, 'Approve')}
+          </Button>
+        )}
+        {!completedTx && (
+          <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
+            Cancel
+          </Button>
+        )}
       </Actions>
     </Modal>
   )

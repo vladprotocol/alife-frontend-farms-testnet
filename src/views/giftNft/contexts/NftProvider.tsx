@@ -4,9 +4,10 @@ import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useBlock from 'hooks/useBlock'
 import nftFarmV2 from 'config/abi/NftFarmV2.json'
-import Nfts, { NftFarm } from 'config/constants/giftnfts'
+import Nfts, { NftFarm } from 'config/constants/newnfts'
+import GiftNfts from 'config/constants/giftnfts'
 import multicall from 'utils/multicall'
-import { useNftGift,useERC20 } from 'hooks/useContract'
+import { useNftGift, useERC20 } from 'hooks/useContract'
 import {
   getNftContract,
   getFromWei,
@@ -15,7 +16,7 @@ import {
   getFromWayArray,
   getNewNftContract,
   getNftwithTokenContract,
-  getERC20Contract
+  getERC20Contract,
 } from '../utils/contracts'
 
 interface NftProviderProps {
@@ -160,14 +161,13 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     const fetchContractData = async () => {
       try {
         const nftContract = getNftContract()
-        const nftgiftContract = getNftwithTokenContract();
+        const nftgiftContract = getNftwithTokenContract()
 
         const getMinted = await multicall(nftFarmV2, [{ address: NftFarm, name: 'getMinted', params: [account] }])
 
         const hasClaimed = getMinted[0][0]
         const amounts = getToFloat(getMinted[0][1])
         const myMints = getToInt(getMinted[0][2])
-
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
@@ -268,10 +268,9 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         console.error('an error occured', error)
       }
     }
-    
+
     if (account) {
       fetchContractData()
-      
     } else {
       fetchNonLoggedInContractData()
     }
@@ -286,39 +285,47 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
   const canBurnNft = currentBlock <= state.endBlockNumber
   const getTokenIds = (nftId: number) => state.nftMap[nftId]
 
-  
+  const fetchNftData = useCallback(
+    async (index: number) => {
+      try {
+        const data = await giftContract.methods.getNFTdetails(index).call()
 
-  const fetchNftData = useCallback(async (index:number)=>{
+        const giftId = Number(data.giftId)
+
+        const nftdetails = GiftNfts.find((nft) => nft.nftId === giftId)
+
+        // ToDo
+        // handle when nftdetails is not found
+
+        //  to retreive the amount of token locked
+        const erc20Contract = getERC20Contract(data.token)
+
+        const name = await erc20Contract.methods.name().call()
+
+        // // to find the number of nft's minted by given token id
+        const tokenminted = await giftContract.methods.listTokenByGiftId(giftId).call()
+
+        const nftdata = {
+          ...nftdetails,
+          amount: getFromWei(data.amount),
+          giftId: nftdetails.nftId,
+          tokenId: index,
+          tokenname: name,
+          isClaimed: data.isClaimed,
+          tokenminted: tokenminted.length,
+        }
+        return nftdata
+      } catch (err) {
+        console.log(err)
+        return null
+      }
+    },
+    [giftContract],
+  )
+
+  const getNftSentDetails = useCallback(async () => {
     try {
-      const data = await giftContract.methods.getNFTdetails(index).call()
-
-      const giftId = Number(data.giftId)
-      const  nftdetails = Nfts.find((nft) => giftId === nft.nftId)
-      // ToDo
-      // handle when nftdetails is not found
-
-      //  to retreive the amount of token locked
-      const erc20Contract = getERC20Contract(data.token);
-      
-      const name = await erc20Contract.methods.name().call()
-
-      // // to find the number of nft's minted by given token id
-      const tokenminted = await giftContract.methods.listTokenByGiftId(giftId).call()
-
-      const nftdata ={...nftdetails,amount:getFromWei(data.amount),giftId:nftdetails.nftId,tokenId:index,tokenname:name,isClaimed:data.isClaimed,tokenminted:tokenminted.length}
-      return nftdata
-
-    } catch (err) {
-      console.log(err)
-      return null
-    }
-
-  },[giftContract])
-
-  const getNftSentDetails = useCallback( async () =>{
-
-    try {
-      if(!account) return
+      if (!account) return
       const dataPromises = []
       const nftIdsSent = await giftContract.methods.listTokenByMinter(account).call()
       nftIdsSent.forEach((token) => {
@@ -334,13 +341,12 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     } catch (err) {
       console.log(err)
     }
+  }, [account, fetchNftData, giftContract])
 
-  },[account,fetchNftData,giftContract])
-
-  const getNftRecievedDetails = useCallback(async()=>{
+  const getNftRecievedDetails = useCallback(async () => {
     try {
-      if(!account) return
-      
+      if (!account) return
+
       const dataPromises = []
       // const contract = getNftwithTokenContract()
       const nftIdsReceieved = await giftContract.methods.listTokenByOwner(account).call()
@@ -356,8 +362,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     } catch (err) {
       console.log(err)
     }
-
-  },[account,fetchNftData,giftContract])
+  }, [account, fetchNftData, giftContract])
 
   /**
    * Allows consumers to re-fetch all data from the contract. Triggers the effects.
@@ -371,8 +376,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       setState((prevState) => ({ ...prevState, isInitialized: false }))
     }
   }
-
-  
 
   return (
     <NftProviderContext.Provider value={{ ...state, canBurnNft, getTokenIds, reInitialize,getNftSentDetails,getNftRecievedDetails,fetchNftData }}>
