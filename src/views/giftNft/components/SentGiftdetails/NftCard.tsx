@@ -26,6 +26,13 @@ import {NftProviderContext} from '../../contexts/NftProvider'
 const Header = styled(InfoRow)`
   min-height: 28px;
 `
+const CustomRow = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: space-between;
+`
 
 const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })`
   height: auto;
@@ -74,7 +81,7 @@ const NftCard = ({ nft }) => {
   const{reInitialize} = useContext(NftProviderContext)
 
   
-  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenminted,isClaimed } = nft
+  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenminted,isClaimed,giftName,giftMessage} = nft
   const loggedIn = account !=null
 
   const fetchDetails = useCallback(async () => {
@@ -89,11 +96,11 @@ const NftCard = ({ nft }) => {
       console.error(error)
     }
   }, [])
-  const handleClaimNft =()=>reInitialize()
+  const handleSucess =()=>reInitialize()
 
-  const [onWithdrawNft] = useModal(<WithdrawNftModal nft ={nft} onSuccess={handleClaimNft}/>)
+  const [onWithdrawNft] = useModal(<WithdrawNftModal nft ={nft} onSuccess={handleSucess}/>)
   
-  const[onIncreaseToken] = useModal(<IncreaseTokenModal nft={nft}onSuccess={handleClaimNft}/>)
+  const[onIncreaseToken] = useModal(<IncreaseTokenModal nft={nft}onSuccess={handleSucess}/>)
 
 
   const handleClick = async () => {
@@ -138,7 +145,8 @@ const NftCard = ({ nft }) => {
         )}
         
         {"  "}
-        <Button onClick={onIncreaseToken}>
+        
+        <Button onClick={onIncreaseToken} disabled ={isClaimed}>
           {TranslateString(999, 'Increase Token Amount')}
         </Button>
       </CardBody>
@@ -147,21 +155,40 @@ const NftCard = ({ nft }) => {
           {state.isLoading ? TranslateString(999, 'Loading...') : TranslateString(999, 'Details')}
         </DetailsButton>
         {state.isOpen && (
+          <>
           <InfoBlock>
             <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
               {description}
             </Text>
-            <InfoRow>
+            </InfoBlock>
+            <CustomRow>
               <Text>{TranslateString(999, 'Number Gifted')}:</Text>
               <Value>
               {tokenminted}
               </Value>
-            </InfoRow>
-            <InfoRow>
+            </CustomRow>
+            <CustomRow>
               <Text>Total amount:</Text>
               <Value>{amount}</Value>
-            </InfoRow>
-          </InfoBlock>
+              </CustomRow>
+              <CustomRow>
+              
+            <Text as="p" color="textSubtle" style={{ textAlign: 'center', minWidth: 'max-content' }}>
+              Gift Name :
+            </Text>
+            <Heading>{giftName}</Heading>
+          </CustomRow>
+          <CustomRow>
+            <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center', minWidth: 'max-content' }}>
+              Gift Message :
+            </Text>
+              <Text bold mb="16px" style={{ textAlign: 'center' }}>
+                {giftMessage}
+              </Text>
+              </CustomRow>
+
+
+          </>
         )}
       </CardFooter>
     </SmallCard>

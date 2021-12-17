@@ -36,13 +36,11 @@ const Section = styled.div`
 
 const SentGift = (props) => {
 const {id} = props
-console.log(id)
 const[nftdata,setNftData] = useState(null);
 
     const {myGiftsdetails,getNftSentDetails} = useContext(NftProviderContext)
   
     useEffect(()=> getNftSentDetails(),[getNftSentDetails])
-    console.log(myGiftsdetails)
     useEffect(()=>{
       if(!myGiftsdetails && myGiftsdetails.length<1) return 
       const nft1 = myGiftsdetails.find((nft)=>nft.nftId === id)
