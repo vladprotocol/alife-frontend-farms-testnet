@@ -87,7 +87,7 @@ const Nft = () => {
           <OwnedGift />
         </Route>
         <Route exact path={`${path}/sent-gifts`}>
-          <SentGift nftList={nfts} />
+          <SentGift />
         </Route>
       </Page>
     </NftProvider>

@@ -4,7 +4,7 @@ import NftList from './NftList'
 import nfts from '../../../../config/constants/newnfts'
 import { NftProviderContext } from '../../contexts/NftProvider'
 
-const SentGift = ({ nftList }) => {
+const SentGift = () => {
   const { myGifts, myNfts, myGiftsdetails } = useContext(NftProviderContext)
   return (
     <div>

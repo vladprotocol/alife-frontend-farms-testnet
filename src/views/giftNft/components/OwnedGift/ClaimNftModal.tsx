@@ -1,19 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Modal, Text } from '@pancakeswap-libs/uikit'
+import { useNftGift } from 'hooks/useContract'
+
+import BigNumber from 'bignumber.js'
 
 import { Nft } from 'config/constants/types'
 
 import useI18n from 'hooks/useI18n'
 
-import InfoRow from './InfoRow'
+import InfoRow from '../InfoRow'
 
-interface GiftNftProps {
-  nft: Nft
+interface GiftNft extends Nft {
+  isClaimed: boolean
+  tokenId: number
+}
+interface ClaimNftModalProps {
+  nft: GiftNft
   onSuccess: () => any
   onDismiss?: () => void
+  price?: BigNumber
 }
 
 const Value = styled(Text)`
@@ -30,31 +38,38 @@ const Actions = styled.div`
   grid-gap: 8px;
 `
 
-const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => {
+const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss, price }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [pendingTx, setPendingTx] = useState(false)
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
-
-  // console.log('getLifeAddress', getLifeAddress(), NftFarm, allowance)
-  // console.log('allowance', allowance)
-
+  const giftContract = useNftGift()
   const handleConfirm = async () => {
     try {
-      setIsLoading(true)
-      await onSuccess()
-      setError('Successfully gifted NFT')
-      setIsLoading(false)
+      await giftContract.methods
+        .claimToken(Number(nft.tokenId))
+        .send({ from: account })
+        .on('sending', () => {
+          setIsLoading(true)
+        })
+        .on('receipt', () => {
+          setError('Successfully claimed NFT')
+          onDismiss()
+          onSuccess()
+        })
+        .on('error', () => {
+          console.error(error)
+          setError('Unable to claim NFT')
+          setIsLoading(false)
+        })
     } catch (err) {
-      setIsLoading(false)
-      setError('Unable to gift NFT')
-      console.error('Unable to mint NFT:', err)
+      console.error('Unable to claim NFT:', err)
     }
   }
 
   return (
-    <Modal title="Gift NFT" onDismiss={onDismiss}>
+    <Modal title="Claim this NFT" onDismiss={onDismiss}>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">
@@ -62,8 +77,8 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
           </Text>
         )}
         <InfoRow>
-          <Text>{TranslateString(999, 'You will send')}:</Text>
-          <Value>{`1x "${nft.name}" NFT`}</Value>
+          <Text>{TranslateString(999, 'You will claim')}:</Text>
+          <Value>{`${nft.name} NFT`}</Value>
         </InfoRow>
       </ModalContent>
       <Actions>
@@ -78,4 +93,4 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
   )
 }
 
-export default GiftNftModal
+export default ClaimNftModal
