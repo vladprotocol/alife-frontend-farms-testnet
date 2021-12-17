@@ -14,6 +14,7 @@ import {
   getFromWayArray,
   getNewNftContract,
   getNftwithTokenContract,
+  getERC20Contract
 } from '../utils/contracts'
 
 interface NftProviderProps {
@@ -154,6 +155,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     const fetchContractData = async () => {
       try {
         const nftContract = getNftContract()
+        const nftgiftContract = getNftwithTokenContract();
 
         const getMinted = await multicall(nftFarmV2, [{ address: NftFarm, name: 'getMinted', params: [account] }])
 
@@ -161,7 +163,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         const amounts = getToFloat(getMinted[0][1])
         const myMints = getToInt(getMinted[0][2])
 
-        // console.log('hasClaimed', hasClaimed)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
@@ -268,15 +269,26 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         const data = await contract.methods.getNFTdetails(index).call()
 
         const giftId = Number(data.giftId)
-        const nftdetails = Nfts.find((nft) => giftId === nft.nftId)
+        const  nftdetails = Nfts.find((nft) => giftId === nft.nftId)
 
-        return { ...nftdetails, isClaimed: data.isClaimed, tokenId: index }
+        //  to retreive the amount of token locked
+        const erccontract = getERC20Contract(data.token);
+        const name = await erccontract.methods.name().call()
+
+        // // to find the number of nft's minted by given token id
+        const tokenminted = await contract.methods.listTokenByGiftId(giftId).call()
+
+        const nftdata ={...nftdetails,amount:Number(data.amount),giftId:nftdetails.nftId,tokenId:index,tokenname:name,isClaimed:data.isClaimed,tokenminted:tokenminted.length}
+        return nftdata
+        // const nftdetails = Nfts.find((nft) => giftId === nft.nftId)
+
+        // return { ...nftdetails, isClaimed: data.isClaimed, tokenId: index }
       } catch (err) {
         console.log(err)
         return null
       }
     }
-
+// nft gifted to others
     const fetchNftGifted = async () => {
       try {
         const dataPromises = []
@@ -298,7 +310,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       }
     }
 
-    // OwnedNft
+    // Nft owned 
     const fetchNftRecieved = async () => {
       try {
         const dataPromises = []
@@ -349,16 +361,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     }
   }
 
-  // const fetchNftData = async (index: number) => {
-  //   try {
-  //     const contract = getNftwithTokenContract()
-  //     const data = await contract.methods.getNFTdetails(index).call()
-  //     console.log(data)
-  //     // return data;
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+  
 
   return (
     <NftProviderContext.Provider value={{ ...state, canBurnNft, getTokenIds, reInitialize }}>

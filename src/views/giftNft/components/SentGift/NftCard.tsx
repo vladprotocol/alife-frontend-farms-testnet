@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {
   Card,
@@ -15,20 +15,28 @@ import {
 } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
-
 import { Nft } from 'config/constants/types'
 import { useHistory } from 'react-router-dom'
 import InfoRow from '../InfoRow'
 import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
-import { getNewNftContract } from '../../utils/contracts'
+import { getNewNftContract,getNftwithTokenContract } from '../../utils/contracts'
 
+// interface NftCardProps {
+//   nft: Nft
+// }
+interface GiftNft extends Nft {
+  isClaimed: boolean
+  tokenname: string
+  amount: number
+  tokenminted:number
+}
 interface NftCardProps {
-  nft: Nft
+  nft: GiftNft
 }
 
 const Header = styled(InfoRow)`
-  min-height: 28px;
+  min-height: 44px;
 `
 
 const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })`
@@ -44,10 +52,18 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
   }
 `
 const InfoBlock = styled.div`
-padding:0 24px 24px:`
+  padding: 0 24px 24px;
+`
+
 
 const Value = styled(Text)`
   font-weight: 600;
+`
+
+const ViewNft = styled(Text)`
+  @media (max-width: 1300px) {
+    font-size: 11px;
+  }
 `
 const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   const [state, setState] = useState({
@@ -57,6 +73,8 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     nftBurnCount: 0,
   })
   const [maxMint, setMaxMint] = useState(0)
+  // const[tokenName,setTokenName] = useState("");
+  // const[TokenAmount,setamount] = useState("");
 
   const TranslateString = useI18n()
 
@@ -79,7 +97,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   } = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
-  const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply } = nft
+  const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply,isClaimed,tokenname,amount,tokenminted} = nft
   const loggedIn = account != null
 
   const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
@@ -108,6 +126,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
       }
     }
   }
+  const walletOwnsNft = MINTS > 0
 
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
@@ -129,11 +148,24 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   }, [nftId])
   // console.log(nft)
   return (
-    <Card>
+    <Card isActive={walletOwnsNft}>
       <Image src={`/images/nfts/${previewImage}`} alt={name} />
-
       <CardBody>
-        <Header>{/* <Heading>Owned Gift</Heading> */}</Header>
+        <Header>
+          <Heading>{name}</Heading>
+          <Tag >
+        {tokenname}
+          </Tag>
+          </Header>
+            {amount}
+          {isInitialized && (
+          <Button fullWidth onClick={() => history.push(`/sent-gift-nft-detail/${nftId}`)} mt="24px">
+            <ViewNft>
+              View NFT 
+              ({MINTED}/{maxMint} MINTED)
+            </ViewNft>
+          </Button>
+        )}
       </CardBody>
       <CardFooter p="0">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
@@ -144,17 +176,19 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
               {description}
             </Text>
+
             <InfoRow>
-              <Text>{TranslateString(999, 'Number minted')}:</Text>
+              <Text>{TranslateString(999, 'Number Gifted')}:</Text>
               <Value>
-                {MINTED}/{maxMint}
+              {tokenminted}
               </Value>
             </InfoRow>
             <InfoRow>
               <Text>Owned By Me:</Text>
               <Value>{MINTS}</Value>
             </InfoRow>
-          </InfoBlock>
+            </InfoBlock>
+
         )}
       </CardFooter>
     </Card>

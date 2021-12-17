@@ -32,7 +32,7 @@ const NewDetail = lazy(() => import('./views/NewDetail'))
 const LegendaryDetail = lazy(() => import('./views/LegendaryDetail'))
 const EpicDetail = lazy(() => import('./views/EpicDetail'))
 const GiftNftDetail = lazy(() => import('./views/GiftNftDetail'))
-
+const SentGiftNftDetail = lazy(()=>import('./views/giftNft/components/SentGiftdetails'))
 // This config is required for number formating
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
@@ -110,6 +110,7 @@ const App: React.FC = () => {
             <Route path="/legendary-detail/:id" component={LegendaryDetail} />
             <Route path="/epic-detail/:id" component={EpicDetail} />
             <Route path="/gift-nft-detail/:id" component={GiftNftDetail} />
+            <Route path="/sent-gift-nft-detail/:id" component={SentGiftNftDetail}/>
 
             {/* Redirect */}
             {/* <Route path="/staking"> */}

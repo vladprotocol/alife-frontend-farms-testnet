@@ -2,6 +2,8 @@ import { AbiItem, fromWei } from 'web3-utils'
 import { getContract } from 'utils/web3'
 import { ContractOptions } from 'web3-eth-contract'
 import nftFarm from 'config/abi/NftFarmV2.json'
+import erc20 from 'config/abi/erc20.json'
+
 import nft from 'config/abi/NFT.json'
 import nftwithToken from 'config/abi/NftWithToken.json'
 
@@ -28,6 +30,11 @@ export const getNftwithTokenContract = (contractOptions?: ContractOptions) => {
   const nftAbi = nftwithToken as unknown as AbiItem
   const contract = getContract(nftAbi, NftWithToken, contractOptions)
   return contract
+}
+export const getERC20Contract = (address:string)=>{
+  const erc20Abi = erc20 as unknown as AbiItem
+  const contract = getContract(erc20Abi,address);
+  return contract;
 }
 
 export const getFromWei = (v: any) => {
