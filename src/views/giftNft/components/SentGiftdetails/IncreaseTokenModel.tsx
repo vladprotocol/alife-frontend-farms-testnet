@@ -40,8 +40,33 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
     const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
-  const { account } = useWallet()
-  const giftContract = useNftGift()
+  const { account } = useWallet();
+  const giftContract = useNftGift();
+  const [form, setForm] = useState(null)
+
+
+  
+  const handleChange = (e) => {
+    setForm((prev) => (prev ? { ...prev, [e.target.name]: e.target.value } : { [e.target.name]: e.target.value }))
+  }
+
+  const handleConfirm = async()=>{
+    try{
+      await giftContract.methods.increaseAmount(nft.tokenId,form.amount).send({from:account}).on('sending',()=>{
+        setIsLoading(true)
+      }).on('receipt',()=>{
+        onDismiss()
+        onSuccess()
+      }).on("error",()=>{
+        console.error(error)
+            setError('Unable to increase amount')
+            setIsLoading(false)
+      })
+    }
+    catch(err){
+      console.error('Unable to increase amount',err)
+    }
+  }
     return(
         <Modal title="Claim this NFT " onDismiss={onDismiss}>
       <ModalContent>
@@ -51,25 +76,29 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
           </Text>
         )}
         <InfoRow>
-          <Text>{TranslateString(999, 'Increasing..')}:</Text>
+          <Text>{TranslateString(999, 'Increasing')}:</Text>
           <Value>{`${nft.name} NFT`}</Value>
         </InfoRow>
         <Label htmlFor='increaseAmount'>{TranslateString(999,'Increasing Amount')}</Label>
         <Input id="increaseAmount"
-        name="Amount"/>
+        name="amount"
+        type="text"
+        onChange={handleChange}
+        placeholder={TranslateString(999,"Amount")}
+        />
       </ModalContent>
       <Actions>
 
         <Button
           fullWidth
-        //   onClick={handleConfirm}
           disabled={!account || isLoading }
+          onClick={handleConfirm}
         >
           {TranslateString(464, 'Confirm')}
         </Button>
         <Button 
             fullWidth
-            disabled ={!account || isLoading}>
+            onClick={onDismiss}>
             {TranslateString(464,"Cancel")}
             </Button>
       </Actions>

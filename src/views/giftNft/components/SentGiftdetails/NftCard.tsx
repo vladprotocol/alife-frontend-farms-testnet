@@ -74,7 +74,7 @@ const NftCard = ({ nft }) => {
   const{reInitialize} = useContext(NftProviderContext)
 
   
-  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenminted,isClaimed } = nft[0]
+  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenminted,isClaimed } = nft
   const loggedIn = account !=null
 
   const fetchDetails = useCallback(async () => {
@@ -91,9 +91,9 @@ const NftCard = ({ nft }) => {
   }, [])
   const handleClaimNft =()=>reInitialize()
 
-  const [onWithdrawNft] = useModal(<WithdrawNftModal nft ={nft[0]} onSuccess={handleClaimNft}/>)
+  const [onWithdrawNft] = useModal(<WithdrawNftModal nft ={nft} onSuccess={handleClaimNft}/>)
   
-  const[onIncreaseToken] = useModal(<IncreaseTokenModal nft={nft[0]}onSuccess={handleClaimNft}/>)
+  const[onIncreaseToken] = useModal(<IncreaseTokenModal nft={nft}onSuccess={handleClaimNft}/>)
 
 
   const handleClick = async () => {

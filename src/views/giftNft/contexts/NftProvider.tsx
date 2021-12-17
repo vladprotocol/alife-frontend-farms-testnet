@@ -58,6 +58,7 @@ type Context = {
   reInitialize: () => void
   getNftSentDetails: () => void
   getNftRecievedDetails: () => void
+  fetchNftData: (index: number) => any
 } & State
 
 export const NftProviderContext = createContext<Context | null>(null)
@@ -384,7 +385,15 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
   return (
     <NftProviderContext.Provider
-      value={{ ...state, canBurnNft, getTokenIds, reInitialize, getNftSentDetails, getNftRecievedDetails }}
+      value={{
+        ...state,
+        canBurnNft,
+        getTokenIds,
+        reInitialize,
+        getNftSentDetails,
+        getNftRecievedDetails,
+        fetchNftData,
+      }}
     >
       {children}
     </NftProviderContext.Provider>
