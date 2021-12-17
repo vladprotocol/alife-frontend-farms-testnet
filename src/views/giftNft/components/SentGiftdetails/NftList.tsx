@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import Nfts from 'config/constants/newnfts'
+import Nfts from 'config/constants/giftnfts'
 import Page from 'components/layout/Page'
 import styled from "styled-components"
 import { Heading, LogoIcon, Text, Button } from '@pancakeswap-libs/uikit'
@@ -37,30 +37,34 @@ const Section = styled.div`
 const SentGift = (props) => {
 const {id} = props
 console.log(id)
+const[nftdata,setNftData] = useState(null);
 
-    const { myGifts, myNfts, myGiftsdetails,getNftSentDetails } = useContext(NftProviderContext)
-    useEffect(()=> getNftSentDetails,[getNftSentDetails])
+    const {myGiftsdetails,getNftSentDetails} = useContext(NftProviderContext)
+  
+    useEffect(()=> getNftSentDetails(),[getNftSentDetails])
     console.log(myGiftsdetails)
-    const nft1 = myGiftsdetails.filter((nft)=>nft.nftId === id)
+    useEffect(()=>{
+      if(!myGiftsdetails && myGiftsdetails.length<1) return 
+      const nft1 = myGiftsdetails.find((nft)=>nft.nftId === id)
+      setNftData(nft1);
+    },[id,myGiftsdetails])
+
+
+    
 
   return (
-
     <div>
-      { myGiftsdetails &&(
+      {nftdata && (
         <Page>
-                <StyledHero>
-                  
-                <CustomHeading as="h1" size="xxl" color="#9f0d0d" mb="24px">
-                {nft1[0] && nft1[0].name}
+        <StyledHero>
+        <CustomHeading as="h1" size="xxl" color="#9f0d0d" mb="24px">
+                {nftdata.name}
           </CustomHeading>              
            </StyledHero>
-           
-               <NftCard nft={nft1[0]}/>
-            </Page>)}
-
-
+           <NftCard nft={nftdata}/>
+            </Page>
+      )}
         
-      {/* <NftList nfts={myGiftsdetails} /> */}
     </div>
   )
 }
