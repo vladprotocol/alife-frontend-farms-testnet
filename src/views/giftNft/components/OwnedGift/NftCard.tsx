@@ -27,6 +27,11 @@ import ClaimNftModal from './ClaimNftModal'
 interface GiftNft extends Nft {
   isClaimed: boolean
   tokenId: number
+  tokenname: string
+  amount: number
+  tokenminted: number
+  giftName: string
+  giftMessage: string
 }
 interface NftCardProps {
   nft: GiftNft
@@ -34,6 +39,19 @@ interface NftCardProps {
 
 const Header = styled(InfoRow)`
   min-height: 28px;
+  flex-direction: column;
+  justify-content: space-evenly;
+`
+const CustomRow = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const CustomTag = styled(Tag)`
+  margin-top: 10px;
 `
 
 const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })`
@@ -68,7 +86,25 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   const { reInitialize } = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
-  const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply, isClaimed } = nft
+
+  const {
+    nftId,
+    name,
+    tokenId,
+    previewImage,
+    originalImage,
+    description,
+    tokenAmount,
+    tokenSupply,
+    isClaimed,
+    tokenname,
+    amount,
+    tokenminted,
+    giftName,
+    giftMessage,
+  } = nft
+
+  console.log({ nft })
   const loggedIn = account != null
 
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
@@ -115,7 +151,8 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
 
       <CardBody>
         <Header>
-          <Heading>{name}</Heading>{' '}
+          <Heading>{name}</Heading>
+          <CustomTag>{`${amount} ${tokenname}`}</CustomTag>
         </Header>
         {loggedIn && isClaimed && (
           <Button fullWidth variant="primary" mt="24px" disabled>
@@ -133,11 +170,31 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
           {state.isLoading ? TranslateString(999, 'Loading...') : TranslateString(999, 'Details')}
         </DetailsButton>
         {state.isOpen && (
-          <InfoBlock>
-            <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
-              {description}
-            </Text>
-          </InfoBlock>
+          <>
+            {' '}
+            <InfoBlock>
+              <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
+                {description}
+              </Text>
+            </InfoBlock>
+            <CustomRow>
+              <Text as="p" color="textSubtle" style={{ textAlign: 'center', minWidth: 'max-content' }}>
+                Gift Name :
+              </Text>
+              <Heading>{giftName}</Heading>
+            </CustomRow>
+            <CustomRow>
+              <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center', minWidth: 'max-content' }}>
+                Gift Message :
+              </Text>
+
+              <InfoBlock>
+                <Text bold mb="16px" style={{ textAlign: 'center' }}>
+                  {giftMessage}
+                </Text>
+              </InfoBlock>
+            </CustomRow>
+          </>
         )}
       </CardFooter>
     </Card>

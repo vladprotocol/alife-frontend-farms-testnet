@@ -15,6 +15,9 @@ import InfoRow from '../InfoRow'
 
 interface GiftNft extends Nft {
   isClaimed: boolean
+  tokenname: string
+  amount: number
+  tokenminted: number
   tokenId: number
 }
 interface ClaimNftModalProps {
@@ -79,6 +82,10 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
         <InfoRow>
           <Text>{TranslateString(999, 'You will claim')}:</Text>
           <Value>{`${nft.name} NFT`}</Value>
+        </InfoRow>
+        <InfoRow>
+          <Text>This NFT has:</Text>
+          <Value>{`${nft.amount} ${nft.tokenname}`}</Value>
         </InfoRow>
       </ModalContent>
       <Actions>

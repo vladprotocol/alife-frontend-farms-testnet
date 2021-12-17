@@ -90,7 +90,6 @@ function SendGiftForm({ nft }) {
     }
   }, [tokenContract, selectedToken, account, checkAllowance])
   const formValidation = useCallback(() => {
-    console.log('form validation entered', form)
     const KEYS = ['reciever', 'tokenAmount', 'giftName', 'message']
     if (!form) return false
     console.log(Object.keys[form])
@@ -108,6 +107,8 @@ function SendGiftForm({ nft }) {
       console.log({ hasAllData })
       if (!hasAllData) {
         setError('All fields should be filled !!!')
+
+        setTimeout(() => setError(null), 1500)
         return
       }
       setLoading(true)
@@ -123,7 +124,9 @@ function SendGiftForm({ nft }) {
     }
   }, [account, selectedToken, form, formValidation, nftId, originalImage, giftContract])
 
-  const [onSendGift] = useModal(<GiftNftModal nft={nft} onSuccess={handleSendGift} />)
+  const [onSendGift] = useModal(
+    <GiftNftModal nft={nft} Tokens={Tokens} form={form} selectedToken={selectedToken} onSuccess={handleSendGift} />,
+  )
   const [onApproveToken] = useModal(
     <ApproveTokenModal
       token={Tokens.find((item) => item.contractAddress === selectedToken)}

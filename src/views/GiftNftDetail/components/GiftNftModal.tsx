@@ -12,6 +12,9 @@ import InfoRow from './InfoRow'
 
 interface GiftNftProps {
   nft: Nft
+  form: any
+  selectedToken: string
+  Tokens: any
   onSuccess: () => any
   onDismiss?: () => void
 }
@@ -30,7 +33,7 @@ const Actions = styled.div`
   grid-gap: 8px;
 `
 
-const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => {
+const GiftNftModal: React.FC<GiftNftProps> = ({ nft, Tokens, selectedToken, form, onSuccess, onDismiss }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [completedTx, setCompleteTx] = useState(false)
 
@@ -48,12 +51,9 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
       setError('Successfully gifted NFT')
       setCompleteTx(true)
       setIsLoading(false)
-      onDismiss()
     } catch (err) {
       setIsLoading(false)
       setError('Unable to gift NFT')
-      onDismiss()
-      console.error('Unable to mint NFT:', err)
     }
   }
 
@@ -68,6 +68,12 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
         <InfoRow>
           <Text>{TranslateString(999, 'You will send')}:</Text>
           <Value>{`1x "${nft.name}" NFT`}</Value>
+        </InfoRow>
+        <InfoRow>
+          <Text>This NFT binds:</Text>
+          <Value>{`${form && form.tokenAmount ? form.tokenAmount : ''} ${
+            selectedToken ? Tokens.find((tkn) => tkn.contractAddress === selectedToken).name : ''
+          }`}</Value>
         </InfoRow>
       </ModalContent>
       <Actions>
