@@ -161,7 +161,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         const amounts = getToFloat(getMinted[0][1])
         const myMints = getToInt(getMinted[0][2])
 
-        // console.log('hasClaimed', hasClaimed)
 
         const balanceOf = await nftContract.methods.balanceOf(account).call()
 
@@ -275,9 +274,8 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
         // // to find the number of nft's minted by given token id
         const tokenminted = await contract.methods.listTokenByGiftId(giftId).call()
-        console.log("Token minted",tokenminted)
 
-        const nftdata ={...nftdetails,amount:Number(data.amount),giftId:nftdetails.nftId,TokenId:index,tokenname:name,isClaimed:data.isClaimed,tokenminted:tokenminted.length}
+        const nftdata ={...nftdetails,amount:Number(data.amount),giftId:nftdetails.nftId,tokenId:index,tokenname:name,isClaimed:data.isClaimed,tokenminted:tokenminted.length}
         return nftdata
       } catch (err) {
         console.log(err)
@@ -287,18 +285,15 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 // nft gifted to others
     const fetchNftGifted = async () => {
       try {
-        console.log('fetch nft gifted')
         const dataPromises = []
         const contract = getNftwithTokenContract()
         const nftIdsSent = await contract.methods.listTokenByMinter(account).call()
 
-        console.log('fetch nft gifted', { nftIdsSent })
 
         nftIdsSent.forEach((token) => {
           dataPromises.push(fetchNftData(token))
         })
         const data = [...(await Promise.all(dataPromises))].filter((item) => item !== null)
-        console.log('fetch nft gifted', { data })
         setState((prevState) => ({
           ...prevState,
           myNfts: nftIdsSent,
@@ -312,7 +307,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     // Nft owned 
     const fetchNftRecieved = async () => {
       try {
-        console.log('Fetch owned NFT')
         const dataPromises = []
         const contract = getNftwithTokenContract()
         const tokens = await contract.methods.listTokenByOwner(account).call()
@@ -320,7 +314,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
           dataPromises.push(fetchNftData(token))
         })
         const data = await Promise.all(dataPromises)
-        console.log('Fetch owned NFT', { data })
         setState((prevState) => ({
           ...prevState,
           myGifts: tokens,

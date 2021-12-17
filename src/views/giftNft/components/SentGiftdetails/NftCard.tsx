@@ -13,10 +13,14 @@ import {
   useModal,
   LogoIcon,
 } from '@pancakeswap-libs/uikit'
-
+import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
 import InfoRow from '../InfoRow'
 import Image from "../Image"
+import WithdrawNftModal from './WithdrawNftModal';
+import {NftProviderContext} from '../../contexts/NftProvider'
+
+
 
 const Header = styled(InfoRow)`
   min-height: 28px;
@@ -57,22 +61,20 @@ const CustomButton = styled(Button)`
 `
 
 const NftCard = ({ nft }) => {
-    console.log(nft[0])
   const [state, setState] = useState({
     isLoading: false,
     isOpen: false,
     nftCount: 0,
     nftBurnCount: 0,
   })
+  const {account} = useWallet()
   const TranslateString = useI18n()
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
+  const{reInitialize} = useContext(NftProviderContext)
 
-  // maxMintPerNft limit max amount that a nft can be minted
-  // maxMintByNft array containing individual amount of mint per nft index
-  // prices array containing individual prices of a mint per nft index
-  // tokenPerBurn global price
-
-  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenminted } = nft[0]
+  
+  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenminted,isClaimed } = nft[0]
+  const loggedIn = account !=null
 
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
@@ -86,6 +88,9 @@ const NftCard = ({ nft }) => {
       console.error(error)
     }
   }, [])
+  const handleClaimNft =()=>reInitialize()
+
+  const [onWithdrawNft] = useModal(<WithdrawNftModal nft ={nft[0]} onSuccess={handleClaimNft}/>)
 
   const handleClick = async () => {
     if (state.isOpen) {
@@ -113,18 +118,23 @@ const NftCard = ({ nft }) => {
         {tokenname}
           </Tag>
         </Header>
-              {/* {amount} */}
               <br/>
-
-        
+              
+        {loggedIn && !isClaimed &&(
         <Button 
-        // onClick={goGiftNft} mt="24px"
+        onClick={onWithdrawNft} mt="24px"
         >
           {TranslateString(999, 'Withdraw Token')}
-        </Button>
+        </Button>)}
+
+        {loggedIn && isClaimed &&(
+            <Button  disabled>
+                Already Claimed
+            </Button>
+        )}
+        
         {"  "}
         <Button 
-        // onClick={goGiftNft} mt="24px"
         >
           {TranslateString(999, 'Increase Token Amount')}
         </Button>
@@ -147,7 +157,6 @@ const NftCard = ({ nft }) => {
             <InfoRow>
               <Text>Total amount:</Text>
               <Value>{amount}</Value>
-              {/* <Value>{MINTS}</Value> */}
             </InfoRow>
           </InfoBlock>
         )}
