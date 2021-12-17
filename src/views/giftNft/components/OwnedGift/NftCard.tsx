@@ -109,7 +109,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   }, [nftId])
 
   const [onClaimNft] = useModal(<ClaimNftModal nft={nft} onSuccess={handleClaimNft} />)
-  // console.log(nft)
   return (
     <Card>
       <Image src={`/images/nfts/${previewImage}`} alt={name} />

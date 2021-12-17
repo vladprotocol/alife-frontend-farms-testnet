@@ -1,11 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import NftList from './NftList'
 
 import { NftProviderContext } from '../../contexts/NftProvider'
 
 const OwnedGift = () => {
-  const { myNftdetails } = useContext(NftProviderContext)
+  const { myNftdetails,getNftRecievedDetails } = useContext(NftProviderContext)
+
+  useEffect (()=>{
+   return  getNftRecievedDetails()
+
+  },[getNftRecievedDetails])
+
+  
 
   return (
     <div>

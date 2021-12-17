@@ -5,7 +5,6 @@ import NftGrid from '../NftGrid'
 
 const NftList = (props) => {
   const { nfts } = props
-  console.log(nfts)
   return (
     <NftGrid>
       

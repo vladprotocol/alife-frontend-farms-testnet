@@ -146,7 +146,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
       console.error(err)
     }
   }, [nftId])
-  // console.log(nft)
   return (
     <Card isActive={walletOwnsNft}>
       <Image src={`/images/nfts/${previewImage}`} alt={name} />
