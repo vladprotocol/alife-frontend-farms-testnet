@@ -22,21 +22,34 @@ import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
 import { getNewNftContract,getNftwithTokenContract } from '../../utils/contracts'
 
-// interface NftCardProps {
-//   nft: Nft
-// }
+
 interface GiftNft extends Nft {
   isClaimed: boolean
   tokenname: string
   amount: number
   tokenminted:number
+  giftName: string
+  giftMessage: string
 }
 interface NftCardProps {
   nft: GiftNft
 }
 
 const Header = styled(InfoRow)`
-  min-height: 44px;
+  min-height: 28px;
+  flex-direction: column;
+  justify-content: space-evenly;
+`
+const CustomRow = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const CustomTag = styled(Tag)`
+  margin-top: 10px;
 `
 
 const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })`
@@ -52,9 +65,7 @@ const DetailsButton = styled(Button).attrs({ variant: 'text', fullWidth: true })
   }
 `
 const InfoBlock = styled.div`
-  padding: 0 24px 24px;
-`
-
+padding:0 24px 24px:`
 
 const Value = styled(Text)`
   font-weight: 600;
@@ -92,12 +103,12 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     maxMintPerNft,
     tokenPerBurn,
     amounts,
-    myMints,
+    myMints,    
     isApproved,
   } = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
-  const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply,isClaimed,tokenname,amount,tokenminted} = nft
+  const { nftId,name,previewImage, originalImage, description, tokenAmount, tokenSupply,isClaimed,tokenname,amount,tokenminted,giftName,giftMessage} = nft
   const loggedIn = account != null
 
   const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
@@ -152,43 +163,47 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
       <CardBody>
         <Header>
           <Heading>{name}</Heading>
-          <Tag >
-        {tokenname}
-          </Tag>
+          <CustomTag>{`${amount} ${tokenname}`}</CustomTag>
           </Header>
-            {amount}
+
           {isInitialized && (
           <Button fullWidth onClick={() => history.push(`/sent-gift-nft-detail/${nftId}`)} mt="24px">
             <ViewNft>
               View NFT 
-              ({MINTED}/{maxMint} MINTED)
             </ViewNft>
           </Button>
         )}
       </CardBody>
-      <CardFooter p="0">
+      <CardFooter p="2">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
           {state.isLoading ? TranslateString(999, 'Loading...') : TranslateString(999, 'Details')}
         </DetailsButton>
         {state.isOpen && (
+          <>
+          {' '}
           <InfoBlock>
             <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center' }}>
               {description}
             </Text>
+          </InfoBlock>
+          <CustomRow>
+            <Text as="p" color="textSubtle" style={{ textAlign: 'center', minWidth: 'max-content' }}>
+              Gift Name :
+            </Text>
+            <Heading>{giftName}</Heading>
+          </CustomRow>
+          <CustomRow>
+            <Text as="p" color="textSubtle" mb="16px" style={{ textAlign: 'center', minWidth: 'max-content' }}>
+              Gift Message :
+            </Text>
 
-            <InfoRow>
-              <Text>{TranslateString(999, 'Number Gifted')}:</Text>
-              <Value>
-              {tokenminted}
-              </Value>
-            </InfoRow>
-            <InfoRow>
-              <Text>Owned By Me:</Text>
-              <Value>{MINTS}</Value>
-            </InfoRow>
+            <InfoBlock>
+              <Text bold mb="16px" style={{ textAlign: 'center' }}>
+                {giftMessage}
+              </Text>
             </InfoBlock>
-
-        )}
+          </CustomRow>
+        </>)}        
       </CardFooter>
     </Card>
   )

@@ -289,7 +289,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     async (index: number) => {
       try {
         const data = await giftContract.methods.getNFTdetails(index).call()
-        console.log({ data })
         const giftId = Number(data.giftId)
 
         const nftdetails = GiftNfts.find((nft) => nft.nftId === giftId)
@@ -302,7 +301,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
 
         const name = await erc20Contract.methods.name().call()
 
-        // // to find the number of nft's minted by given token id
+         // to find the number of nft's minted by given token id
         const tokenminted = await giftContract.methods.listTokenByGiftId(giftId).call()
 
         const nftdata = {

@@ -104,7 +104,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     giftMessage,
   } = nft
 
-  console.log({ nft })
   const loggedIn = account != null
 
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon

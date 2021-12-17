@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { ethers } from 'ethers'
+
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { Button, Modal, Text ,Input} from '@pancakeswap-libs/uikit'
 
@@ -52,7 +54,8 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
 
   const handleConfirm = async()=>{
     try{
-      await giftContract.methods.increaseAmount(nft.tokenId,form.amount).send({from:account}).on('sending',()=>{
+      const tokenAmount = ethers.utils.parseUnits(form.amount,"ether")
+      await giftContract.methods.increaseAmount(nft.tokenId,tokenAmount).send({from:account}).on('sending',()=>{
         setIsLoading(true)
       }).on('receipt',()=>{
         onDismiss()
