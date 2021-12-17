@@ -46,9 +46,11 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ token, onSuccess, onDismiss }) =
       await onSuccess()
       setError('Successfully gifted NFT')
       setIsLoading(false)
+      onDismiss()
     } catch (err) {
       setIsLoading(false)
       setError('Unable to gift NFT')
+      onDismiss()
       console.error('Unable to mint NFT:', err)
     }
   }
@@ -68,10 +70,10 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ token, onSuccess, onDismiss }) =
       </ModalContent>
       <Actions>
         <Button fullWidth onClick={handleConfirm} disabled={!account || isLoading}>
-          {TranslateString(464, 'Approve')}
+          Approve
         </Button>
         <Button fullWidth onClick={onDismiss} disabled={!account || isLoading}>
-          {TranslateString(464, 'Cancel')}
+          Cancel
         </Button>
       </Actions>
     </Modal>

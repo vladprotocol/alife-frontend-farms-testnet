@@ -8,6 +8,8 @@ import nft from 'config/abi/NFT.json'
 import nftwithToken from 'config/abi/NftWithToken.json'
 
 import { NftFarm, NFT, NftWithToken } from 'config/constants/newnfts'
+import { useNftGift, useERC20 } from 'hooks/useContract'
+
 import BigNumber from 'bignumber.js'
 // TODO: Figure out how to add current account to contracts to write methods can be used
 

@@ -46,9 +46,11 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, onSuccess, onDismiss }) => 
       await onSuccess()
       setError('Successfully gifted NFT')
       setIsLoading(false)
+      onDismiss()
     } catch (err) {
       setIsLoading(false)
       setError('Unable to gift NFT')
+      onDismiss()
       console.error('Unable to mint NFT:', err)
     }
   }
