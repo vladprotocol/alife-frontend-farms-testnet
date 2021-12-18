@@ -47,8 +47,6 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
   const { account } = useWallet();
   const giftContract = useNftGift();
   const [form, setForm] = useState(null)
-console.log({nft})
-
   
   const handleChange = (e) => {
     setForm((prev) => (prev ? { ...prev, [e.target.name]: e.target.value } : { [e.target.name]: e.target.value }))

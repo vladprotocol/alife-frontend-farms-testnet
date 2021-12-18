@@ -109,7 +109,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   } = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
-  console.log({nft});
   const { nftId,tokenId,name,previewImage, originalImage, description, tokenAmount, tokenSupply,isClaimed,tokenname,amount,tokenminted,giftName,giftMessage} = nft
   const loggedIn = account != null
 
