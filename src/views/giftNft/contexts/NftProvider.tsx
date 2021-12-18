@@ -334,7 +334,6 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         dataPromises.push(fetchNftData(token))
       })
       const data = [...(await Promise.all(dataPromises))].filter((item) => item !== null)
-      console.log({data})
       setState((prevState) => ({
         ...prevState,
         myNfts: nftIdsSent,

@@ -68,6 +68,17 @@ const CustomButton = styled(Button)`
   margin-left: 10px;
 `
 
+const Grid = styled.div`
+  display: flex;
+  float: left;
+  width: 50%;
+`
+const Section = styled.div`
+  width: 50%;
+  margin-top: 10px;
+`
+
+
 const NftCard = ({ nft }) => {
   const [state, setState] = useState({
     isLoading: false,
@@ -128,19 +139,19 @@ const NftCard = ({ nft }) => {
           <Tag>
         {amount} {tokenname}
           </Tag>
+
         </Header>
-              <br/>
+      <br/>
               
         {loggedIn && !isClaimed &&(
         <Button 
-        onClick={onWithdrawNft} mt="24px"
->
+        onClick={onWithdrawNft} mt="24px">
           {TranslateString(999, 'Withdraw Token')}
         </Button>)}
 
         {loggedIn && isClaimed &&(
             <Button  disabled>
-                Already Claimed
+              Claimed
             </Button>
         )}
         
