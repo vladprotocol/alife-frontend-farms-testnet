@@ -1,4 +1,6 @@
 import React, { useState, useContext, useCallback } from 'react'
+import {FacebookIcon,TelegramIcon,TwitterIcon,FacebookShareButton,TelegramShareButton,TwitterShareButton} from 'react-share';
+
 import styled from 'styled-components'
 import {
   Card,
@@ -56,6 +58,16 @@ const SmallCard = styled(Card)`
 const CustomButton = styled(Button)`
   margin-left: 10px;
 `
+const Grid = styled.div`
+  display: flex;
+  float: right;
+  width: 50%;
+`
+const Section = styled.div`
+  width: 50%;
+  margin-top: 10px;
+`
+
 
 const NftCard = ({ nft }) => {
   const [state, setState] = useState({
@@ -107,12 +119,27 @@ const NftCard = ({ nft }) => {
 
       <CardBody>
         <Header>
-          <Heading>{name}</Heading>
-        </Header>
-
-        {/* <Button fullWidth onClick={goGiftNft} mt="24px">
-          {TranslateString(999, 'Gift this NFT')}
-        </Button> */}
+          <Heading>{name} </Heading>
+          
+     <Grid>
+      <Section>          
+        <FacebookShareButton url={window.location.href}>
+          <FacebookIcon size={32} round/>
+        </FacebookShareButton>  
+      </Section>
+      <Section>
+      <TelegramShareButton url={window.location.href}>
+          <TelegramIcon size={32} round/>
+        </TelegramShareButton>
+      </Section>
+      <Section>
+      <TwitterShareButton url={window.location.href}>
+          <TwitterIcon size={32} round/>
+        </TwitterShareButton>
+      </Section>
+      </Grid>
+      </Header>
+        
       </CardBody>
       <CardFooter p="0">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
