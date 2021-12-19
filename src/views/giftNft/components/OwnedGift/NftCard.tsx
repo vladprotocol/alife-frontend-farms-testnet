@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react'
+import {FacebookIcon,TelegramIcon,TwitterIcon,FacebookShareButton,TelegramShareButton,TwitterShareButton} from 'react-share';
 import styled from 'styled-components'
 import {
   Card,
@@ -23,6 +24,7 @@ import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
 import { getNewNftContract } from '../../utils/contracts'
 import ClaimNftModal from './ClaimNftModal'
+
 
 interface GiftNft extends Nft {
   isClaimed: boolean
@@ -72,6 +74,19 @@ padding:0 24px 24px:`
 const Value = styled(Text)`
   font-weight: 600;
 `
+
+const Grid = styled.div`
+  display: flex;
+  float: center;
+  width: 100%;
+`
+const Section = styled.div`
+  width: 100%;
+  padding: 10px;
+`
+
+
+
 const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   const [state, setState] = useState({
     isLoading: false,
@@ -163,6 +178,26 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
             Claim NFT
           </Button>
         )}
+
+<Grid>
+      <Section>          
+        <FacebookShareButton url={`${window.location.origin}/gift/${tokenId}`}>
+          <FacebookIcon size={32} round/>
+        </FacebookShareButton>  
+      </Section>
+      <Section>
+      <TelegramShareButton url={`${window.location.origin}/gift/${tokenId}`}>
+          <TelegramIcon size={32} round/>
+        </TelegramShareButton>
+      </Section>
+      <Section>
+      <TwitterShareButton url={`${window.location.origin}/gift/${tokenId}`}>
+          <TwitterIcon size={32} round/>
+        </TwitterShareButton>
+      </Section>
+      </Grid>
+
+
       </CardBody>
       <CardFooter p="2">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>

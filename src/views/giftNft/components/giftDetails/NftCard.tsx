@@ -1,5 +1,4 @@
 import React, { useState, useContext, useCallback } from 'react'
-import {FacebookIcon,TelegramIcon,TwitterIcon,FacebookShareButton,TelegramShareButton,TwitterShareButton} from 'react-share';
 import styled from 'styled-components'
 import {
   Card,
@@ -18,8 +17,7 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
 import InfoRow from '../InfoRow'
 import Image from "../Image"
-import WithdrawNftModal from './WithdrawNftModal';
-import IncreaseTokenModal from './IncreaseTokenModel'
+
 import {NftProviderContext} from '../../contexts/NftProvider'
 
 
@@ -71,13 +69,11 @@ const CustomButton = styled(Button)`
 
 const Grid = styled.div`
   display: flex;
-  float: center;
-  text-align: center;
-  width: 100%;
-
+  float: left;
+  width: 50%;
 `
 const Section = styled.div`
-  width: 100%;
+  width: 50%;
   margin-top: 10px;
 `
 
@@ -95,7 +91,7 @@ const NftCard = ({ nft }) => {
   const{reInitialize} = useContext(NftProviderContext)
 
   
-  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenId,tokenminted,isClaimed,giftName,giftMessage} = nft
+  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenminted,isClaimed,giftName,giftMessage} = nft
   const loggedIn = account !=null
 
   const fetchDetails = useCallback(async () => {
@@ -110,11 +106,7 @@ const NftCard = ({ nft }) => {
       console.error(error)
     }
   }, [])
-  const handleSucess =()=>reInitialize()
-
-  const [onWithdrawNft] = useModal(<WithdrawNftModal nft ={nft} onSuccess={handleSucess}/>)
-  
-  const[onIncreaseToken] = useModal(<IncreaseTokenModal nft={nft}onSuccess={handleSucess}/>)
+  const handleSucess =()=>reInitialize()  
 
 
   const handleClick = async () => {
@@ -144,49 +136,8 @@ const NftCard = ({ nft }) => {
           </Tag>
 
         </Header>
-
-     
-
-
       <br/>
-              
-        {loggedIn && !isClaimed &&(
-        <Button 
-        onClick={onWithdrawNft} mt="24px">
-          {TranslateString(999, 'Withdraw Token')}
-        </Button>)}
-
-        {loggedIn && isClaimed &&(
-            <Button  disabled>
-              Claimed
-            </Button>
-        )}
-        
-        {"  "}
-        
-        <Button onClick={onIncreaseToken} disabled ={isClaimed}>
-          {TranslateString(999, 'Increase Token Amount')}
-        </Button>
-
-
-   <Grid>
-      <Section>          
-        <FacebookShareButton url={`${window.location.origin}/gift/${tokenId}`}>
-          <FacebookIcon size={32} round/>
-        </FacebookShareButton>  
-      </Section>
-      <Section>
-      <TelegramShareButton url={`${window.location.origin}/gift/${tokenId}`}>
-          <TelegramIcon size={32} round/>
-        </TelegramShareButton>
-      </Section>
-      <Section>
-      <TwitterShareButton url={`${window.location.origin}/gift/${tokenId}`}>
-          <TwitterIcon size={32} round/>
-        </TwitterShareButton>
-      </Section>
-      </Grid>
-       
+   
       </CardBody>
       <CardFooter p="0">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
@@ -224,8 +175,6 @@ const NftCard = ({ nft }) => {
                 {giftMessage}
               </Text>
               </CustomRow>
-
-
           </>
         )}
       </CardFooter>
