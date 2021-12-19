@@ -290,7 +290,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       try {
         const data = await giftContract.methods.getNFTdetails(index).call()
         const giftId = Number(data.giftId)
-
+        
         const nftdetails = GiftNfts.find((nft) => nft.nftId === giftId)
 
         // ToDo
@@ -367,6 +367,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
       console.log(err)
     }
   }, [account, fetchNftData, giftContract])
+
 
   /**
    * Allows consumers to re-fetch all data from the contract. Triggers the effects.
