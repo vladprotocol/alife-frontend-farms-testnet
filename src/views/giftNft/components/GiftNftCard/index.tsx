@@ -11,24 +11,14 @@ import {
   ChevronDownIcon,
   Text,
   CardFooter,
-  useModal,
 } from '@pancakeswap-libs/uikit'
-import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
 import { Nft } from 'config/constants/types'
-import { AMOUNT_TO_CLAIM, NftFarm, NFT } from 'config/constants/newnfts'
 import { useHistory } from 'react-router-dom'
-import { usePancakeRabbits } from 'hooks/useContract'
 import InfoRow from '../InfoRow'
 import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
-import { getNewNftContract } from '../../utils/contracts'
-import ClaimNftModal from '../ClaimNftModal'
-import GiftNftModal from '../GiftNftModal'
-
-import BurnNftModal from '../BurnNftModal'
-import TransferNftModal from '../TransferNftModal'
 
 interface NftCardProps {
   nft: Nft
@@ -72,106 +62,33 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     nftCount: 0,
     nftBurnCount: 0,
   })
-  const [minted, setMinted] = useState(0)
-  const [maxMint, setMaxMint] = useState(0)
-  const [price, setPrice] = useState(new BigNumber(0))
   const TranslateString = useI18n()
   const {
-    isInitialized,
-    hasClaimed,
-    canBurnNft,
-    totalSupplyDistributed,
-    currentDistributedSupply,
-    getTokenIds,
-    reInitialize,
-    allowMultipleClaims,
-    rarity,
-    priceMultiplier,
-    maxMintPerNft,
-    tokenPerBurn,
-    amounts,
-    myMints,
-    isApproved,
-  } = useContext(NftProviderContext)
+    isInitialized} = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
 
-  const [requestedApproval, setRequestedApproval] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
-  const [error, setError] = useState(null)
-  // maxMintPerNft limit max amount that a nft can be minted
-  // maxMintByNft array containing individual amount of mint per nft index
-  // prices array containing individual prices of a mint per nft index
-  // tokenPerBurn global price
-
-  const { nftId, name, previewImage, originalImage, description, tokenAmount, tokenSupply } = nft
-
-  const firstCharOfAccount = account != null && account.slice(0, 4)
-  const lastCharOfAccount = account != null && account.slice(-4)
-
-  const accountName = account != null && `${firstCharOfAccount}...${lastCharOfAccount}`
-
-  const loggedIn = account !== null
-
-  // console.log('?hasClaimed', hasClaimed)
-  // console.log('?ownerById', ownerById)
-
-  const nftIndex = hasClaimed && hasClaimed.indexOf(nftId)
-
-  const MINTS = myMints[nftIndex] || 0
-
-  // not sure about this, you need to check if this oser own this nft in the view nft page.
-  // const youAreTheLastOwner = ownerById && ownerById[nftIndex] && ownerById[nftIndex].toString() === account.toString()
-
-  const MINTED = amounts[nftIndex] ? parseInt(amounts[nftIndex].toString()) : 0
-
-  const walletCanClaim = maxMintPerNft === 0 || MINTED === undefined || MINTED < maxMint
-
-  // console.log('CONTRACT/GALLERY INFO:', totalSupplyDistributed, rarity, priceMultiplier, maxMintPerNft, tokenPerBurn)
-  // console.log('LIMITS BY NFT:', tokenPerBurn, amounts, maxMintByNft, prices)
-  // console.log(nftId, 'walletCanClaim', walletCanClaim, maxMintPerNft, MINTED, MAX_MINT)
-
-  const tokenIds = getTokenIds(nftId)
-  // const isSupplyAvailable = currentDistributedSupply < totalSupplyDistributed
+  const { nftId, name, previewImage, description, } = nft
 
   const goGiftNft = () => history.push(`/gift-nft-detail/${nftId}`)
-  useEffect(() => {
-    const getNftInfoState = async () => {
-      const newFarmContract = getNewNftContract()
-      const nftInfoState = await newFarmContract.methods.nftInfoState(nftId).call()
-      const { minted: mintedValue, maxMint: maxMintValue, price: priceValue } = nftInfoState
-      setMinted(parseInt(mintedValue))
-      setMaxMint(parseInt(maxMintValue))
-      setPrice(new BigNumber(priceValue).div(new BigNumber(10).pow(18)))
-    }
-    getNftInfoState()
-  }, [nftId, isInitialized])
-
-  const isSupplyAvailable = minted < maxMint
-  // const walletOwnsNft = tokenIds && tokenIds.length > 0
-  const walletOwnsNft = MINTS > 0
+  
 
   const Icon = state.isOpen ? ChevronUpIcon : ChevronDownIcon
 
+  
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
-    try {
-      const { methods } = getNewNftContract()
-      const nftCount = await methods.nftCount(nftId).call()
-      const nftBurnCount = await methods.nftBurnCount(nftId).call()
 
+    try {
       setState((prevState) => ({
         ...prevState,
         isLoading: false,
-        isDataFetched: true,
-        nftCount: parseInt(nftCount, 10),
-        nftBurnCount: parseInt(nftBurnCount, 10),
       }))
     } catch (err) {
       console.error(err)
     }
-  }, [nftId])
+  }, [])
 
   const handleClick = async () => {
     if (state.isOpen) {
@@ -186,60 +103,14 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
       }
     }
   }
-
-  const nftContract = usePancakeRabbits(NFT)
-
-  const handleApprove = useCallback(async () => {
-    try {
-      setState((prevState) => ({ ...prevState, isLoading: true }))
-      setRequestedApproval(true)
-      await nftContract.methods
-        .setApprovalForAll(NftFarm, 'true')
-        .send({ from: account })
-        .on('sending', () => {
-          setIsLoading(true)
-        })
-        .on('receipt', () => {
-          console.log('receipt')
-        })
-        .on('error', () => {
-          setError('Unable to transfer NFT')
-          setIsLoading(false)
-        })
-      setState((prevState) => ({
-        ...prevState,
-        isLoading: false,
-        isDataFetched: true,
-      }))
-
-      fetchDetails()
-      reInitialize()
-      setRequestedApproval(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }, [account, nftContract, reInitialize, fetchDetails])
-
-  const handleSuccess = () => {
-    fetchDetails()
-    reInitialize()
-  }
-
-  const [onPresentClaimModal] = useModal(<ClaimNftModal nft={nft} price={price} onSuccess={handleSuccess} />)
-  const [onPresentGiftModal] = useModal(<GiftNftModal nft={nft} onSuccess={handleSuccess} />)
-
-  const [onPresentBurnModal] = useModal(<BurnNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />)
-  const [onPresentTransferModal] = useModal(
-    <TransferNftModal nft={nft} tokenIds={tokenIds} onSuccess={handleSuccess} />,
-  )
-
+  
   return (
-    <Card isActive={walletOwnsNft}>
-      <Image src={`/images/nfts/${previewImage}`} alt={name} originalLink={walletOwnsNft ? originalImage : null} />
+    <Card >
+      <Image src={`/images/nfts/${previewImage}`} alt={name} />
       <CardBody>
         <Header>
           <Heading>{name}</Heading>
-          {isInitialized && walletCanClaim && (
+          {isInitialized && (
             <Tag outline variant="success">
               {TranslateString(526, 'Available')}
             </Tag>

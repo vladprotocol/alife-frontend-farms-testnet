@@ -43,7 +43,6 @@ const Actions = styled.div`
 
 const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss, price }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [pendingTx, setPendingTx] = useState(false)
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
   const { account } = useWallet()
