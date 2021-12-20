@@ -9,11 +9,13 @@ import { getContract } from 'utils/erc20'
 import { getContract as getNftContract } from 'utils/web3'
 import giftNftAbi from 'config/abi/NftWithToken.json'
 
+const chainId = process.env.REACT_APP_CHAIN_ID
+
+
 interface GiftProviderProps {
   children: ReactNode
 }
 
-const CONTRACT_ADDRESS_TEST = 97
 // type Context = {
 //   // getTokenIds: (nftId: number) => number[]
 //   reInitialize: () => void
@@ -52,7 +54,7 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
       const contract = await getContract(ethereum as provider, tokenAddress)
       setState((prev) => ({ ...prev, isInitialized: true, tokenContract: contract }))
       const allowance = await contract.methods
-        .allowance(account, ContractAddresses.giftNFT[CONTRACT_ADDRESS_TEST])
+        .allowance(account, ContractAddresses.giftNFT[chainId])
         .call()
       if (allowance > 0) {
         setState((prev) => ({ ...prev, isApproved: true }))
