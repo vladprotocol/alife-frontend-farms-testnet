@@ -3,10 +3,11 @@ import _ from 'lodash'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import GiftNfts from 'config/constants/giftnfts'
 import { useNftGift } from 'hooks/useContract'
-import {
-  getFromWei,
-  getERC20Contract,
-} from '../utils/contracts'
+import { getContract } from 'utils/erc20'
+import { provider } from 'web3-core'
+import {getFromWei} from '../utils/contracts'
+
+
 
 interface NftProviderProps {
   children: ReactNode
@@ -47,7 +48,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     myNfts: [],
     isApproved: false,
   })
-  const { account } = useWallet()
+  const { account,ethereum } = useWallet()
 
   const { isInitialized } = state
   const giftContract = useNftGift()
@@ -87,7 +88,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         // handle when nftdetails is not found
 
         //  to retreive the amount of token locked
-        const erc20Contract = getERC20Contract(data.token)
+        const erc20Contract = await getContract(ethereum as provider,data.token)
 
         const name = await erc20Contract.methods.name().call()
 
@@ -111,7 +112,7 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
         return null
       }
     },
-    [giftContract],
+    [ethereum,giftContract],
   )
 
   const getNftSentDetails = useCallback(async () => {
