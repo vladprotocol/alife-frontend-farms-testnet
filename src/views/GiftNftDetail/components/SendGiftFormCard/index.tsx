@@ -18,6 +18,9 @@ import ApproveTokenModal from '../ApproveTokenModal'
 
 import InfoRow from '../InfoRow'
 
+const chainId = process.env.REACT_APP_CHAIN_ID
+
+
 const StyledInputWrapper = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.colors.input};
@@ -80,7 +83,7 @@ function SendGiftForm({ nft }) {
       if (!tokenContract) return
       setLoading(true)
       await tokenContract.methods
-        .approve(ContractAddresses.giftNFT[97], ethers.constants.MaxUint256)
+        .approve(ContractAddresses.giftNFT[chainId], ethers.constants.MaxUint256)
         .send({ from: account })
       await checkAllowance(selectedToken)
       setLoading(false)
