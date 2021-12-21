@@ -1,5 +1,12 @@
 import React, { useCallback, useContext, useState } from 'react'
-import {FacebookIcon,TelegramIcon,TwitterIcon,FacebookShareButton,TelegramShareButton,TwitterShareButton} from 'react-share';
+import {
+  FacebookIcon,
+  TelegramIcon,
+  TwitterIcon,
+  FacebookShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+} from 'react-share'
 import styled from 'styled-components'
 import {
   Card,
@@ -24,7 +31,6 @@ import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
 import { getNewNftContract } from '../../utils/contracts'
 import ClaimNftModal from './ClaimNftModal'
-
 
 interface GiftNft extends Nft {
   isClaimed: boolean
@@ -84,8 +90,6 @@ const Section = styled.div`
   width: 100%;
   padding: 10px;
 `
-
-
 
 const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   const [state, setState] = useState({
@@ -179,25 +183,23 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
           </Button>
         )}
 
-<Grid>
-      <Section>          
-        <FacebookShareButton url={`${window.location.origin}/gift/${tokenId}`}>
-          <FacebookIcon size={32} round/>
-        </FacebookShareButton>  
-      </Section>
-      <Section>
-      <TelegramShareButton url={`${window.location.origin}/gift/${tokenId}`}>
-          <TelegramIcon size={32} round/>
-        </TelegramShareButton>
-      </Section>
-      <Section>
-      <TwitterShareButton url={`${window.location.origin}/gift/${tokenId}`}>
-          <TwitterIcon size={32} round/>
-        </TwitterShareButton>
-      </Section>
-      </Grid>
-
-
+        <Grid>
+          <Section>
+            <FacebookShareButton url={`${window.location.origin}/gift/${tokenId}`}>
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+          </Section>
+          <Section>
+            <TelegramShareButton url={`${window.location.origin}/gift/${tokenId}`}>
+              <TelegramIcon size={32} round />
+            </TelegramShareButton>
+          </Section>
+          <Section>
+            <TwitterShareButton url={`${window.location.origin}/gift/${tokenId}`}>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+          </Section>
+        </Grid>
       </CardBody>
       <CardFooter p="2">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
