@@ -95,7 +95,6 @@ function SendGiftForm({ nft }) {
   const formValidation = useCallback(() => {
     const KEYS = ['reciever', 'tokenAmount', 'giftName', 'message']
     if (!form) return false
-    console.log(Object.keys[form])
     const hasAllKeys = KEYS.every((item) => {
       return Object.keys(form).includes(item)
     })
@@ -107,7 +106,6 @@ function SendGiftForm({ nft }) {
       if (!selectedToken) return
 
       const hasAllData = formValidation()
-      console.log({ hasAllData })
       if (!hasAllData) {
         setError('All fields should be filled !!!')
 

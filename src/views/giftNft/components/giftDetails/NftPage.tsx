@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useWallet } from '@binance-chain/bsc-use-wallet'
-import Nfts from 'config/constants/giftnfts'
 import Page from 'components/layout/Page'
 import styled from "styled-components"
-import { Heading, LogoIcon, Text, Button } from '@pancakeswap-libs/uikit'
+import { Heading } from '@pancakeswap-libs/uikit'
 import { NftProviderContext } from '../../contexts/NftProvider'
 import NftCard from './NftCard'
 
