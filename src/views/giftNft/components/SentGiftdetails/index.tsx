@@ -1,13 +1,11 @@
 import React,{useContext} from "react"
 import styled from "styled-components"
 import { Heading, LogoIcon, Text, Button } from '@pancakeswap-libs/uikit'
-import nfts from 'config/constants/giftnfts'
 import Page from 'components/layout/Page'
 import NftProvider from '../../contexts/NftProvider'
 import NftList from './NftList'
 
-// import GiftProvider from "../../contexts/GiftProvider"
-// import NftCard from './NftCard'
+
 
 const StyledHero = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.textSubtle};
@@ -39,7 +37,6 @@ const Section = styled.div`
 const Detail = (props) => {
     const { match } = props
     const id = parseInt(match.params.id)
-    // const nft1 = nfts.filter((nft) => nft.nftId === id)
     
     return(
         <NftProvider>

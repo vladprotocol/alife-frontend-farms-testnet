@@ -41,8 +41,7 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, Tokens, selectedToken, form
   const TranslateString = useI18n()
   const { account } = useWallet()
 
-  // console.log('getLifeAddress', getLifeAddress(), NftFarm, allowance)
-  // console.log('allowance', allowance)
+ 
 
   const handleConfirm = async () => {
     try {
