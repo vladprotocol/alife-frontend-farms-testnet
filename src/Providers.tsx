@@ -10,25 +10,12 @@ import { ThemeContextProvider } from 'contexts/ThemeContext'
 import { BlockContextProvider } from 'contexts/BlockContext'
 import { RefreshContextProvider } from 'contexts/RefreshContext'
 import store from 'state'
-
-declare const window: any
+import useChainId from 'utils/handleChainChange'
 
 const Providers: React.FC = ({ children }) => {
-  const { ethereum } = window
-  const defaultChain = parseInt(process.env.REACT_APP_CHAIN_ID)
   const rpcUrl = getRpcUrl()
-  const [chainId, setChainId] = useState(defaultChain)
+  const chainId = useChainId()
 
-  useEffect(() => {
-    function detectChain() {
-      ethereum.on('chainChanged', (chain) => {
-        if (!chain) return
-        const newChain = Web3.utils.hexToNumber(chain)
-        setChainId(newChain)
-      })
-    }
-    detectChain()
-  }, [ethereum])
   return (
     <Provider store={store}>
       <ThemeContextProvider>
