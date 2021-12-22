@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ModalProvider } from '@pancakeswap-libs/uikit'
+import Web3 from 'web3'
 // import bsc, { UseWalletProvider } from '@binance-chain/bsc-use-wallet'
 import * as bsc from '@binance-chain/bsc-use-wallet'
 import { Provider } from 'react-redux'
@@ -9,10 +10,12 @@ import { ThemeContextProvider } from 'contexts/ThemeContext'
 import { BlockContextProvider } from 'contexts/BlockContext'
 import { RefreshContextProvider } from 'contexts/RefreshContext'
 import store from 'state'
+import useChainId from 'utils/handleChainChange'
 
 const Providers: React.FC = ({ children }) => {
   const rpcUrl = getRpcUrl()
-  const chainId = parseInt(process.env.REACT_APP_CHAIN_ID)
+  const chainId = useChainId()
+
   return (
     <Provider store={store}>
       <ThemeContextProvider>
