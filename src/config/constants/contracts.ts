@@ -38,5 +38,6 @@ export default {
   giftNFT: {
     56: '',
     97: '0xFf7Ab747C0BC2B8aC9B2A211F70AE651df8F6B48',
+    4002: '0x11491766c302FdB58996cf9cb0F685F21ce10518',
   },
 }
