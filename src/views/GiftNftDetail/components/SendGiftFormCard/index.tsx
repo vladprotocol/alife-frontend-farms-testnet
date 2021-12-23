@@ -1,22 +1,16 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-
 import { getContract } from 'utils/erc20'
 import { provider } from 'web3-core'
 import styled from 'styled-components'
 import { ethers } from 'ethers'
-import { useHistory } from 'react-router-dom'
-
 import ContractAddresses from 'config/constants/contracts'
-
 import { Card, CardBody, Button, CardFooter, Input, useModal } from '@pancakeswap-libs/uikit'
 import Tokens from 'config/constants/tokens'
 import { GiftProviderContext } from 'views/GiftNftDetail/contexts/GiftProvider'
 import { useNftGift, useERC20 } from 'hooks/useContract'
-
 import GiftNftModal from '../GiftNftModal'
 import ApproveTokenModal from '../ApproveTokenModal'
-
 import InfoRow from '../InfoRow'
 
 const chainId = process.env.REACT_APP_CHAIN_ID
@@ -58,7 +52,6 @@ const StyledSelectOptions = styled.option`
   outline: none;
 `
 function SendGiftForm({ nft }) {
-  const history = useHistory()
   const { checkAllowance, isApproved, isInitialized, tokenContract, reInitialize, tokenBalance } =
     useContext(GiftProviderContext)
   const giftContract = useNftGift()

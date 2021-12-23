@@ -19,7 +19,6 @@ import {
   Text,
   CardFooter,
   useModal,
-  LogoIcon,
 } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
@@ -29,7 +28,6 @@ import { useHistory } from 'react-router-dom'
 import InfoRow from '../InfoRow'
 import Image from '../Image'
 import { NftProviderContext } from '../../contexts/NftProvider'
-import { getNewNftContract } from '../../utils/contracts'
 import ClaimNftModal from './ClaimNftModal'
 
 interface GiftNft extends Nft {
@@ -98,7 +96,6 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     nftCount: 0,
     nftBurnCount: 0,
   })
-  const [maxMint, setMaxMint] = useState(0)
 
   const TranslateString = useI18n()
 
@@ -106,22 +103,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
   const { account } = useWallet()
   const history = useHistory()
 
-  const {
-    nftId,
-    name,
-    tokenId,
-    previewImage,
-    originalImage,
-    description,
-    tokenAmount,
-    tokenSupply,
-    isClaimed,
-    tokenname,
-    amount,
-    tokenminted,
-    giftName,
-    giftMessage,
-  } = nft
+  const { name, tokenId, previewImage, description, isClaimed, tokenname, amount, giftName, giftMessage } = nft
 
   const loggedIn = account != null
 
@@ -145,22 +127,16 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
 
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
-    try {
-      const { methods } = getNewNftContract()
-      const nftCount = await methods.nftCount(nftId).call()
-      const nftBurnCount = await methods.nftBurnCount(nftId).call()
 
+    try {
       setState((prevState) => ({
         ...prevState,
         isLoading: false,
-        isDataFetched: true,
-        nftCount: parseInt(nftCount, 10),
-        nftBurnCount: parseInt(nftBurnCount, 10),
       }))
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      console.error(error)
     }
-  }, [nftId])
+  }, [])
 
   const [onClaimNft] = useModal(<ClaimNftModal nft={nft} onSuccess={handleClaimNft} />)
   return (

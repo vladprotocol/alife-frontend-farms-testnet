@@ -12,7 +12,6 @@ import {
   Text,
   CardFooter,
   useModal,
-  LogoIcon,
 } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import useI18n from 'hooks/useI18n'
@@ -95,7 +94,7 @@ const NftCard = ({ nft }) => {
   const{reInitialize} = useContext(NftProviderContext)
 
   
-  const {  name, previewImage, originalImage, description, tokenAmount, tokenSupply,tokenname,amount,tokenId,tokenminted,isClaimed,giftName,giftMessage} = nft
+  const {  name, previewImage,description ,tokenname,amount,tokenId,tokenminted,isClaimed,giftName,giftMessage} = nft
   const loggedIn = account !=null
 
   const fetchDetails = useCallback(async () => {
@@ -142,12 +141,7 @@ const NftCard = ({ nft }) => {
           <Tag>
         {amount} {tokenname}
           </Tag>
-
         </Header>
-
-     
-
-
       <br/>
               
         {loggedIn && !isClaimed &&(
