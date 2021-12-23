@@ -5,6 +5,7 @@ import { getContract } from 'utils/erc20'
 import { provider } from 'web3-core'
 import styled from 'styled-components'
 import { ethers } from 'ethers'
+import { useHistory } from 'react-router-dom'
 
 import ContractAddresses from 'config/constants/contracts'
 
@@ -20,7 +21,6 @@ import InfoRow from '../InfoRow'
 
 const chainId = process.env.REACT_APP_CHAIN_ID
 
-
 const StyledInputWrapper = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.colors.input};
@@ -29,6 +29,9 @@ const StyledInputWrapper = styled.div`
   height: 48px;
   width: 100%;
   padding: 10px;
+`
+const Text = styled.p`
+  color: ${(props) => props.theme.colors.textSubtle};
 `
 
 const StyledSelect = styled.select`
@@ -55,19 +58,23 @@ const StyledSelectOptions = styled.option`
   outline: none;
 `
 function SendGiftForm({ nft }) {
-  const { checkAllowance, isApproved, isInitialized, tokenContract } = useContext(GiftProviderContext)
+  const history = useHistory()
+  const { checkAllowance, isApproved, isInitialized, tokenContract, reInitialize, tokenBalance } =
+    useContext(GiftProviderContext)
   const giftContract = useNftGift()
   const { name, originalImage, nftId } = nft
   const { account, ethereum } = useWallet()
-  const loggedIn = account !== null
+  // const loggedIn = account !== null
   const [tokens, setTokens] = useState(null)
   const [state, setState] = useState({
     isLoading: false,
   })
   const [selectedToken, setSelectedToken] = useState(null)
   const [form, setForm] = useState(null)
-  const [tokenBalance, setTokenBalance] = useState(0)
-  const [error, setError] = useState(null)
+  const [message, setMessage] = useState({
+    text: null,
+    type: null,
+  })
   const getTokens = useCallback(() => {
     setTimeout(() => setTokens(Tokens), 500)
   }, [])
@@ -78,6 +85,16 @@ function SendGiftForm({ nft }) {
 
   const setLoading = (val) => setState((prev) => ({ ...prev, isLoading: val }))
 
+  const setNewMessage = useCallback((msg, type) => {
+    if (!msg) return setMessage(null)
+
+    setMessage({ text: msg, type })
+
+    return setTimeout(() => {
+      setMessage({ text: null, type: null })
+    }, 5000)
+  }, [])
+
   const handleApprove = useCallback(async () => {
     try {
       if (!tokenContract) return
@@ -87,48 +104,37 @@ function SendGiftForm({ nft }) {
         .send({ from: account })
       await checkAllowance(selectedToken)
       setLoading(false)
+      setNewMessage('Successfully approved token', 'success')
     } catch (e) {
       setLoading(false)
+      setNewMessage('Couldnot approved token', 'error')
       console.error(e)
     }
-  }, [tokenContract, selectedToken, account, checkAllowance])
-  const formValidation = useCallback(() => {
-    const KEYS = ['reciever', 'tokenAmount', 'giftName', 'message']
-    if (!form) return false
-    console.log(Object.keys[form])
-    const hasAllKeys = KEYS.every((item) => {
-      return Object.keys(form).includes(item)
-    })
-    return hasAllKeys
-  }, [form])
+  }, [tokenContract, selectedToken, account, checkAllowance, setNewMessage])
 
   const handleSendGift = useCallback(async () => {
     try {
       if (!selectedToken) return
 
-      const hasAllData = formValidation()
-      console.log({ hasAllData })
-      if (!hasAllData) {
-        setError('All fields should be filled !!!')
-
-        setTimeout(() => setError(null), 1500)
-        return
-      }
       setLoading(true)
       const tokenAmount = ethers.utils.parseUnits(form.tokenAmount, 'ether')
-      const tx = await giftContract.methods
+
+      await giftContract.methods
         .mint(form.reciever, selectedToken, tokenAmount, parseInt(nftId), form.giftName, form.message, originalImage)
         .send({ from: account })
       setLoading(false)
-    } catch (e) {
+      setForm(null)
+      setNewMessage('Successfully sent gift', 'success')
+    } catch (err) {
       setLoading(false)
-      console.log({ e })
-      console.error(e)
+      setNewMessage('Couldnot send gift', 'error')
+      console.log({ err })
     }
-  }, [account, selectedToken, form, formValidation, nftId, originalImage, giftContract])
+  }, [account, selectedToken, form, nftId, originalImage, giftContract, setNewMessage])
 
   const [onSendGift] = useModal(
     <GiftNftModal nft={nft} Tokens={Tokens} form={form} selectedToken={selectedToken} onSuccess={handleSendGift} />,
+    false,
   )
   const [onApproveToken] = useModal(
     <ApproveTokenModal
@@ -137,94 +143,151 @@ function SendGiftForm({ nft }) {
     />,
   )
 
+  const handleTokenChange = (e) => {
+    if (e.target.value && e.target.value.length) return setSelectedToken(e.target.value)
+
+    return setSelectedToken(null)
+  }
+
   useEffect(() => {
     async function onTokenChange() {
+      reInitialize()
+      if (!selectedToken) return
       setLoading(true)
       await checkAllowance(selectedToken)
       setLoading(false)
     }
 
     onTokenChange()
-  }, [selectedToken, ethereum, account, checkAllowance])
+  }, [selectedToken, ethereum, account, checkAllowance, reInitialize])
 
   useEffect(() => getTokens(), [getTokens])
 
   return (
     <Card>
-      <CardBody>
-        <InfoRow>
-          <Input
-            onChange={onChange}
-            name="reciever"
-            value={form && form.reciever ? form.reciever : ''}
-            placeholder="To ETH address"
-          />
-        </InfoRow>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          return onSendGift()
+        }}
+      >
+        <CardBody>
+          <InfoRow>
+            <Input
+              onChange={onChange}
+              name="reciever"
+              value={form && form.reciever ? form.reciever : ''}
+              placeholder="To ETH address"
+              required
+            />
+          </InfoRow>
 
-        <InfoRow>
-          <StyledInputWrapper>
-            <StyledSelect
-              placeholder="Token"
-              onChange={(e) => setSelectedToken(e.target.value)}
-              name="token"
-              value={selectedToken}
+          <InfoRow>
+            <StyledInputWrapper>
+              <StyledSelect
+                placeholder="Token"
+                onChange={(e) => handleTokenChange(e)}
+                name="token"
+                value={selectedToken}
+                required
+              >
+                <StyledSelectOptions value="">None</StyledSelectOptions>
+
+                {tokens && tokens.length > 0
+                  ? tokens.map((tkn, index) => (
+                      <StyledSelectOptions
+                        value={tkn.contractAddress}
+                        key={tkn.contractAddress}
+                      >{`${tkn.name} (${tkn.symbol})`}</StyledSelectOptions>
+                    ))
+                  : null}
+              </StyledSelect>
+            </StyledInputWrapper>
+          </InfoRow>
+
+          <InfoRow>
+            <Input
+              type="number"
+              onChange={onChange}
+              name="tokenAmount"
+              value={form && form.tokenAmount ? form.tokenAmount : ''}
+              placeholder="Gift Amount - (0 is possible)"
+              required
+            />
+          </InfoRow>
+
+          <InfoRow>
+            <Input
+              onChange={onChange}
+              name="giftName"
+              value={form && form.giftName ? form.giftName : ''}
+              placeholder="Gift Name"
+              required
+            />
+          </InfoRow>
+
+          <InfoRow>
+            <Input
+              onChange={onChange}
+              name="message"
+              value={form && form.message ? form.message : ''}
+              placeholder="Message"
+              required
+            />
+          </InfoRow>
+        </CardBody>
+        <CardFooter>
+          {message && message.text && message.type === 'success' && (
+            <Text style={{ color: 'greenyellow', marginBottom: '1rem' }}>{message.text}</Text>
+          )}
+
+          {message && message.text && message.type === 'error' && (
+            <Text style={{ color: 'red', marginBottom: '1rem' }}>{message.text}</Text>
+          )}
+
+          {state && state.isLoading && <p>Loading....</p>}
+          {tokenBalance && (
+            <Text>
+              You own {tokenBalance}{' '}
+              {selectedToken ? Tokens.find((tkn) => tkn.contractAddress === selectedToken).name : ''}
+            </Text>
+          )}
+          {/* {isInitialized && loggedIn && !isApproved && !state.isLoading && ( */}
+          {!state.isLoading && (
+            <Button
+              onClick={onApproveToken}
+              fullWidth
+              variant="primary"
+              mt="24px"
+              disabled={!selectedToken || isApproved}
             >
-              <StyledSelectOptions value="">None</StyledSelectOptions>
+              Approve Transfer
+            </Button>
+          )}
 
-              {tokens && tokens.length > 0
-                ? tokens.map((tkn, index) => (
-                    <StyledSelectOptions
-                      value={tkn.contractAddress}
-                      key={tkn.contractAddress}
-                    >{`${tkn.name} (${tkn.symbol})`}</StyledSelectOptions>
-                  ))
-                : null}
-            </StyledSelect>
-          </StyledInputWrapper>
-        </InfoRow>
+          {/* {isInitialized && loggedIn && isApproved && !state.isLoading && ( */}
 
-        <InfoRow>
-          <Input
-            type="number"
-            onChange={onChange}
-            name="tokenAmount"
-            value={form && form.tokenAmount ? form.tokenAmount : ''}
-            placeholder="Gift Amount - (0 is possible)"
-          />
-        </InfoRow>
-
-        <InfoRow>
-          <Input
-            onChange={onChange}
-            name="giftName"
-            value={form && form.giftName ? form.giftName : ''}
-            placeholder="Gift Name"
-          />
-        </InfoRow>
-
-        <InfoRow>
-          <Input
-            onChange={onChange}
-            name="message"
-            value={form && form.message ? form.message : ''}
-            placeholder="Message"
-          />
-        </InfoRow>
-      </CardBody>
-      <CardFooter>
-        {error ? <p>{error}</p> : ''}
-        {state && state.isLoading && <p>Loading....</p>}
-        {isInitialized && loggedIn && !isApproved && !state.isLoading && (
-          <Button onClick={onApproveToken} fullWidth variant="primary" mt="24px">
-            Approve Transfer
-          </Button>
-        )}
-        {isInitialized && loggedIn && isApproved && !state.isLoading && (
-          <Button fullWidth variant="primary" mt="24px" onClick={onSendGift}>
-            Send Gift
-          </Button>
-        )}
-      </CardFooter>
+          {!state.isLoading && (
+            <Button
+              fullWidth
+              variant="primary"
+              mt="24px"
+              type="submit"
+              disabled={!selectedToken || !isApproved || (tokenBalance && form?.tokenAmount > parseInt(tokenBalance))}
+            >
+              Send Gift
+            </Button>
+          )}
+          {tokenBalance && form?.tokenAmount > parseInt(tokenBalance) && (
+            <Text style={{ color: 'red', paddingTop: '1rem' }}>
+              You dont own enough{' '}
+              {selectedToken ? Tokens.find((tkn) => tkn.contractAddress === selectedToken).name : ''}
+              token.
+            </Text>
+          )}
+          {/* )} */}
+        </CardFooter>
+      </form>
     </Card>
   )
 }
