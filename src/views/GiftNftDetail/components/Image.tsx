@@ -13,17 +13,20 @@ const Container = styled.div`
   width: 100%;
   overflow: hidden;
   padding-bottom: 100%;
+  display:flex;
+  justify-content:center;
 `
 
 const StyledImage = styled.img`
   position: absolute;
-  width: 100%;
+  max-width: 100%;
   top: 0;
   left: 0;
   transition: opacity 1s linear;
-  height: 100%;
+  max-height: 100%;
   object-fit: cover;
   border-radius: 32px 32px 0 0;
+  display:block;
 `
 
 const Image: React.FC<ImageProps> = ({ src, alt, originalLink }) => {

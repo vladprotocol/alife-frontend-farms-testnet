@@ -57,7 +57,7 @@ function SendGiftForm({ nft }) {
   const giftContract = useNftGift()
   const { name, originalImage, nftId } = nft
   const { account, ethereum } = useWallet()
-  // const loggedIn = account !== null
+const loggedIn = account !== null
   const [tokens, setTokens] = useState(null)
   const [state, setState] = useState({
     isLoading: false,
@@ -68,8 +68,8 @@ function SendGiftForm({ nft }) {
     text: null,
     type: null,
   })
-  const getTokens = useCallback(() => {
-    setTimeout(() => setTokens(Tokens), 500)
+  const getTokens = useCallback((id) => {
+    setTimeout(() => setTokens(Tokens[id]), 500)
   }, [])
 
   const onChange = (e) => {
@@ -126,12 +126,12 @@ function SendGiftForm({ nft }) {
   }, [account, selectedToken, form, nftId, originalImage, giftContract, setNewMessage])
 
   const [onSendGift] = useModal(
-    <GiftNftModal nft={nft} Tokens={Tokens} form={form} selectedToken={selectedToken} onSuccess={handleSendGift} />,
+    <GiftNftModal nft={nft} Tokens={Tokens[chainId]} form={form} selectedToken={selectedToken} onSuccess={handleSendGift} />,
     false,
   )
   const [onApproveToken] = useModal(
     <ApproveTokenModal
-      token={Tokens.find((item) => item.contractAddress === selectedToken)}
+      token={Tokens[chainId].find((item) => item.contractAddress === selectedToken)}
       onSuccess={handleApprove}
     />,
   )
@@ -142,6 +142,11 @@ function SendGiftForm({ nft }) {
     return setSelectedToken(null)
   }
 
+  const preventMinus = (e) => {
+    if (e.code === 'Minus') {
+        e.preventDefault();
+    }
+};
   useEffect(() => {
     async function onTokenChange() {
       reInitialize()
@@ -154,7 +159,7 @@ function SendGiftForm({ nft }) {
     onTokenChange()
   }, [selectedToken, ethereum, account, checkAllowance, reInitialize])
 
-  useEffect(() => getTokens(), [getTokens])
+  useEffect(() => getTokens(chainId), [getTokens])
 
   return (
     <Card>
@@ -201,10 +206,12 @@ function SendGiftForm({ nft }) {
           <InfoRow>
             <Input
               type="number"
+              min="0"
               onChange={onChange}
               name="tokenAmount"
               value={form && form.tokenAmount ? form.tokenAmount : ''}
               placeholder="Gift Amount - (0 is possible)"
+              onKeyPress={preventMinus}
               required
             />
           </InfoRow>
@@ -241,12 +248,13 @@ function SendGiftForm({ nft }) {
           {state && state.isLoading && <p>Loading....</p>}
           {tokenBalance && (
             <Text>
-              You own {tokenBalance}{' '}
-              {selectedToken ? Tokens.find((tkn) => tkn.contractAddress === selectedToken).name : ''}
+              You own {Math.round(parseInt(ethers.utils.formatUnits(tokenBalance,'ether'))).toFixed(3)}{' '}
+              {selectedToken ? Tokens[chainId].find((tkn) => tkn.contractAddress === selectedToken).name : ''}
             </Text>
           )}
-          {/* {isInitialized && loggedIn && !isApproved && !state.isLoading && ( */}
-          {!state.isLoading && (
+           {/* {!state.isLoading && ( */}
+
+          {isInitialized && loggedIn && !isApproved && !state.isLoading && (
             <Button
               onClick={onApproveToken}
               fullWidth
@@ -258,9 +266,10 @@ function SendGiftForm({ nft }) {
             </Button>
           )}
 
-          {/* {isInitialized && loggedIn && isApproved && !state.isLoading && ( */}
+     {/* {!state.isLoading && ( */}
+          {isInitialized && loggedIn && isApproved && !state.isLoading && (
 
-          {!state.isLoading && (
+     
             <Button
               fullWidth
               variant="primary"
@@ -271,10 +280,27 @@ function SendGiftForm({ nft }) {
               Send Gift
             </Button>
           )}
+
+            {!isInitialized && (
+
+                
+            <Button
+              fullWidth
+              variant="primary"
+              mt="24px"
+              type="submit"
+              disabled={!isInitialized}
+            >
+              Select Token to Gift
+            </Button>
+            )}
+
+
+
           {tokenBalance && form?.tokenAmount > parseInt(tokenBalance) && (
             <Text style={{ color: 'red', paddingTop: '1rem' }}>
               You dont own enough{' '}
-              {selectedToken ? Tokens.find((tkn) => tkn.contractAddress === selectedToken).name : ''}
+              {selectedToken ? Tokens[chainId].find((tkn) => tkn.contractAddress === selectedToken).name : ''}
               token.
             </Text>
           )}
