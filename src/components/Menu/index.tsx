@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { allLanguages } from 'config/localisation/languageCodes'
@@ -189,10 +189,24 @@ fetch(
   })
 
 const Menu = (props) => {
-  const { account, connect, reset } = useWallet()
+  const { account, connect, reset, chainId } = useWallet()
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
+
+  const [filteredConfig, setFilteredConfig] = useState([])
+
+  useEffect(() => {
+    if (!chainId) return
+
+    const newFilteredConfigs = config.filter(
+      (navigationItem) =>
+        navigationItem.supportedChain &&
+        navigationItem.supportedChain.length &&
+        navigationItem.supportedChain.includes(chainId),
+    )
+    setFilteredConfig([...newFilteredConfigs])
+  }, [chainId])
 
   return (
     <div className="body-bg">
@@ -332,7 +346,7 @@ const Menu = (props) => {
           langs={allLanguages}
           setLang={setSelectedLanguage}
           cakePriceUsd={cakePriceUsd.toNumber()}
-          links={config}
+          links={filteredConfig}
           priceLink="https://bscscan.com/token/0x50f4220C82c9325dC99f729C3328FB5c338BEaae"
           {...props}
         />

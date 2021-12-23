@@ -1,0 +1,6 @@
+export default {
+  BNB_TESTNET: 97,
+  BNB_MAINNET: 56,
+  FTM_TESTNET: 4002,
+  FTM_MAINNET: 250,
+}

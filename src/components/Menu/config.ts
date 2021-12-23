@@ -1,12 +1,19 @@
 import { MenuEntry } from '@pancakeswap-libs/uikit'
+import CHAIN_IDS from 'config/constants/chainIds'
 
-const config: MenuEntry[] = [
+interface CustomMenuENtry extends MenuEntry {
+  supportedChain?: number[]
+}
+const config: CustomMenuENtry[] = [
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
     label: 'Home',
     icon: 'HomeIcon',
     href: '/',
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'Trade',
     icon: 'TradeIcon',
     items: [
@@ -29,21 +36,29 @@ const config: MenuEntry[] = [
     ],
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'Farm Alife',
     icon: 'FarmIcon',
     href: '/farms',
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'Mint NFTs (Genesis)',
     icon: 'NftIcon',
     href: '/nft',
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'Mint NFTs (Shibari)',
     icon: 'NftIcon',
     href: '/shibari-nft',
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET, CHAIN_IDS.FTM_TESTNET, CHAIN_IDS.FTM_MAINNET],
+
     label: 'Gift NFTs',
     icon: 'NftIcon',
     href: '/gift-nft',
@@ -55,16 +70,22 @@ const config: MenuEntry[] = [
   //   href: '/nft-artist',
   // },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'My NFT Collection',
     icon: 'NftIcon',
     href: '/my-collection',
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'Past Farms',
     icon: 'PoolIcon',
     href: 'https://life.vlad.finance',
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'More',
     icon: 'MoreIcon',
     items: [
@@ -95,11 +116,15 @@ const config: MenuEntry[] = [
     ],
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'Gordian Audit Passed',
     icon: 'NftIcon',
     href: 'https://gordian.agency',
   },
   {
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+
     label: 'SOLIDITY Audit Coming Soon',
     icon: 'NftIcon',
     href: '#',
