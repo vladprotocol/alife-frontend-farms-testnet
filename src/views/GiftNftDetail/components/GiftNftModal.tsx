@@ -57,7 +57,7 @@ const GiftNftModal: React.FC<GiftNftProps> = ({ nft, Tokens, selectedToken, form
   }
 
   return (
-    <Modal title="Gift NFT" onDismiss={onDismiss}>
+    <Modal title="Gift NFT" onDismiss={onDismiss} hideCloseButton>
       <ModalContent>
         {error && (
           <Text color="failure" mb="8px">

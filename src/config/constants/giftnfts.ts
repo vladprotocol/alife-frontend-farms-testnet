@@ -6,49 +6,57 @@ export const AMOUNT_TO_CLAIM = '10'
 
 const Nfts: GiftNFT[] = [
   {
-    name: 'Pink Spider gift',
-    previewImage: 'pink-spider-min.png',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    name: 'Christmas Bear',
+    previewImage: 'bear-nft.png',
+    description: "Hoping this will be the only bear that visits you this Christmas. Don't wreck the halls. Merry Christmas!",
     originalImage:
-      'https://gateway.pinata.cloud/ipfs/QmZRVNLGYbjh2DaPuqcaQi51wXSjaxzGjAg24WviM5N8Tj',
+      'https://gateway.pinata.cloud/ipfs/QmXwMmZbShdue93zfba4X8PcWkkbrW8e4Yg89kbm7p8Ghz/Bear-NFT.png',
     nftId: 100,
 
   },
   {
-    name: 'Pink Fox gift',
-    previewImage: 'pink-fox-min.png',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    name: 'Christmas Nutcracker',
+    previewImage: 'nutcracker-nft.png',
+    description: 'Nothing stops a HACKER like your very own NUTCRACKER Happy Holidays!',
     originalImage:
-      'https://gateway.pinata.cloud/ipfs/QmeDaRUcV3bp5oa6juNYYrV9G7o2zcKFcrRBJmPJxe6BQL',
+      'https://gateway.pinata.cloud/ipfs/QmXwMmZbShdue93zfba4X8PcWkkbrW8e4Yg89kbm7p8Ghz/NutCracker-NFT.png',
     nftId: 101,
  
   },
+
   {
-    name: 'Pink Bunny gift',
-    previewImage: 'pink-bunny-min.png',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
-    originalImage: 'https://gateway.pinata.cloud/ipfs/QmWh9xNZvyhzQWFp4xFEjbBBXPBuZhYnQufL2HwRBae9Gn',
+    name: 'Christmas Santa',
+    previewImage: 'santa-nft.png',
+    description: "HO HO HODL all the way - If you've been nice Santa has a moon bag just for you! Happy holidays!",
+    originalImage:
+      'https://gateway.pinata.cloud/ipfs/QmXwMmZbShdue93zfba4X8PcWkkbrW8e4Yg89kbm7p8Ghz/Santa-NFT.png',
+
     nftId: 102,
   },
   {
-    name: 'Pink Dragon gift',
-    previewImage: 'pink-dragon-min.png',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    name: 'Christmas Snowman',
+    previewImage: 'snowman-nft.png',
+    description:"Frosty knows a thing or two about Diamond hands - it's really ice. Merry Christmas!",
     originalImage:
-      'https://gateway.pinata.cloud/ipfs/QmUBgkzR5rSLiWH9pgDACayjAQLcCfB8Csn81PVbTdB86t',
-
+      'https://gateway.pinata.cloud/ipfs/QmXwMmZbShdue93zfba4X8PcWkkbrW8e4Yg89kbm7p8Ghz/Snowman-NFT.png',
     nftId: 103,
+
   },
   {
-    name: 'Pink B&B gift',
-    previewImage: 'bull-and-bear-min.png',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget vehicula massa. Donec fringilla a nibh sed euismod. Nam vitae erat vitae nisl pulvinar lacinia. Ut vitae ultrices diam.',
+    name: 'Christmas Stocking',
+    previewImage: 'stocking-nft.png',
+    description:'May the stocking that hangs by the fire be filled with gains.Merry Christmas!',
     originalImage:
-      'https://gateway.pinata.cloud/ipfs/QmQ8MkJZzAQYNnUmzVXFmBQAZTXSjjvdvGVF3f16HP7LLW',
+      'https://gateway.pinata.cloud/ipfs/QmXwMmZbShdue93zfba4X8PcWkkbrW8e4Yg89kbm7p8Ghz/Stocking-NFT.png',
     nftId: 104,
 
+  },
+  {
+    name: 'Christmas Tree',
+    previewImage: 'tree-nft.png',
+    description:"If you've been stackin' you won't be lackin' Merry Christmas!",
+    originalImage: 'https://gateway.pinata.cloud/ipfs/QmXwMmZbShdue93zfba4X8PcWkkbrW8e4Yg89kbm7p8Ghz/Tree-NFT.png',
+    nftId: 105,
   },
 ]
 
