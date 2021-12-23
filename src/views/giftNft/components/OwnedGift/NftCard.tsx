@@ -102,7 +102,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
 
   const TranslateString = useI18n()
 
-  const { reInitialize } = useContext(NftProviderContext)
+  const { reInitialize, getNftRecievedDetails } = useContext(NftProviderContext)
   const { account } = useWallet()
   const history = useHistory()
 
@@ -141,7 +141,7 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
     }
   }
 
-  const handleClaimNft = () => reInitialize()
+  const handleClaimNft = () => getNftRecievedDetails()
 
   const fetchDetails = useCallback(async () => {
     setState((prevState) => ({ ...prevState, isLoading: true }))
