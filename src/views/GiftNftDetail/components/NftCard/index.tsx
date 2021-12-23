@@ -46,13 +46,8 @@ const Value = styled(Text)`
   font-weight: 600;
 `
 
-const SmallCard = styled(Card)`
-  width: 500px;
-  margin: 0 auto;
-
-  @media (max-width: 767px) {
-    width: 320px;
-  }
+const DetailCard = styled(Card)`
+position:relative
 `
 
 const CustomButton = styled(Button)`
@@ -114,8 +109,8 @@ const NftCard = ({ nft }) => {
   }
 
   return (
-    <Card>
-      <Image src={`/images/nfts/${previewImage}`} alt={name} />
+    <DetailCard>
+      <Image src={originalImage} alt={name} />
 
       <CardBody>
         <Header>
@@ -153,7 +148,7 @@ const NftCard = ({ nft }) => {
           </InfoBlock>
         )}
       </CardFooter>
-    </Card>
+    </DetailCard>
   )
 }
 
