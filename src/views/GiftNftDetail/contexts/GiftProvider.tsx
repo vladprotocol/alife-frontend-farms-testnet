@@ -1,16 +1,12 @@
 import React, { createContext, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import _ from 'lodash'
-import { ethers } from 'ethers'
-import BigNumber from 'bignumber.js'
+
 import { provider } from 'web3-core'
 import ContractAddresses from 'config/constants/contracts'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { getContract } from 'utils/erc20'
-import { getContract as getNftContract } from 'utils/web3'
-import giftNftAbi from 'config/abi/NftWithToken.json'
 
 const chainId = process.env.REACT_APP_CHAIN_ID
-
 
 interface GiftProviderProps {
   children: ReactNode
@@ -39,7 +35,7 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
     // Transactions can take awhile so it is likely some users will navigate to another page
     // before the transaction is finished
     if (isMounted.current) {
-      setState((prevState) => ({ ...prevState, isInitialized: false }))
+      setState((prevState) => ({ ...prevState, isInitialized: false, isApproved: false, tokenBalance: null }))
     }
   }, [])
 
@@ -53,13 +49,12 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
       reInitialize()
       const contract = await getContract(ethereum as provider, tokenAddress)
       setState((prev) => ({ ...prev, isInitialized: true, tokenContract: contract }))
-      const allowance = await contract.methods
-        .allowance(account, ContractAddresses.giftNFT[chainId])
-        .call()
+      const allowance = await contract.methods.allowance(account, ContractAddresses.giftNFT[chainId]).call()
+      const tokenBalance = await contract.methods.balanceOf(account).call()
       if (allowance > 0) {
-        setState((prev) => ({ ...prev, isApproved: true }))
+        setState((prev) => ({ ...prev, isApproved: true, tokenBalance }))
       } else {
-        setState((prev) => ({ ...prev, isApproved: false }))
+        setState((prev) => ({ ...prev, isApproved: false, tokenBalance }))
       }
       // Approve Max i.e ethers.constants.MaxUint256
     },
