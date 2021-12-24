@@ -6,7 +6,7 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/hooks'
-import { Menu as UikitMenu, Button } from '@pancakeswap-libs/uikit'
+import { Menu as UikitMenu, Button ,Text, Toggle} from '@pancakeswap-libs/uikit'
 import config from './config'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'antd/dist/antd.css'
@@ -26,8 +26,9 @@ import alifeLogo from './alife.png'
 import bgFooter from './bg-footer.jpg'
 import binanceLogo from './binance-logo.png'
 import fantomLogo from './fantom-logo.png'
-
 import soundCloudLogo from './soundcloud.png'
+
+declare const window: any
 
 const Footer = styled.div`
   height: 400px;
@@ -148,6 +149,24 @@ const CustomI = styled.i`
   height: 16px;
   margin-right: 10px;
 `
+const ToggleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 32px;
+
+  @media (max-width: 767px) {
+    margin-right: 0px;
+  }
+
+  ${Text} {
+    margin-left: 8px;
+  }
+`
+const NetworkToggle = styled(Toggle)`
+
+`
+
 
 let vladValue = '0.00'
 let lifeValue = '0.00'
@@ -201,6 +220,43 @@ const Menu = (props) => {
   const [filteredConfig, setFilteredConfig] = useState([])
   const [networkName,setNetworkName] = useState('unknown');
   const [networklogo,setNetworkLogo] = useState(vladLogo);
+
+
+  const getNetworkConnectParams = () => ({
+    97: [
+      {
+        chainId: 97,
+        chainName: 'Binance Smart Chain Mainnet',
+        nativeCurrency: {
+          name: 'BNB',
+          symbol: 'bnb',
+          decimals: 18,
+        },
+        rpcUrls: ['https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed.binance.org'],
+        blockExplorerUrls: ['https://bscscan.com'],
+      },
+    ],
+    4002: [
+      {
+        chainId: 4002,
+        chainName: 'Fantom Opera',
+        nativeCurrency: {
+          name: 'Fantom Token',
+          symbol: 'FTM',
+          decimals: 18,
+        },
+        rpcUrls: ['https://rpc.ftm.tools/'],
+        blockExplorerUrls: ['https://ftmscan.com/'],
+      },
+    ],
+  });
+
+  const handleChangeNetwork = async network => {
+    await window.ethereum.request({
+      method: 'wallet_addEthereumChain',
+      params: getNetworkConnectParams()[network],
+    });
+  };
 
   useEffect(() => {
     if (!chainId) return
@@ -275,7 +331,15 @@ const Menu = (props) => {
           </div>
           <div className="tp-btns">
             <ul>
+
+
+
               <li style={{float:"left"}}>
+              {/* <ToggleWrapper>
+              <Text> Binance</Text>
+          <NetworkToggle   />
+          <Text> Fantom</Text>
+        </ToggleWrapper> */}
               <div className="btn-wrap">
                   <span className="btn-first">
                     <img src={networklogo} className="" alt="" />{networkName}
