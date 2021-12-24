@@ -47,7 +47,8 @@ const Value = styled(Text)`
 `
 
 const DetailCard = styled(Card)`
-position:relative
+display:block;
+float:center;
 `
 
 const CustomButton = styled(Button)`
