@@ -6,7 +6,7 @@ import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/hooks'
-import { Menu as UikitMenu, Button ,Text, Toggle} from '@pancakeswap-libs/uikit'
+import { Menu as UikitMenu, Button, Text, Toggle } from '@pancakeswap-libs/uikit'
 import config from './config'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'antd/dist/antd.css'
@@ -164,13 +164,12 @@ const ToggleWrapper = styled.div`
   }
 `
 const NetworkToggle = styled(Button)`
-height: 22px;
-background: #171717; 
-margin-right: 10px;
-margin-left: 10px;
-padding: 10px ;
+  height: 22px;
+  background: #171717;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 10px;
 `
-
 
 let vladValue = '0.00'
 let lifeValue = '0.00'
@@ -227,23 +226,28 @@ const Menu = (props) => {
   const binanceid = process.env.REACT_APP_BINANCE_CHAIN_ID;
   const fantomid = process.env.REACT_APP_FANTOM_CHAIN_ID;
 
+
   const getNetworkConnectParams = () => ({
     97: [
       {
-        chainId: "0x61",
+        chainId: '0x61',
         chainName: 'Binance Smart Chain Testnet',
         nativeCurrency: {
           name: 'BNB',
           symbol: 'bnb',
           decimals: 18,
         },
-        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/', 'https://data-seed-prebsc-1-s3.binance.org:8545/', 'https://data-seed-prebsc-1-s2.binance.org:8545/'],
+        rpcUrls: [
+          'https://data-seed-prebsc-1-s1.binance.org:8545/',
+          'https://data-seed-prebsc-1-s3.binance.org:8545/',
+          'https://data-seed-prebsc-1-s2.binance.org:8545/',
+        ],
         blockExplorerUrls: ['https://testnet.bscscan.com'],
       },
     ],
     4002: [
       {
-        chainId:"0xfa2" ,
+        chainId: '0xfa2',
         chainName: 'Fantom TestNet',
         nativeCurrency: {
           name: 'Fantom Token',
@@ -255,41 +259,44 @@ const Menu = (props) => {
       },
     ],
 
-    56:[
+    56: [
       {
-        chainId:"0x38",
-        chainName:"Binance SmartChain Mainnet",
+        chainId: '0x38',
+        chainName: 'Binance SmartChain Mainnet',
         nativeCurrency: {
           name: 'BNB',
           symbol: 'bnb',
           decimals: 18,
         },
-        rpcUrls: ['https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed.binance.org'],
+        rpcUrls: [
+          'https://bsc-dataseed1.ninicoin.io',
+          'https://bsc-dataseed1.defibit.io',
+          'https://bsc-dataseed.binance.org',
+        ],
         blockExplorerUrls: ['https://bscscan.com'],
-
-      }
+      },
     ],
-    250:[
+    250: [
       {
-       chainId:"0xfa" ,
-       chainName: 'Fantom Opera',
-      nativeCurrency: {
-        name: 'Fantom Token',
-        symbol: 'FTM',
-        decimals: 18,
+        chainId: '0xfa',
+        chainName: 'Fantom Opera',
+        nativeCurrency: {
+          name: 'Fantom Token',
+          symbol: 'FTM',
+          decimals: 18,
+        },
+        rpcUrls: ['https://rpc.ftm.tools/'],
+        blockExplorerUrls: ['https://ftmscan.com/'],
       },
-      rpcUrls: ['https://rpc.ftm.tools/'],
-      blockExplorerUrls: ['https://ftmscan.com/'],
-      },
-    ]
-  });
+    ],
+  })
 
-  const handleChangeNetwork = async network => {
+  const handleChangeNetwork = async (network) => {
     await window.ethereum.request({
       method: 'wallet_addEthereumChain',
       params: getNetworkConnectParams()[network],
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (!chainId) return
@@ -301,11 +308,10 @@ const Menu = (props) => {
         navigationItem.supportedChain.includes(chainId),
     )
     setFilteredConfig([...newFilteredConfigs])
-    if(chains[chainId]) {
+    if (chains[chainId]) {
       setNetworkName(chains[chainId])
-      if(chainId === 97 || chainId === 56)setNetworkLogo(binanceLogo)
-      if(chainId === 4002 || chainId === 250)setNetworkLogo(fantomLogo)
-
+      if (chainId === 97 || chainId === 56) setNetworkLogo(binanceLogo)
+      if (chainId === 4002 || chainId === 250) setNetworkLogo(fantomLogo)
     }
   }, [chainId])
 
@@ -364,26 +370,26 @@ const Menu = (props) => {
           </div>
           <div className="tp-btns">
             <ul>
-        <li style ={{float:'left'}}>
+              <li style={{ float: 'left' }}>
                 <div className="btn-wrap">
                   <span className="btn-first">
-                    <img src={networklogo} className="" alt="" />{networkName}
-                  </span>   
+                    <img src={networklogo} className="" alt="" />
+                    {networkName}
+                  </span>
                 </div>
               </li>
 
-        <li style={{float:"left"}}> 
-        <span className="btn-first">
-        <NetworkToggle onClick={()=>handleChangeNetwork(binanceid)}>  
-        <img src={binanceLogo} className="" alt=""/> 
-        </NetworkToggle >
-        <NetworkToggle onClick={()=>handleChangeNetwork(fantomid)}>
-        <img src={fantomLogo} className="" alt="" /> 
-        </NetworkToggle >
-        </span>
-        </li>
+              <li style={{ float: 'left' }}>
+                <span className="btn-first">
+                  <NetworkToggle onClick={() => handleChangeNetwork(binanceid)}>
+                    <img src={binanceLogo} className="" alt="" />
+                  </NetworkToggle>
+                  <NetworkToggle onClick={() => handleChangeNetwork(fantomid)}>
+                    <img src={fantomLogo} className="" alt="" />
+                  </NetworkToggle>
+                </span>
+              </li>
               <li>
-
                 <div className="btn-wrap">
                   <span className="btn-first">
                     <img src={vladLogo} className="" alt="" />${vladValue}

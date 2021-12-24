@@ -13,7 +13,6 @@ import GiftNftModal from '../GiftNftModal'
 import ApproveTokenModal from '../ApproveTokenModal'
 import InfoRow from '../InfoRow'
 
-
 const StyledInputWrapper = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.colors.input};
@@ -55,9 +54,9 @@ function SendGiftForm({ nft }) {
     useContext(GiftProviderContext)
 
   const { name, originalImage, nftId } = nft
-  const { account, ethereum,chainId } = useWallet()
+  const { account, ethereum, chainId } = useWallet()
   const giftContract = useNftGift(chainId)
-const loggedIn = account !== null
+  const loggedIn = account !== null
   const [tokens, setTokens] = useState(null)
   const [state, setState] = useState({
     isLoading: false,
@@ -69,7 +68,7 @@ const loggedIn = account !== null
     type: null,
   })
   const getTokens = useCallback((id) => {
-    setTimeout(() => setTokens(Tokens[id]), 500)
+    setTokens(Tokens[id])
   }, [])
 
   const onChange = (e) => {
@@ -103,7 +102,7 @@ const loggedIn = account !== null
       setNewMessage('Couldnot approved token', 'error')
       console.error(e)
     }
-  }, [tokenContract, selectedToken, account, checkAllowance, setNewMessage,chainId])
+  }, [tokenContract, selectedToken, account, checkAllowance, setNewMessage, chainId])
 
   const handleSendGift = useCallback(async () => {
     try {
@@ -126,7 +125,13 @@ const loggedIn = account !== null
   }, [account, selectedToken, form, nftId, originalImage, giftContract, setNewMessage])
 
   const [onSendGift] = useModal(
-    <GiftNftModal nft={nft} Tokens={Tokens[chainId]} form={form} selectedToken={selectedToken} onSuccess={handleSendGift} />,
+    <GiftNftModal
+      nft={nft}
+      Tokens={Tokens[chainId]}
+      form={form}
+      selectedToken={selectedToken}
+      onSuccess={handleSendGift}
+    />,
     false,
   )
   const [onApproveToken] = useModal(
@@ -138,28 +143,34 @@ const loggedIn = account !== null
 
   const handleTokenChange = (e) => {
     if (e.target.value && e.target.value.length) return setSelectedToken(e.target.value)
-
     return setSelectedToken(null)
   }
 
   const preventMinus = (e) => {
     if (e.code === 'Minus') {
-        e.preventDefault();
+      e.preventDefault()
     }
-};
+  }
   useEffect(() => {
     async function onTokenChange() {
       reInitialize()
+
       if (!selectedToken) return
       setLoading(true)
+
       await checkAllowance(selectedToken)
       setLoading(false)
     }
-
     onTokenChange()
   }, [selectedToken, ethereum, account, checkAllowance, reInitialize])
 
-  useEffect(() => getTokens(chainId), [getTokens,chainId])
+  useEffect(() => {
+    setLoading(true)
+    setTokens(null)
+    getTokens(chainId)
+    setSelectedToken(null)
+    setLoading(false)
+  }, [getTokens, reInitialize, chainId])
 
   return (
     <Card>
@@ -246,13 +257,14 @@ const loggedIn = account !== null
           )}
 
           {state && state.isLoading && <p>Loading....</p>}
+
           {tokenBalance && (
             <Text>
-              You own {Math.round(parseInt(ethers.utils.formatUnits(tokenBalance,'ether'))).toFixed(3)}{' '}
-              {selectedToken ? Tokens[chainId].find((tkn) => tkn.contractAddress === selectedToken).name : ''}
+              You own {Math.round(parseInt(ethers.utils.formatUnits(tokenBalance, 'ether'))).toFixed(3)}{' '}
+              {selectedToken ? Tokens[chainId].find((tkn) => tkn.contractAddress === selectedToken)?.name : ''}
             </Text>
           )}
-           {/* {!state.isLoading && ( */}
+          {/* {!state.isLoading && ( */}
 
           {isInitialized && loggedIn && !isApproved && !state.isLoading && (
             <Button
@@ -266,10 +278,8 @@ const loggedIn = account !== null
             </Button>
           )}
 
-     {/* {!state.isLoading && ( */}
+          {/* {!state.isLoading && ( */}
           {isInitialized && loggedIn && isApproved && !state.isLoading && (
-
-     
             <Button
               fullWidth
               variant="primary"
@@ -281,21 +291,11 @@ const loggedIn = account !== null
             </Button>
           )}
 
-            {!isInitialized && (
-
-                
-            <Button
-              fullWidth
-              variant="primary"
-              mt="24px"
-              type="submit"
-              disabled={!isInitialized}
-            >
+          {!isInitialized && (
+            <Button fullWidth variant="primary" mt="24px" type="submit" disabled={!isInitialized}>
               Select Token to Gift
             </Button>
-            )}
-
-
+          )}
 
           {tokenBalance && form?.tokenAmount > parseInt(tokenBalance) && (
             <Text style={{ color: 'red', paddingTop: '1rem' }}>
