@@ -88,9 +88,9 @@ export const useSousChef = (id) => {
   return useContract(abi, config.contractAddress[process.env.REACT_APP_CHAIN_ID])
 }
 
-export const useNftGift = () => {
+export const useNftGift = (chainId ) => {
   const abi = nftWithToken as unknown as AbiItem
-  return useContract(abi, getGiftNftAddress())
+  return useContract(abi, getGiftNftAddress(chainId))
 }
 
 export default useContract

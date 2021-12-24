@@ -13,7 +13,6 @@ import GiftNftModal from '../GiftNftModal'
 import ApproveTokenModal from '../ApproveTokenModal'
 import InfoRow from '../InfoRow'
 
-const chainId = process.env.REACT_APP_CHAIN_ID
 
 const StyledInputWrapper = styled.div`
   align-items: center;
@@ -54,9 +53,10 @@ const StyledSelectOptions = styled.option`
 function SendGiftForm({ nft }) {
   const { checkAllowance, isApproved, isInitialized, tokenContract, reInitialize, tokenBalance } =
     useContext(GiftProviderContext)
-  const giftContract = useNftGift()
+
   const { name, originalImage, nftId } = nft
-  const { account, ethereum } = useWallet()
+  const { account, ethereum,chainId } = useWallet()
+  const giftContract = useNftGift(chainId)
 const loggedIn = account !== null
   const [tokens, setTokens] = useState(null)
   const [state, setState] = useState({
@@ -103,7 +103,7 @@ const loggedIn = account !== null
       setNewMessage('Couldnot approved token', 'error')
       console.error(e)
     }
-  }, [tokenContract, selectedToken, account, checkAllowance, setNewMessage])
+  }, [tokenContract, selectedToken, account, checkAllowance, setNewMessage,chainId])
 
   const handleSendGift = useCallback(async () => {
     try {
@@ -159,7 +159,7 @@ const loggedIn = account !== null
     onTokenChange()
   }, [selectedToken, ethereum, account, checkAllowance, reInitialize])
 
-  useEffect(() => getTokens(chainId), [getTokens])
+  useEffect(() => getTokens(chainId), [getTokens,chainId])
 
   return (
     <Card>

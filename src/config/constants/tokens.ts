@@ -92,6 +92,64 @@ export default {
   name: 'MyToken',
   symbol: 'MTK',
   contractAddress: '0xc4cecc3c1f0daa1ec391832e507a1a4d44abb2f2',
-}]
+}],
+
+4002:[
+  {
+    name: 'Democoin',
+    contractAddress: '0xE59F209e7Bc684b296e03bAaB160041D38D993A3',
+    symbol: 'Demo',
+  },
+  {
+    name: 'Trycoin',
+    contractAddress: '0x5F09c60dD0890d07fc544c453fC565D070c1671E',
+    symbol: 'Try',
+  },
+  {
+    name: "SwashCoin",
+    contractAddress:"0xA18aCF100D26ac5aC40cdFfEAF37D73fB08c01eA" ,
+    symbol:"Swash",
+ },
+ {
+    name: "VladCoin",
+    contractAddress:"0xDc12DEAeBb5A9868773719389eefbA5d2c974173" ,
+    symbol:"Vlad",
+ },
+],
+
+250:[
+
+  {
+    name: 'WFTM',
+    contractAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+    symbol: 'WFTM',
+  },
+  {
+    name: 'ICE',
+    contractAddress: '0xf16e81dce15b08f326220742020379b855b87df9',
+    symbol: 'ICE',
+  },
+  {
+    name: 'SpookyToken',
+    contractAddress: '0x841fad6eae12c286d1fd18d1d525dffa75c7effe',
+    symbol: 'BOO',
+  },
+  
+  {
+    name: 'SPIRIT',
+    symbol: 'SPIRIT',
+    contractAddress: '0x5cc61a78f164885776aa610fb0fe1257df78e59b',
+  },
+  {
+    name: 'USDC',
+    symbol: 'USDC',
+    contractAddress: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
+  },
+  {
+    name: 'BISON',
+    symbol: 'BISON',
+    contractAddress: '0xd2f38621c3C65300ECabA7020c05d1350f9C265c',
+  },
+]
 
 }

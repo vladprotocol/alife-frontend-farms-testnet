@@ -36,10 +36,8 @@ const ClaimNftModal: React.FC<ClaimNftModalProps> = ({ nft, onSuccess, onDismiss
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
-  const { account } = useWallet()
-  const giftContract = useNftGift()
-
-  
+  const { account ,chainId} = useWallet()
+  const giftContract = useNftGift(chainId)
 
   const handleConfirm = async () => {
     try {
