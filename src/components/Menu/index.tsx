@@ -163,8 +163,12 @@ const ToggleWrapper = styled.div`
     margin-left: 8px;
   }
 `
-const NetworkToggle = styled(Toggle)`
-
+const NetworkToggle = styled(Button)`
+height: 22px;
+background: #171717; 
+margin-right: 10px;
+margin-left: 10px;
+padding: 10px ;
 `
 
 
@@ -220,13 +224,41 @@ const Menu = (props) => {
   const [filteredConfig, setFilteredConfig] = useState([])
   const [networkName,setNetworkName] = useState('unknown');
   const [networklogo,setNetworkLogo] = useState(vladLogo);
-
+  const binanceid = process.env.REACT_APP_BINANACE_CHAIN_ID;
+  const fantomid = process.env.REACT_APP_FANTOM_CHAIN_ID;
 
   const getNetworkConnectParams = () => ({
     97: [
       {
-        chainId: 97,
-        chainName: 'Binance Smart Chain Mainnet',
+        chainId: "0x61",
+        chainName: 'Binance Smart Chain Testnet',
+        nativeCurrency: {
+          name: 'BNB',
+          symbol: 'bnb',
+          decimals: 18,
+        },
+        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/', 'https://data-seed-prebsc-1-s3.binance.org:8545/', 'https://data-seed-prebsc-1-s2.binance.org:8545/'],
+        blockExplorerUrls: ['https://testnet.bscscan.com'],
+      },
+    ],
+    4002: [
+      {
+        chainId:"0xfa2" ,
+        chainName: 'Fantom TestNet',
+        nativeCurrency: {
+          name: 'Fantom Token',
+          symbol: 'FTM',
+          decimals: 18,
+        },
+        rpcUrls: ['https://rpc.testnet.fantom.network/'],
+        blockExplorerUrls: ['https://testnet.ftmscan.com/'],
+      },
+    ],
+
+    56:[
+      {
+        chainId:"0x38",
+        chainName:"Binance SmartChain Mainnet",
         nativeCurrency: {
           name: 'BNB',
           symbol: 'bnb',
@@ -234,21 +266,22 @@ const Menu = (props) => {
         },
         rpcUrls: ['https://bsc-dataseed1.ninicoin.io', 'https://bsc-dataseed1.defibit.io', 'https://bsc-dataseed.binance.org'],
         blockExplorerUrls: ['https://bscscan.com'],
-      },
+
+      }
     ],
-    4002: [
+    250:[
       {
-        chainId: 4002,
-        chainName: 'Fantom Opera',
-        nativeCurrency: {
-          name: 'Fantom Token',
-          symbol: 'FTM',
-          decimals: 18,
-        },
-        rpcUrls: ['https://rpc.ftm.tools/'],
-        blockExplorerUrls: ['https://ftmscan.com/'],
+       chainId:"0xfa" ,
+       chainName: 'Fantom Opera',
+      nativeCurrency: {
+        name: 'Fantom Token',
+        symbol: 'FTM',
+        decimals: 18,
       },
-    ],
+      rpcUrls: ['https://rpc.ftm.tools/'],
+      blockExplorerUrls: ['https://ftmscan.com/'],
+      },
+    ]
   });
 
   const handleChangeNetwork = async network => {
@@ -331,22 +364,24 @@ const Menu = (props) => {
           </div>
           <div className="tp-btns">
             <ul>
-
-
-
-              <li style={{float:"left"}}>
-              {/* <ToggleWrapper>
-              <Text> Binance</Text>
-          <NetworkToggle   />
-          <Text> Fantom</Text>
-        </ToggleWrapper> */}
-              <div className="btn-wrap">
+        <li style ={{float:'left'}}>
+                <div className="btn-wrap">
                   <span className="btn-first">
                     <img src={networklogo} className="" alt="" />{networkName}
-                  </span>
-                 
+                  </span>   
                 </div>
               </li>
+
+        <li style={{float:"left"}}> 
+        <span className="btn-first">
+        <NetworkToggle onClick={()=>handleChangeNetwork(binanceid)}>  
+        <img src={binanceLogo} className="" alt=""/> 
+        </NetworkToggle >
+        <NetworkToggle onClick={()=>handleChangeNetwork(fantomid)}>
+        <img src={fantomLogo} className="" alt="" /> 
+        </NetworkToggle >
+        </span>
+        </li>
               <li>
 
                 <div className="btn-wrap">
