@@ -1,5 +1,12 @@
 import React, { useState, useContext, useCallback } from 'react'
-import {FacebookIcon,TelegramIcon,TwitterIcon,FacebookShareButton,TelegramShareButton,TwitterShareButton} from 'react-share';
+import {
+  FacebookIcon,
+  TelegramIcon,
+  TwitterIcon,
+  FacebookShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+} from 'react-share'
 
 import styled from 'styled-components'
 import {
@@ -47,7 +54,7 @@ const Value = styled(Text)`
 `
 
 const DetailCard = styled(Card)`
-text-align: center
+  text-align: center;
 `
 
 const CustomButton = styled(Button)`
@@ -63,11 +70,10 @@ const Section = styled.div`
   margin-top: 10px;
 `
 
-
 const NftCard = ({ nft }) => {
   const [state, setState] = useState({
     isLoading: false,
-    isOpen: false,
+    isOpen: true,
     nftCount: 0,
     nftBurnCount: 0,
   })
@@ -113,29 +119,27 @@ const NftCard = ({ nft }) => {
       <Image src={originalImage} alt={name} />
 
       <CardBody>
-        
         <Header>
           <Heading>{name} </Heading>
-          
-     <Grid>
-      <Section>          
-        <FacebookShareButton url={window.location.href}>
-          <FacebookIcon size={32} round/>
-        </FacebookShareButton>  
-      </Section>
-      <Section>
-      <TelegramShareButton url={window.location.href}>
-          <TelegramIcon size={32} round/>
-        </TelegramShareButton>
-      </Section>
-      <Section>
-      <TwitterShareButton url={window.location.href}>
-          <TwitterIcon size={32} round/>
-        </TwitterShareButton>
-      </Section>
-      </Grid>
-      </Header>
-        
+
+          <Grid>
+            <Section>
+              <FacebookShareButton url={window.location.href}>
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+            </Section>
+            <Section>
+              <TelegramShareButton url={window.location.href}>
+                <TelegramIcon size={32} round />
+              </TelegramShareButton>
+            </Section>
+            <Section>
+              <TwitterShareButton url={window.location.href}>
+                <TwitterIcon size={32} round />
+              </TwitterShareButton>
+            </Section>
+          </Grid>
+        </Header>
       </CardBody>
       <CardFooter p="0">
         <DetailsButton endIcon={<Icon width="24px" color="primary" />} onClick={handleClick}>
