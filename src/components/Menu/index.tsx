@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
+import chains from 'config/constants/chains'
 import { allLanguages } from 'config/localisation/languageCodes'
 import { LanguageContext } from 'contexts/Localisation/languageContext'
 import useTheme from 'hooks/useTheme'
@@ -23,6 +24,9 @@ import vladLogo from './vlad-circle.png'
 import lifeLogo from './life.png'
 import alifeLogo from './alife.png'
 import bgFooter from './bg-footer.jpg'
+import binanceLogo from './binance-logo.png'
+import fantomLogo from './fantom-logo.png'
+
 import soundCloudLogo from './soundcloud.png'
 
 const Footer = styled.div`
@@ -195,6 +199,8 @@ const Menu = (props) => {
   const cakePriceUsd = usePriceCakeBusd()
 
   const [filteredConfig, setFilteredConfig] = useState([])
+  const [networkName,setNetworkName] = useState('unknown');
+  const [networklogo,setNetworkLogo] = useState(vladLogo);
 
   useEffect(() => {
     if (!chainId) return
@@ -206,6 +212,12 @@ const Menu = (props) => {
         navigationItem.supportedChain.includes(chainId),
     )
     setFilteredConfig([...newFilteredConfigs])
+    if(chains[chainId]) {
+      setNetworkName(chains[chainId])
+      if(chainId === 97 || chainId === 56)setNetworkLogo(binanceLogo)
+      if(chainId === 4002 || chainId === 250)setNetworkLogo(fantomLogo)
+
+    }
   }, [chainId])
 
   return (
@@ -263,7 +275,16 @@ const Menu = (props) => {
           </div>
           <div className="tp-btns">
             <ul>
+              <li style={{float:"left"}}>
+              <div className="btn-wrap">
+                  <span className="btn-first">
+                    <img src={networklogo} className="" alt="" />{networkName}
+                  </span>
+                 
+                </div>
+              </li>
               <li>
+
                 <div className="btn-wrap">
                   <span className="btn-first">
                     <img src={vladLogo} className="" alt="" />${vladValue}
