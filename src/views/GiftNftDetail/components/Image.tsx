@@ -9,24 +9,17 @@ interface ImageProps {
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.borderColor};
-  position: relative;
-  width: 100%;
+  position: center;
   overflow: hidden;
-  padding-bottom: 100%;
-  display:flex;
-  justify-content:center;
 `
 
 const StyledImage = styled.img`
-  position: absolute;
-  max-width: 100%;
-  top: 0;
-  left: 0;
-  transition: opacity 1s linear;
-  max-height: 100%;
-  object-fit: cover;
+  position: center;
+  height: 500px;
+  max-width:100%
   border-radius: 32px 32px 0 0;
-  display:block;
+  margin:auto;
+  display:block; 
 `
 
 const Image: React.FC<ImageProps> = ({ src, alt, originalLink }) => {

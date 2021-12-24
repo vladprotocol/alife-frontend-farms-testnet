@@ -29,10 +29,12 @@ const CustomHeading = styled(Heading)`
 const Grid = styled.div`
   display: flex;
   width: 100%;
+  height: 50%;
 `
 const Section = styled.div`
   width: 50%;
   padding: 10px;
+  margin:auto;
 `
 
 const Detail = (props) => {

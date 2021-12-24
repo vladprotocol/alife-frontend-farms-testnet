@@ -47,8 +47,7 @@ const Value = styled(Text)`
 `
 
 const DetailCard = styled(Card)`
-display:block;
-float:center;
+text-align: center
 `
 
 const CustomButton = styled(Button)`
@@ -114,6 +113,7 @@ const NftCard = ({ nft }) => {
       <Image src={originalImage} alt={name} />
 
       <CardBody>
+        
         <Header>
           <Heading>{name} </Heading>
           
