@@ -48,10 +48,10 @@ const NftProvider: React.FC<NftProviderProps> = ({ children }) => {
     myNfts: [],
     isApproved: false,
   })
-  const { account,ethereum } = useWallet()
+  const { account,ethereum ,chainId} = useWallet()
 
   const { isInitialized } = state
-  const giftContract = useNftGift()
+  const giftContract = useNftGift(chainId)
 
 
 

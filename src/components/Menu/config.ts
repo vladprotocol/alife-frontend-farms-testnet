@@ -6,7 +6,7 @@ interface CustomMenuENtry extends MenuEntry {
 }
 const config: CustomMenuENtry[] = [
   {
-    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET,CHAIN_IDS.FTM_MAINNET,CHAIN_IDS.FTM_TESTNET],
     label: 'Home',
     icon: 'HomeIcon',
     href: '/',
@@ -84,7 +84,7 @@ const config: CustomMenuENtry[] = [
     href: 'https://life.vlad.finance',
   },
   {
-    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET,CHAIN_IDS.FTM_MAINNET,CHAIN_IDS.FTM_TESTNET],
 
     label: 'More',
     icon: 'MoreIcon',
@@ -116,14 +116,14 @@ const config: CustomMenuENtry[] = [
     ],
   },
   {
-    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET,CHAIN_IDS.FTM_MAINNET,CHAIN_IDS.FTM_TESTNET],
 
     label: 'Gordian Audit Passed',
     icon: 'NftIcon',
     href: 'https://gordian.agency',
   },
   {
-    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET],
+    supportedChain: [CHAIN_IDS.BNB_MAINNET, CHAIN_IDS.BNB_TESTNET,CHAIN_IDS.FTM_MAINNET,CHAIN_IDS.FTM_TESTNET],
 
     label: 'SOLIDITY Audit Coming Soon',
     icon: 'NftIcon',

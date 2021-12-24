@@ -6,7 +6,6 @@ import ContractAddresses from 'config/constants/contracts'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { getContract } from 'utils/erc20'
 
-const chainId = process.env.REACT_APP_CHAIN_ID
 
 interface GiftProviderProps {
   children: ReactNode
@@ -28,7 +27,7 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
     tokenContract: null,
     tokenBalance: null,
   })
-  const { account, ethereum } = useWallet()
+  const { account, ethereum,chainId } = useWallet()
 
   const reInitialize = useCallback(() => {
     // Only attempt to re-initialize if the component is still mounted
@@ -58,7 +57,7 @@ const GiftProvider: React.FC<GiftProviderProps> = ({ children }) => {
       }
       // Approve Max i.e ethers.constants.MaxUint256
     },
-    [ethereum, account, reInitialize],
+    [ethereum, account, reInitialize,chainId],
   )
 
   return (

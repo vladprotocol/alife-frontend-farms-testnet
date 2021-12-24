@@ -44,8 +44,8 @@ const IncreaseTokenModal:React.FC<IncreaseTokenModalProps> = ({nft,onSuccess,onD
     const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const TranslateString = useI18n()
-  const { account } = useWallet();
-  const giftContract = useNftGift();
+  const { account,chainId } = useWallet();
+  const giftContract = useNftGift(chainId);
   const [form, setForm] = useState(null)
   
   const handleChange = (e) => {
