@@ -221,10 +221,11 @@ const Menu = (props) => {
   const cakePriceUsd = usePriceCakeBusd()
 
   const [filteredConfig, setFilteredConfig] = useState([])
-  const [networkName, setNetworkName] = useState('unknown')
-  const [networklogo, setNetworkLogo] = useState(vladLogo)
-  const binanceid = process.env.REACT_APP_BINANACE_CHAIN_ID
-  const fantomid = process.env.REACT_APP_FANTOM_CHAIN_ID
+  const [networkName,setNetworkName] = useState('unknown');
+  const [networklogo,setNetworkLogo] = useState(vladLogo);
+  const binanceid = process.env.REACT_APP_BINANCE_CHAIN_ID;
+  const fantomid = process.env.REACT_APP_FANTOM_CHAIN_ID;
+
 
   const getNetworkConnectParams = () => ({
     97: [
