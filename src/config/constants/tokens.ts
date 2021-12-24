@@ -87,11 +87,6 @@ export default {
   name: 'BANANA',
   symbol: 'BANANA',
   contractAddress: '0x603c7f932ed1fc6575303d8fb018fdcbb0f39a95',
-},
-{
-  name: 'MyToken',
-  symbol: 'MTK',
-  contractAddress: '0xc4cecc3c1f0daa1ec391832e507a1a4d44abb2f2',
 }],
 
 4002:[
